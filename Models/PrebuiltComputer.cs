@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace Computer_Parts_Store.Models
 {
-    /// Готова збірка комп'ютера
     public class PrebuiltComputer
     {
         [Key]
@@ -17,7 +16,6 @@ namespace Computer_Parts_Store.Models
 
         public string Description { get; set; }
 
-        // Склад збірки (багато-до-багатьох)
         public virtual ICollection<Product> Products { get; set; }
 
         [NotMapped]

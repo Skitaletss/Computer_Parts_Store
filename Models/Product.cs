@@ -34,7 +34,6 @@ namespace Computer_Parts_Store.Models
         public decimal? Weight { get; set; }
         public int? WarrantyMonths { get; set; }
 
-        // Зв'язки
         public int CategoryId { get; set; }
         public virtual Category? Category { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }

@@ -8,7 +8,6 @@ namespace Computer_Parts_Store.Data
 {
     public class Computer_Parts_StoreContext : DbContext
     {
-        // DbSet для всіх таблиць
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<PrebuiltComputer> PrebuiltComputers { get; set; }
@@ -37,7 +36,6 @@ namespace Computer_Parts_Store.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Налаштування зв'язку багато-до-багатьох для PrebuiltComputer та Product
             modelBuilder.Entity<PrebuiltComputer>()
                 .HasMany(pc => pc.Products)
                 .WithMany(p => p.PrebuiltComputers)
@@ -47,7 +45,6 @@ namespace Computer_Parts_Store.Data
                     j => j.HasOne<PrebuiltComputer>().WithMany().HasForeignKey("PrebuiltComputerId")
                 );
 
-            // Унікальні індекси
             modelBuilder.Entity<Product>()
                 .HasIndex(p => p.Article)
                 .IsUnique();

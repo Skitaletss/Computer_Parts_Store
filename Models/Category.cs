@@ -13,7 +13,6 @@ namespace Computer_Parts_Store.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
-        // Навігаційна властивість для товарів цієї категорії
         public virtual ICollection<Product> Products { get; set; }
 
         public Category()

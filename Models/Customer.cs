@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Computer_Parts_Store.Models
 {
-    /// Клієнт магазину
     public class Customer
     {
         [Key]
@@ -19,7 +18,6 @@ namespace Computer_Parts_Store.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        // Історія замовлень клієнта
         public virtual ICollection<Order> Orders { get; set; }
 
         public Customer()

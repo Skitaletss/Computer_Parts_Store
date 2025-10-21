@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace Computer_Parts_Store.Models
 {
-    /// Замовлення клієнта
     public class Order
     {
         [Key]
@@ -15,12 +14,10 @@ namespace Computer_Parts_Store.Models
         public DateTime OrderDate { get; set; } = DateTime.Now;
         public string Status { get; set; } = "Нове";
 
-        // Посилання на клієнта
         public int CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
 
-        // Список товарів у замовленні
         public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         [NotMapped]

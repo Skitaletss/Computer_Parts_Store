@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +20,6 @@ namespace Computer_Parts_Store.Services
 
         #region CRUD Operations
 
-        // Products
         public async Task<List<Product>> GetProductsAsync() =>
             await _context.Products.Include(p => p.Category).AsNoTracking().ToListAsync();
 
@@ -58,7 +57,6 @@ namespace Computer_Parts_Store.Services
                 .Include(p => p.Category)
                 .ToListAsync();
 
-        // Categories
         public async Task<List<Category>> GetCategoriesAsync() =>
             await _context.Categories.AsNoTracking().ToListAsync();
 
@@ -71,7 +69,6 @@ namespace Computer_Parts_Store.Services
             await _context.SaveChangesAsync();
         }
 
-        // Customers
         public async Task<List<Customer>> GetCustomersAsync() =>
             await _context.Customers.AsNoTracking().ToListAsync();
 
@@ -90,7 +87,6 @@ namespace Computer_Parts_Store.Services
             await _context.SaveChangesAsync();
         }
 
-        // Orders
         public async Task<List<Order>> GetOrdersAsync() =>
             await _context.Orders
                 .Include(o => o.Customer)
@@ -108,7 +104,6 @@ namespace Computer_Parts_Store.Services
 
         public async Task AddOrderAsync(Order order)
         {
-            // Фіксуємо ціни товарів на момент замовлення
             foreach (var item in order.OrderItems)
             {
                 var product = await _context.Products.FindAsync(item.ProductId);
@@ -116,10 +111,9 @@ namespace Computer_Parts_Store.Services
                 {
                     item.UnitPrice = product.Price;
 
-                    // Зменшуємо кількість на складі
                     product.StockQuantity -= item.Quantity;
                     if (product.StockQuantity < 0)
-                        throw new InvalidOperationException($"Недостатня кількість товару: {product.Name}");
+                        throw new InvalidOperationException($"РќРµРґРѕСЃС‚Р°С‚РЅСЏ РєС–Р»СЊРєС–СЃС‚СЊ С‚РѕРІР°СЂСѓ: {product.Name}");
                 }
             }
 
@@ -145,7 +139,6 @@ namespace Computer_Parts_Store.Services
                 .ThenInclude(oi => oi.Product)
                 .ToListAsync();
 
-        // Prebuilt Computers
         public async Task<List<PrebuiltComputer>> GetPrebuiltComputersAsync() =>
             await _context.PrebuiltComputers.Include(pc => pc.Products).ThenInclude(p => p.Category).AsNoTracking().ToListAsync();
 
@@ -162,18 +155,16 @@ namespace Computer_Parts_Store.Services
 
         #region Business Logic Methods
 
-        /// Отримати загальний прибуток за період
         public async Task<decimal> GetTotalProfitAsync(DateTime startDate, DateTime endDate)
         {
             var orders = await _context.Orders
-                .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate && o.Status != "Скасоване")
+                .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate && o.Status != "РЎРєР°СЃРѕРІР°РЅРµ")
                 .Include(o => o.OrderItems)
                 .ToListAsync();
 
             return orders.Sum(o => o.OrderItems.Sum(oi => oi.Quantity * oi.UnitPrice));
         }
 
-        /// Отримати найпопулярніші товари
         public async Task<List<Product>> GetTopSellingProductsAsync(int topCount = 10)
         {
             return await _context.OrderItems
@@ -187,14 +178,12 @@ namespace Computer_Parts_Store.Services
                 .ToListAsync();
         }
 
-        /// Перевірити наявність товару на складі
         public async Task<bool> CheckProductAvailabilityAsync(int productId, int quantity)
         {
             var product = await _context.Products.FindAsync(productId);
             return product != null && product.StockQuantity >= quantity;
         }
 
-        /// Оновити кількість товару на складі
         public async Task UpdateProductStockAsync(int productId, int quantityChange)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -202,7 +191,7 @@ namespace Computer_Parts_Store.Services
             {
                 product.StockQuantity += quantityChange;
                 if (product.StockQuantity < 0)
-                    throw new InvalidOperationException("Кількість товару не може бути від'ємною");
+                    throw new InvalidOperationException("РљС–Р»СЊРєС–СЃС‚СЊ С‚РѕРІР°СЂСѓ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РІС–Рґ'С”РјРЅРѕСЋ");
 
                 await _context.SaveChangesAsync();
             }
@@ -212,10 +201,8 @@ namespace Computer_Parts_Store.Services
 
         #region Utility Methods
 
-        /// Отримати кількість записів у таблиці
         public async Task<int> GetCountAsync<T>() where T : class => await _context.Set<T>().CountAsync();
 
-        /// Очистити кеш контексту
         public void ClearContextCache()
         {
             foreach (var entry in _context.ChangeTracker.Entries().ToList())
@@ -224,7 +211,6 @@ namespace Computer_Parts_Store.Services
             }
         }
 
-        /// Перевірити з'єднання з базою даних
         public async Task<bool> TestConnectionAsync()
         {
             try

@@ -3,18 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Computer_Parts_Store.Models
 {
-    /// Елемент замовлення (товар у замовленні)
     public class OrderItem
     {
         [Key]
         public int Id { get; set; }
 
-        // Посилання на замовлення
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]
         public virtual Order Order { get; set; }
 
-        // Посилання на товар
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
@@ -23,7 +20,6 @@ namespace Computer_Parts_Store.Models
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
-        // Ціна на момент покупки (фіксується)
         [Required]
         [DataType(DataType.Currency)]
         public decimal UnitPrice { get; set; }
