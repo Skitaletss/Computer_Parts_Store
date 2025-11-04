@@ -141,11 +141,7 @@ namespace Computer_Parts_Store.Forms
 
             txtBuildSummary.AppendText("=== КОНФІГУРАЦІЯ ПК ===\n\n");
 
-            if (PC.Products != null && PC.Products.Count > 0)
-            {
-                txtBuildSummary.AppendText($"Збірка: {PC.Name}\n");
-                txtBuildSummary.AppendText($"Опис: {PC.Description}\n\n");
-            }
+
 
             if (cmbCPU.SelectedIndex > 0)
                 txtBuildSummary.AppendText($"Процесор: {cmbCPU.Text}\n");
@@ -201,7 +197,29 @@ namespace Computer_Parts_Store.Forms
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void PCBuilderForm_Resize(object sender, EventArgs e)
+        {
+            FormResize();
+        }
+
+        private void FormResize()
+        {
+            panelSummary.Location = new Point(
+                ClientSize.Width - panelSummary.Width - 20,
+                panelSummary.Location.Y);
+            panelComponents.Size = new Size(
+                ClientSize.Width - panelSummary.Width - 60,
+                panelComponents.Height);
+            btnClose.Location = new Point(
+                ClientSize.Width - btnClose.Width - 20,
+                btnClose.Location.Y);
+            foreach (ComboBox cmb in panelComponents.Controls.OfType<ComboBox>())
+            {
+                cmb.Width = panelComponents.ClientSize.Width - 50;
+            }
         }
     }
 }

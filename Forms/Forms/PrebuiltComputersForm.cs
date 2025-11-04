@@ -72,7 +72,7 @@ namespace Computer_Parts_Store.Forms
                     var prebuiltPCs = db.PrebuiltComputers.Include(_ => _.Products).ToList();
                     var selectedPC = prebuiltPCs[e.RowIndex];
                     var EditForm = new PCBuilderForm(selectedPC);
-                    EditForm.ShowDialog();            
+                    EditForm.ShowDialog();
                 }
             }
             else if (e.ColumnIndex == dataGridViewPrebuilt.Columns["colAddToCart"]?.Index)
@@ -84,6 +84,20 @@ namespace Computer_Parts_Store.Forms
         private void btnClose_Click(object? sender, EventArgs e)
         {
             Close();
+        }
+
+        private void PrebuiltComputersForm_Resize(object sender, EventArgs e)
+        {
+            ResizeForm();
+        }
+
+        private void ResizeForm()
+        {
+            btnClose.Location = new Point(
+                ClientSize.Width - btnClose.Width - 20,
+                btnClose.Location.Y);
+            dataGridViewPrebuilt.Width = ClientSize.Width - 40;
+            dataGridViewPrebuilt.Height = ClientSize.Height - 80;
         }
     }
 }

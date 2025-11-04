@@ -17,221 +17,227 @@
 
         private void InitializeComponent()
         {
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.lblSubtitle = new System.Windows.Forms.Label();
-            this.panelMenu = new System.Windows.Forms.Panel();
-            this.btnCatalog = new System.Windows.Forms.Button();
-            this.btnPCBuilder = new System.Windows.Forms.Button();
-            this.btnPrebuilt = new System.Windows.Forms.Button();
-            this.btnCart = new System.Windows.Forms.Button();
-            this.btnSalesHistory = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.lblWelcome = new System.Windows.Forms.Label();
-            this.lblInfo = new System.Windows.Forms.Label();
-            this.panelHeader.SuspendLayout();
-            this.panelMenu.SuspendLayout();
-            this.panelContent.SuspendLayout();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            panelHeader = new Panel();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
+            panelMenu = new Panel();
+            btnExit = new Button();
+            btnSalesHistory = new Button();
+            btnCart = new Button();
+            btnPrebuilt = new Button();
+            btnPCBuilder = new Button();
+            btnCatalog = new Button();
+            panelContent = new Panel();
+            lblInfo = new Label();
+            lblWelcome = new Label();
+            panelHeader.SuspendLayout();
+            panelMenu.SuspendLayout();
+            panelContent.SuspendLayout();
+            SuspendLayout();
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.panelHeader.Controls.Add(this.lblSubtitle);
-            this.panelHeader.Controls.Add(this.lblTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1200, 100);
-            this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(528, 45);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Магазин комп'ютерних комплектуючих";
+            panelHeader.BackColor = Color.FromArgb(41, 128, 185);
+            panelHeader.Controls.Add(lblSubtitle);
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1200, 100);
+            panelHeader.TabIndex = 0;
             // 
             // lblSubtitle
             // 
-            this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblSubtitle.ForeColor = System.Drawing.Color.White;
-            this.lblSubtitle.Location = new System.Drawing.Point(25, 65);
-            this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(350, 20);
-            this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "Підберіть ідеальну конфігурацію для вашого ПК";
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new Font("Segoe UI", 11F);
+            lblSubtitle.ForeColor = Color.White;
+            lblSubtitle.Location = new Point(25, 65);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(346, 20);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Підберіть ідеальну конфігурацію для вашого ПК";
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 15);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(653, 45);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Магазин комп'ютерних комплектуючих";
             // 
             // panelMenu
             // 
-            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.panelMenu.Controls.Add(this.btnExit);
-            this.panelMenu.Controls.Add(this.btnSalesHistory);
-            this.panelMenu.Controls.Add(this.btnCart);
-            this.panelMenu.Controls.Add(this.btnPrebuilt);
-            this.panelMenu.Controls.Add(this.btnPCBuilder);
-            this.panelMenu.Controls.Add(this.btnCatalog);
-            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelMenu.Location = new System.Drawing.Point(0, 100);
-            this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(250, 600);
-            this.panelMenu.TabIndex = 1;
-            // 
-            // btnCatalog
-            // 
-            this.btnCatalog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.btnCatalog.FlatAppearance.BorderSize = 0;
-            this.btnCatalog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCatalog.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnCatalog.ForeColor = System.Drawing.Color.White;
-            this.btnCatalog.Location = new System.Drawing.Point(0, 20);
-            this.btnCatalog.Name = "btnCatalog";
-            this.btnCatalog.Size = new System.Drawing.Size(250, 60);
-            this.btnCatalog.TabIndex = 0;
-            this.btnCatalog.Text = "📦 Каталог товарів";
-            this.btnCatalog.UseVisualStyleBackColor = false;
-            this.btnCatalog.Click += new System.EventHandler(this.btnCatalog_Click);
-            this.btnCatalog.MouseEnter += new System.EventHandler(this.MenuButton_MouseEnter);
-            this.btnCatalog.MouseLeave += new System.EventHandler(this.MenuButton_MouseLeave);
-            // 
-            // btnPCBuilder
-            // 
-            this.btnPCBuilder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.btnPCBuilder.FlatAppearance.BorderSize = 0;
-            this.btnPCBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPCBuilder.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnPCBuilder.ForeColor = System.Drawing.Color.White;
-            this.btnPCBuilder.Location = new System.Drawing.Point(0, 90);
-            this.btnPCBuilder.Name = "btnPCBuilder";
-            this.btnPCBuilder.Size = new System.Drawing.Size(250, 60);
-            this.btnPCBuilder.TabIndex = 1;
-            this.btnPCBuilder.Text = "🔧 Збірка ПК";
-            this.btnPCBuilder.UseVisualStyleBackColor = false;
-            this.btnPCBuilder.Click += new System.EventHandler(this.btnPCBuilder_Click);
-            this.btnPCBuilder.MouseEnter += new System.EventHandler(this.MenuButton_MouseEnter);
-            this.btnPCBuilder.MouseLeave += new System.EventHandler(this.MenuButton_MouseLeave);
-            // 
-            // btnPrebuilt
-            // 
-            this.btnPrebuilt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.btnPrebuilt.FlatAppearance.BorderSize = 0;
-            this.btnPrebuilt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrebuilt.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnPrebuilt.ForeColor = System.Drawing.Color.White;
-            this.btnPrebuilt.Location = new System.Drawing.Point(0, 160);
-            this.btnPrebuilt.Name = "btnPrebuilt";
-            this.btnPrebuilt.Size = new System.Drawing.Size(250, 60);
-            this.btnPrebuilt.TabIndex = 2;
-            this.btnPrebuilt.Text = "💻 Готові ПК";
-            this.btnPrebuilt.UseVisualStyleBackColor = false;
-            this.btnPrebuilt.Click += new System.EventHandler(this.btnPrebuilt_Click);
-            this.btnPrebuilt.MouseEnter += new System.EventHandler(this.MenuButton_MouseEnter);
-            this.btnPrebuilt.MouseLeave += new System.EventHandler(this.MenuButton_MouseLeave);
-            // 
-            // btnCart
-            // 
-            this.btnCart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.btnCart.FlatAppearance.BorderSize = 0;
-            this.btnCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCart.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnCart.ForeColor = System.Drawing.Color.White;
-            this.btnCart.Location = new System.Drawing.Point(0, 230);
-            this.btnCart.Name = "btnCart";
-            this.btnCart.Size = new System.Drawing.Size(250, 60);
-            this.btnCart.TabIndex = 3;
-            this.btnCart.Text = "🛒 Кошик";
-            this.btnCart.UseVisualStyleBackColor = false;
-            this.btnCart.Click += new System.EventHandler(this.btnCart_Click);
-            this.btnCart.MouseEnter += new System.EventHandler(this.MenuButton_MouseEnter);
-            this.btnCart.MouseLeave += new System.EventHandler(this.MenuButton_MouseLeave);
-            // 
-            // btnSalesHistory
-            // 
-            this.btnSalesHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.btnSalesHistory.FlatAppearance.BorderSize = 0;
-            this.btnSalesHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalesHistory.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnSalesHistory.ForeColor = System.Drawing.Color.White;
-            this.btnSalesHistory.Location = new System.Drawing.Point(0, 300);
-            this.btnSalesHistory.Name = "btnSalesHistory";
-            this.btnSalesHistory.Size = new System.Drawing.Size(250, 60);
-            this.btnSalesHistory.TabIndex = 4;
-            this.btnSalesHistory.Text = "📊 Історія продажів";
-            this.btnSalesHistory.UseVisualStyleBackColor = false;
-            this.btnSalesHistory.Click += new System.EventHandler(this.btnSalesHistory_Click);
-            this.btnSalesHistory.MouseEnter += new System.EventHandler(this.MenuButton_MouseEnter);
-            this.btnSalesHistory.MouseLeave += new System.EventHandler(this.MenuButton_MouseLeave);
+            panelMenu.BackColor = Color.FromArgb(52, 73, 94);
+            panelMenu.Controls.Add(btnExit);
+            panelMenu.Controls.Add(btnSalesHistory);
+            panelMenu.Controls.Add(btnCart);
+            panelMenu.Controls.Add(btnPrebuilt);
+            panelMenu.Controls.Add(btnPCBuilder);
+            panelMenu.Controls.Add(btnCatalog);
+            panelMenu.Dock = DockStyle.Left;
+            panelMenu.Location = new Point(0, 100);
+            panelMenu.Name = "panelMenu";
+            panelMenu.Size = new Size(250, 600);
+            panelMenu.TabIndex = 1;
             // 
             // btnExit
             // 
-            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.btnExit.FlatAppearance.BorderSize = 0;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(25, 530);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(200, 50);
-            this.btnExit.TabIndex = 5;
-            this.btnExit.Text = "🚪 Вихід";
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            btnExit.BackColor = Color.FromArgb(192, 57, 43);
+            btnExit.FlatAppearance.BorderSize = 0;
+            btnExit.FlatStyle = FlatStyle.Flat;
+            btnExit.Font = new Font("Segoe UI", 12F);
+            btnExit.ForeColor = Color.White;
+            btnExit.Location = new Point(25, 530);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(200, 50);
+            btnExit.TabIndex = 5;
+            btnExit.Text = "🚪 Вихід";
+            btnExit.UseVisualStyleBackColor = false;
+            btnExit.Click += btnExit_Click;
+            // 
+            // btnSalesHistory
+            // 
+            btnSalesHistory.BackColor = Color.FromArgb(52, 73, 94);
+            btnSalesHistory.FlatAppearance.BorderSize = 0;
+            btnSalesHistory.FlatStyle = FlatStyle.Flat;
+            btnSalesHistory.Font = new Font("Segoe UI", 12F);
+            btnSalesHistory.ForeColor = Color.White;
+            btnSalesHistory.Location = new Point(0, 300);
+            btnSalesHistory.Name = "btnSalesHistory";
+            btnSalesHistory.Size = new Size(250, 60);
+            btnSalesHistory.TabIndex = 4;
+            btnSalesHistory.Text = "📊 Історія продажів";
+            btnSalesHistory.UseVisualStyleBackColor = false;
+            btnSalesHistory.Click += btnSalesHistory_Click;
+            btnSalesHistory.MouseEnter += MenuButton_MouseEnter;
+            btnSalesHistory.MouseLeave += MenuButton_MouseLeave;
+            // 
+            // btnCart
+            // 
+            btnCart.BackColor = Color.FromArgb(52, 73, 94);
+            btnCart.FlatAppearance.BorderSize = 0;
+            btnCart.FlatStyle = FlatStyle.Flat;
+            btnCart.Font = new Font("Segoe UI", 12F);
+            btnCart.ForeColor = Color.White;
+            btnCart.Location = new Point(0, 230);
+            btnCart.Name = "btnCart";
+            btnCart.Size = new Size(250, 60);
+            btnCart.TabIndex = 3;
+            btnCart.Text = "\U0001f6d2 Кошик";
+            btnCart.UseVisualStyleBackColor = false;
+            btnCart.Click += btnCart_Click;
+            btnCart.MouseEnter += MenuButton_MouseEnter;
+            btnCart.MouseLeave += MenuButton_MouseLeave;
+            // 
+            // btnPrebuilt
+            // 
+            btnPrebuilt.BackColor = Color.FromArgb(52, 73, 94);
+            btnPrebuilt.FlatAppearance.BorderSize = 0;
+            btnPrebuilt.FlatStyle = FlatStyle.Flat;
+            btnPrebuilt.Font = new Font("Segoe UI", 12F);
+            btnPrebuilt.ForeColor = Color.White;
+            btnPrebuilt.Location = new Point(0, 160);
+            btnPrebuilt.Name = "btnPrebuilt";
+            btnPrebuilt.Size = new Size(250, 60);
+            btnPrebuilt.TabIndex = 2;
+            btnPrebuilt.Text = "💻 Готові ПК";
+            btnPrebuilt.UseVisualStyleBackColor = false;
+            btnPrebuilt.Click += btnPrebuilt_Click;
+            btnPrebuilt.MouseEnter += MenuButton_MouseEnter;
+            btnPrebuilt.MouseLeave += MenuButton_MouseLeave;
+            // 
+            // btnPCBuilder
+            // 
+            btnPCBuilder.BackColor = Color.FromArgb(52, 73, 94);
+            btnPCBuilder.FlatAppearance.BorderSize = 0;
+            btnPCBuilder.FlatStyle = FlatStyle.Flat;
+            btnPCBuilder.Font = new Font("Segoe UI", 12F);
+            btnPCBuilder.ForeColor = Color.White;
+            btnPCBuilder.Location = new Point(0, 90);
+            btnPCBuilder.Name = "btnPCBuilder";
+            btnPCBuilder.Size = new Size(250, 60);
+            btnPCBuilder.TabIndex = 1;
+            btnPCBuilder.Text = "🔧 Збірка ПК";
+            btnPCBuilder.UseVisualStyleBackColor = false;
+            btnPCBuilder.Click += btnPCBuilder_Click;
+            btnPCBuilder.MouseEnter += MenuButton_MouseEnter;
+            btnPCBuilder.MouseLeave += MenuButton_MouseLeave;
+            // 
+            // btnCatalog
+            // 
+            btnCatalog.BackColor = Color.FromArgb(52, 73, 94);
+            btnCatalog.FlatAppearance.BorderSize = 0;
+            btnCatalog.FlatStyle = FlatStyle.Flat;
+            btnCatalog.Font = new Font("Segoe UI", 12F);
+            btnCatalog.ForeColor = Color.White;
+            btnCatalog.Location = new Point(0, 20);
+            btnCatalog.Name = "btnCatalog";
+            btnCatalog.Size = new Size(250, 60);
+            btnCatalog.TabIndex = 0;
+            btnCatalog.Text = "📦 Каталог товарів";
+            btnCatalog.UseVisualStyleBackColor = false;
+            btnCatalog.Click += btnCatalog_Click;
+            btnCatalog.MouseEnter += MenuButton_MouseEnter;
+            btnCatalog.MouseLeave += MenuButton_MouseLeave;
             // 
             // panelContent
             // 
-            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.panelContent.Controls.Add(this.lblInfo);
-            this.panelContent.Controls.Add(this.lblWelcome);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(250, 100);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(950, 600);
-            this.panelContent.TabIndex = 2;
-            // 
-            // lblWelcome
-            // 
-            this.lblWelcome.AutoSize = true;
-            this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblWelcome.Location = new System.Drawing.Point(50, 50);
-            this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(262, 37);
-            this.lblWelcome.TabIndex = 0;
-            this.lblWelcome.Text = "Ласкаво просимо!";
+            panelContent.BackColor = Color.FromArgb(236, 240, 241);
+            panelContent.Controls.Add(lblInfo);
+            panelContent.Controls.Add(lblWelcome);
+            panelContent.Dock = DockStyle.Fill;
+            panelContent.Location = new Point(250, 100);
+            panelContent.Name = "panelContent";
+            panelContent.Size = new Size(950, 600);
+            panelContent.TabIndex = 2;
             // 
             // lblInfo
             // 
-            this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblInfo.Location = new System.Drawing.Point(50, 110);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(850, 400);
-            this.lblInfo.TabIndex = 1;
-            this.lblInfo.Text = "Оберіть розділ з меню:\r\n\r\n📦 Каталог товарів - перегляд всього асортименту\r\n🔧 Збірка ПК - створіть власну конфігурацію\r\n💻 Готові ПК - готові збірки від експертів\r\n🛒 Кошик - оформлення замовлення\r\n📊 Історія продажів - звіти та аналітика";
+            lblInfo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblInfo.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.World, 204);
+            lblInfo.ForeColor = Color.FromArgb(52, 73, 94);
+            lblInfo.Location = new Point(50, 202);
+            lblInfo.Name = "lblInfo";
+            lblInfo.Size = new Size(850, 398);
+            lblInfo.TabIndex = 1;
+            lblInfo.Text = resources.GetString("lblInfo.Text");
+            lblInfo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblWelcome
+            // 
+            lblWelcome.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblWelcome.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblWelcome.ForeColor = Color.FromArgb(52, 73, 94);
+            lblWelcome.Location = new Point(50, 27);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new Size(850, 53);
+            lblWelcome.TabIndex = 0;
+            lblWelcome.Text = "Ласкаво просимо!";
+            lblWelcome.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 700);
-            this.Controls.Add(this.panelContent);
-            this.Controls.Add(this.panelMenu);
-            this.Controls.Add(this.panelHeader);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Магазин комп'ютерних комплектуючих";
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelMenu.ResumeLayout(false);
-            this.panelContent.ResumeLayout(false);
-            this.panelContent.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1200, 700);
+            Controls.Add(panelContent);
+            Controls.Add(panelMenu);
+            Controls.Add(panelHeader);
+            MinimumSize = new Size(600, 600);
+            Name = "MainForm";
+            ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Магазин комп'ютерних комплектуючих";
+            Resize += MainForm_Resize;
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelMenu.ResumeLayout(false);
+            panelContent.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion

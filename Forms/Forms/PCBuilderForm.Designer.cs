@@ -17,386 +17,388 @@
 
         private void InitializeComponent()
         {
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.panelComponents = new System.Windows.Forms.Panel();
-            this.lblComponents = new System.Windows.Forms.Label();
-            this.lblCPU = new System.Windows.Forms.Label();
-            this.cmbCPU = new System.Windows.Forms.ComboBox();
-            this.lblGPU = new System.Windows.Forms.Label();
-            this.cmbGPU = new System.Windows.Forms.ComboBox();
-            this.lblMotherboard = new System.Windows.Forms.Label();
-            this.cmbMotherboard = new System.Windows.Forms.ComboBox();
-            this.lblRAM = new System.Windows.Forms.Label();
-            this.cmbRAM = new System.Windows.Forms.ComboBox();
-            this.lblStorage = new System.Windows.Forms.Label();
-            this.cmbStorage = new System.Windows.Forms.ComboBox();
-            this.lblPSU = new System.Windows.Forms.Label();
-            this.cmbPSU = new System.Windows.Forms.ComboBox();
-            this.lblCase = new System.Windows.Forms.Label();
-            this.cmbCase = new System.Windows.Forms.ComboBox();
-            this.lblCooling = new System.Windows.Forms.Label();
-            this.cmbCooling = new System.Windows.Forms.ComboBox();
-            this.panelSummary = new System.Windows.Forms.Panel();
-            this.lblSummary = new System.Windows.Forms.Label();
-            this.txtBuildSummary = new System.Windows.Forms.RichTextBox();
-            this.lblTotalPrice = new System.Windows.Forms.Label();
-            this.lblTotalPriceValue = new System.Windows.Forms.Label();
-            this.btnAddToCart = new System.Windows.Forms.Button();
-            this.btnClearBuild = new System.Windows.Forms.Button();
-            this.panelHeader.SuspendLayout();
-            this.panelComponents.SuspendLayout();
-            this.panelSummary.SuspendLayout();
-            this.SuspendLayout();
+            panelHeader = new Panel();
+            btnClose = new Button();
+            lblTitle = new Label();
+            panelComponents = new Panel();
+            cmbCooling = new ComboBox();
+            lblCooling = new Label();
+            cmbCase = new ComboBox();
+            lblCase = new Label();
+            cmbPSU = new ComboBox();
+            lblPSU = new Label();
+            cmbStorage = new ComboBox();
+            lblStorage = new Label();
+            cmbRAM = new ComboBox();
+            lblRAM = new Label();
+            cmbMotherboard = new ComboBox();
+            lblMotherboard = new Label();
+            cmbGPU = new ComboBox();
+            lblGPU = new Label();
+            cmbCPU = new ComboBox();
+            lblCPU = new Label();
+            lblComponents = new Label();
+            panelSummary = new Panel();
+            btnClearBuild = new Button();
+            btnAddToCart = new Button();
+            lblTotalPriceValue = new Label();
+            lblTotalPrice = new Label();
+            txtBuildSummary = new RichTextBox();
+            lblSummary = new Label();
+            panelHeader.SuspendLayout();
+            panelComponents.SuspendLayout();
+            panelSummary.SuspendLayout();
+            SuspendLayout();
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.panelHeader.Controls.Add(this.btnClose);
-            this.panelHeader.Controls.Add(this.lblTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1400, 70);
-            this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 17);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(386, 37);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Конструктор збірки комп'ютера";
+            panelHeader.BackColor = Color.FromArgb(41, 128, 185);
+            panelHeader.Controls.Add(btnClose);
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1400, 70);
+            panelHeader.TabIndex = 0;
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(1300, 15);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(80, 40);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Закрити";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            btnClose.BackColor = Color.FromArgb(192, 57, 43);
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(1300, 15);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(80, 40);
+            btnClose.TabIndex = 1;
+            btnClose.Text = "Закрити";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 17);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(448, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Конструктор збірки комп'ютера";
             // 
             // panelComponents
             // 
-            this.panelComponents.BackColor = System.Drawing.Color.White;
-            this.panelComponents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelComponents.Controls.Add(this.cmbCooling);
-            this.panelComponents.Controls.Add(this.lblCooling);
-            this.panelComponents.Controls.Add(this.cmbCase);
-            this.panelComponents.Controls.Add(this.lblCase);
-            this.panelComponents.Controls.Add(this.cmbPSU);
-            this.panelComponents.Controls.Add(this.lblPSU);
-            this.panelComponents.Controls.Add(this.cmbStorage);
-            this.panelComponents.Controls.Add(this.lblStorage);
-            this.panelComponents.Controls.Add(this.cmbRAM);
-            this.panelComponents.Controls.Add(this.lblRAM);
-            this.panelComponents.Controls.Add(this.cmbMotherboard);
-            this.panelComponents.Controls.Add(this.lblMotherboard);
-            this.panelComponents.Controls.Add(this.cmbGPU);
-            this.panelComponents.Controls.Add(this.lblGPU);
-            this.panelComponents.Controls.Add(this.cmbCPU);
-            this.panelComponents.Controls.Add(this.lblCPU);
-            this.panelComponents.Controls.Add(this.lblComponents);
-            this.panelComponents.Location = new System.Drawing.Point(20, 90);
-            this.panelComponents.Name = "panelComponents";
-            this.panelComponents.Size = new System.Drawing.Size(900, 660);
-            this.panelComponents.TabIndex = 1;
-            // 
-            // lblComponents
-            // 
-            this.lblComponents.AutoSize = true;
-            this.lblComponents.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblComponents.Location = new System.Drawing.Point(15, 15);
-            this.lblComponents.Name = "lblComponents";
-            this.lblComponents.Size = new System.Drawing.Size(239, 25);
-            this.lblComponents.TabIndex = 0;
-            this.lblComponents.Text = "Виберіть комплектуючі:";
-            // 
-            // lblCPU
-            // 
-            this.lblCPU.AutoSize = true;
-            this.lblCPU.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblCPU.Location = new System.Drawing.Point(20, 60);
-            this.lblCPU.Name = "lblCPU";
-            this.lblCPU.Size = new System.Drawing.Size(85, 20);
-            this.lblCPU.TabIndex = 1;
-            this.lblCPU.Text = "Процесор:";
-            // 
-            // cmbCPU
-            // 
-            this.cmbCPU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCPU.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbCPU.FormattingEnabled = true;
-            this.cmbCPU.Location = new System.Drawing.Point(20, 85);
-            this.cmbCPU.Name = "cmbCPU";
-            this.cmbCPU.Size = new System.Drawing.Size(850, 25);
-            this.cmbCPU.TabIndex = 2;
-            this.cmbCPU.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblGPU
-            // 
-            this.lblGPU.AutoSize = true;
-            this.lblGPU.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblGPU.Location = new System.Drawing.Point(20, 125);
-            this.lblGPU.Name = "lblGPU";
-            this.lblGPU.Size = new System.Drawing.Size(95, 20);
-            this.lblGPU.TabIndex = 3;
-            this.lblGPU.Text = "Відеокарта:";
-            // 
-            // cmbGPU
-            // 
-            this.cmbGPU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbGPU.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbGPU.FormattingEnabled = true;
-            this.cmbGPU.Location = new System.Drawing.Point(20, 150);
-            this.cmbGPU.Name = "cmbGPU";
-            this.cmbGPU.Size = new System.Drawing.Size(850, 25);
-            this.cmbGPU.TabIndex = 4;
-            this.cmbGPU.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblMotherboard
-            // 
-            this.lblMotherboard.AutoSize = true;
-            this.lblMotherboard.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblMotherboard.Location = new System.Drawing.Point(20, 190);
-            this.lblMotherboard.Name = "lblMotherboard";
-            this.lblMotherboard.Size = new System.Drawing.Size(145, 20);
-            this.lblMotherboard.TabIndex = 5;
-            this.lblMotherboard.Text = "Материнська плата:";
-            // 
-            // cmbMotherboard
-            // 
-            this.cmbMotherboard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMotherboard.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbMotherboard.FormattingEnabled = true;
-            this.cmbMotherboard.Location = new System.Drawing.Point(20, 215);
-            this.cmbMotherboard.Name = "cmbMotherboard";
-            this.cmbMotherboard.Size = new System.Drawing.Size(850, 25);
-            this.cmbMotherboard.TabIndex = 6;
-            this.cmbMotherboard.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblRAM
-            // 
-            this.lblRAM.AutoSize = true;
-            this.lblRAM.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblRAM.Location = new System.Drawing.Point(20, 255);
-            this.lblRAM.Name = "lblRAM";
-            this.lblRAM.Size = new System.Drawing.Size(148, 20);
-            this.lblRAM.TabIndex = 7;
-            this.lblRAM.Text = "Оперативна пам'ять:";
-            // 
-            // cmbRAM
-            // 
-            this.cmbRAM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRAM.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbRAM.FormattingEnabled = true;
-            this.cmbRAM.Location = new System.Drawing.Point(20, 280);
-            this.cmbRAM.Name = "cmbRAM";
-            this.cmbRAM.Size = new System.Drawing.Size(850, 25);
-            this.cmbRAM.TabIndex = 8;
-            this.cmbRAM.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblStorage
-            // 
-            this.lblStorage.AutoSize = true;
-            this.lblStorage.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblStorage.Location = new System.Drawing.Point(20, 320);
-            this.lblStorage.Name = "lblStorage";
-            this.lblStorage.Size = new System.Drawing.Size(112, 20);
-            this.lblStorage.TabIndex = 9;
-            this.lblStorage.Text = "Накопичувач:";
-            // 
-            // cmbStorage
-            // 
-            this.cmbStorage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStorage.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbStorage.FormattingEnabled = true;
-            this.cmbStorage.Location = new System.Drawing.Point(20, 345);
-            this.cmbStorage.Name = "cmbStorage";
-            this.cmbStorage.Size = new System.Drawing.Size(850, 25);
-            this.cmbStorage.TabIndex = 10;
-            this.cmbStorage.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblPSU
-            // 
-            this.lblPSU.AutoSize = true;
-            this.lblPSU.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPSU.Location = new System.Drawing.Point(20, 385);
-            this.lblPSU.Name = "lblPSU";
-            this.lblPSU.Size = new System.Drawing.Size(125, 20);
-            this.lblPSU.TabIndex = 11;
-            this.lblPSU.Text = "Блок живлення:";
-            // 
-            // cmbPSU
-            // 
-            this.cmbPSU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPSU.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbPSU.FormattingEnabled = true;
-            this.cmbPSU.Location = new System.Drawing.Point(20, 410);
-            this.cmbPSU.Name = "cmbPSU";
-            this.cmbPSU.Size = new System.Drawing.Size(850, 25);
-            this.cmbPSU.TabIndex = 12;
-            this.cmbPSU.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblCase
-            // 
-            this.lblCase.AutoSize = true;
-            this.lblCase.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblCase.Location = new System.Drawing.Point(20, 450);
-            this.lblCase.Name = "lblCase";
-            this.lblCase.Size = new System.Drawing.Size(69, 20);
-            this.lblCase.TabIndex = 13;
-            this.lblCase.Text = "Корпус:";
-            // 
-            // cmbCase
-            // 
-            this.cmbCase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCase.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbCase.FormattingEnabled = true;
-            this.cmbCase.Location = new System.Drawing.Point(20, 475);
-            this.cmbCase.Name = "cmbCase";
-            this.cmbCase.Size = new System.Drawing.Size(850, 25);
-            this.cmbCase.TabIndex = 14;
-            this.cmbCase.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
-            // 
-            // lblCooling
-            // 
-            this.lblCooling.AutoSize = true;
-            this.lblCooling.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.lblCooling.Location = new System.Drawing.Point(20, 515);
-            this.lblCooling.Name = "lblCooling";
-            this.lblCooling.Size = new System.Drawing.Size(163, 20);
-            this.lblCooling.TabIndex = 15;
-            this.lblCooling.Text = "Система охолодження:";
+            panelComponents.BackColor = Color.White;
+            panelComponents.BorderStyle = BorderStyle.FixedSingle;
+            panelComponents.Controls.Add(cmbCooling);
+            panelComponents.Controls.Add(lblCooling);
+            panelComponents.Controls.Add(cmbCase);
+            panelComponents.Controls.Add(lblCase);
+            panelComponents.Controls.Add(cmbPSU);
+            panelComponents.Controls.Add(lblPSU);
+            panelComponents.Controls.Add(cmbStorage);
+            panelComponents.Controls.Add(lblStorage);
+            panelComponents.Controls.Add(cmbRAM);
+            panelComponents.Controls.Add(lblRAM);
+            panelComponents.Controls.Add(cmbMotherboard);
+            panelComponents.Controls.Add(lblMotherboard);
+            panelComponents.Controls.Add(cmbGPU);
+            panelComponents.Controls.Add(lblGPU);
+            panelComponents.Controls.Add(cmbCPU);
+            panelComponents.Controls.Add(lblCPU);
+            panelComponents.Controls.Add(lblComponents);
+            panelComponents.Location = new Point(20, 90);
+            panelComponents.Name = "panelComponents";
+            panelComponents.Size = new Size(900, 660);
+            panelComponents.TabIndex = 1;
             // 
             // cmbCooling
             // 
-            this.cmbCooling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCooling.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbCooling.FormattingEnabled = true;
-            this.cmbCooling.Location = new System.Drawing.Point(20, 540);
-            this.cmbCooling.Name = "cmbCooling";
-            this.cmbCooling.Size = new System.Drawing.Size(850, 25);
-            this.cmbCooling.TabIndex = 16;
-            this.cmbCooling.SelectedIndexChanged += new System.EventHandler(this.Component_SelectedIndexChanged);
+            cmbCooling.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCooling.Font = new Font("Segoe UI", 10F);
+            cmbCooling.FormattingEnabled = true;
+            cmbCooling.Location = new Point(20, 540);
+            cmbCooling.Name = "cmbCooling";
+            cmbCooling.Size = new Size(850, 25);
+            cmbCooling.TabIndex = 16;
+            cmbCooling.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblCooling
+            // 
+            lblCooling.AutoSize = true;
+            lblCooling.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblCooling.Location = new Point(20, 515);
+            lblCooling.Name = "lblCooling";
+            lblCooling.Size = new Size(178, 20);
+            lblCooling.TabIndex = 15;
+            lblCooling.Text = "Система охолодження:";
+            // 
+            // cmbCase
+            // 
+            cmbCase.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCase.Font = new Font("Segoe UI", 10F);
+            cmbCase.FormattingEnabled = true;
+            cmbCase.Location = new Point(20, 475);
+            cmbCase.Name = "cmbCase";
+            cmbCase.Size = new Size(850, 25);
+            cmbCase.TabIndex = 14;
+            cmbCase.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblCase
+            // 
+            lblCase.AutoSize = true;
+            lblCase.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblCase.Location = new Point(20, 450);
+            lblCase.Name = "lblCase";
+            lblCase.Size = new Size(65, 20);
+            lblCase.TabIndex = 13;
+            lblCase.Text = "Корпус:";
+            // 
+            // cmbPSU
+            // 
+            cmbPSU.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPSU.Font = new Font("Segoe UI", 10F);
+            cmbPSU.FormattingEnabled = true;
+            cmbPSU.Location = new Point(20, 410);
+            cmbPSU.Name = "cmbPSU";
+            cmbPSU.Size = new Size(850, 25);
+            cmbPSU.TabIndex = 12;
+            cmbPSU.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblPSU
+            // 
+            lblPSU.AutoSize = true;
+            lblPSU.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblPSU.Location = new Point(20, 385);
+            lblPSU.Name = "lblPSU";
+            lblPSU.Size = new Size(128, 20);
+            lblPSU.TabIndex = 11;
+            lblPSU.Text = "Блок живлення:";
+            // 
+            // cmbStorage
+            // 
+            cmbStorage.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStorage.Font = new Font("Segoe UI", 10F);
+            cmbStorage.FormattingEnabled = true;
+            cmbStorage.Location = new Point(20, 345);
+            cmbStorage.Name = "cmbStorage";
+            cmbStorage.Size = new Size(850, 25);
+            cmbStorage.TabIndex = 10;
+            cmbStorage.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblStorage
+            // 
+            lblStorage.AutoSize = true;
+            lblStorage.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblStorage.Location = new Point(20, 320);
+            lblStorage.Name = "lblStorage";
+            lblStorage.Size = new Size(110, 20);
+            lblStorage.TabIndex = 9;
+            lblStorage.Text = "Накопичувач:";
+            // 
+            // cmbRAM
+            // 
+            cmbRAM.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbRAM.Font = new Font("Segoe UI", 10F);
+            cmbRAM.FormattingEnabled = true;
+            cmbRAM.Location = new Point(20, 280);
+            cmbRAM.Name = "cmbRAM";
+            cmbRAM.Size = new Size(850, 25);
+            cmbRAM.TabIndex = 8;
+            cmbRAM.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblRAM
+            // 
+            lblRAM.AutoSize = true;
+            lblRAM.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblRAM.Location = new Point(20, 255);
+            lblRAM.Name = "lblRAM";
+            lblRAM.Size = new Size(161, 20);
+            lblRAM.TabIndex = 7;
+            lblRAM.Text = "Оперативна пам'ять:";
+            // 
+            // cmbMotherboard
+            // 
+            cmbMotherboard.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbMotherboard.Font = new Font("Segoe UI", 10F);
+            cmbMotherboard.FormattingEnabled = true;
+            cmbMotherboard.Location = new Point(20, 215);
+            cmbMotherboard.Name = "cmbMotherboard";
+            cmbMotherboard.Size = new Size(850, 25);
+            cmbMotherboard.TabIndex = 6;
+            cmbMotherboard.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblMotherboard
+            // 
+            lblMotherboard.AutoSize = true;
+            lblMotherboard.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblMotherboard.Location = new Point(20, 190);
+            lblMotherboard.Name = "lblMotherboard";
+            lblMotherboard.Size = new Size(153, 20);
+            lblMotherboard.TabIndex = 5;
+            lblMotherboard.Text = "Материнська плата:";
+            // 
+            // cmbGPU
+            // 
+            cmbGPU.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbGPU.Font = new Font("Segoe UI", 10F);
+            cmbGPU.FormattingEnabled = true;
+            cmbGPU.Location = new Point(20, 150);
+            cmbGPU.Name = "cmbGPU";
+            cmbGPU.Size = new Size(850, 25);
+            cmbGPU.TabIndex = 4;
+            cmbGPU.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblGPU
+            // 
+            lblGPU.AutoSize = true;
+            lblGPU.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblGPU.Location = new Point(20, 125);
+            lblGPU.Name = "lblGPU";
+            lblGPU.Size = new Size(93, 20);
+            lblGPU.TabIndex = 3;
+            lblGPU.Text = "Відеокарта:";
+            // 
+            // cmbCPU
+            // 
+            cmbCPU.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCPU.Font = new Font("Segoe UI", 10F);
+            cmbCPU.FormattingEnabled = true;
+            cmbCPU.Location = new Point(20, 85);
+            cmbCPU.Name = "cmbCPU";
+            cmbCPU.Size = new Size(850, 25);
+            cmbCPU.TabIndex = 2;
+            cmbCPU.SelectedIndexChanged += Component_SelectedIndexChanged;
+            // 
+            // lblCPU
+            // 
+            lblCPU.AutoSize = true;
+            lblCPU.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblCPU.Location = new Point(20, 60);
+            lblCPU.Name = "lblCPU";
+            lblCPU.Size = new Size(85, 20);
+            lblCPU.TabIndex = 1;
+            lblCPU.Text = "Процесор:";
+            // 
+            // lblComponents
+            // 
+            lblComponents.AutoSize = true;
+            lblComponents.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblComponents.Location = new Point(15, 15);
+            lblComponents.Name = "lblComponents";
+            lblComponents.Size = new Size(239, 25);
+            lblComponents.TabIndex = 0;
+            lblComponents.Text = "Виберіть комплектуючі:";
             // 
             // panelSummary
             // 
-            this.panelSummary.BackColor = System.Drawing.Color.White;
-            this.panelSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelSummary.Controls.Add(this.btnClearBuild);
-            this.panelSummary.Controls.Add(this.btnAddToCart);
-            this.panelSummary.Controls.Add(this.lblTotalPriceValue);
-            this.panelSummary.Controls.Add(this.lblTotalPrice);
-            this.panelSummary.Controls.Add(this.txtBuildSummary);
-            this.panelSummary.Controls.Add(this.lblSummary);
-            this.panelSummary.Location = new System.Drawing.Point(940, 90);
-            this.panelSummary.Name = "panelSummary";
-            this.panelSummary.Size = new System.Drawing.Size(440, 660);
-            this.panelSummary.TabIndex = 2;
-            // 
-            // lblSummary
-            // 
-            this.lblSummary.AutoSize = true;
-            this.lblSummary.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblSummary.Location = new System.Drawing.Point(15, 15);
-            this.lblSummary.Name = "lblSummary";
-            this.lblSummary.Size = new System.Drawing.Size(174, 25);
-            this.lblSummary.TabIndex = 0;
-            this.lblSummary.Text = "Ваша конфігурація:";
-            // 
-            // txtBuildSummary
-            // 
-            this.txtBuildSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBuildSummary.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtBuildSummary.Location = new System.Drawing.Point(15, 55);
-            this.txtBuildSummary.Name = "txtBuildSummary";
-            this.txtBuildSummary.ReadOnly = true;
-            this.txtBuildSummary.Size = new System.Drawing.Size(410, 450);
-            this.txtBuildSummary.TabIndex = 1;
-            this.txtBuildSummary.Text = "";
-            // 
-            // lblTotalPrice
-            // 
-            this.lblTotalPrice.AutoSize = true;
-            this.lblTotalPrice.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPrice.Location = new System.Drawing.Point(15, 520);
-            this.lblTotalPrice.Name = "lblTotalPrice";
-            this.lblTotalPrice.Size = new System.Drawing.Size(140, 25);
-            this.lblTotalPrice.TabIndex = 2;
-            this.lblTotalPrice.Text = "Загальна ціна:";
-            // 
-            // lblTotalPriceValue
-            // 
-            this.lblTotalPriceValue.AutoSize = true;
-            this.lblTotalPriceValue.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPriceValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.lblTotalPriceValue.Location = new System.Drawing.Point(15, 550);
-            this.lblTotalPriceValue.Name = "lblTotalPriceValue";
-            this.lblTotalPriceValue.Size = new System.Drawing.Size(87, 30);
-            this.lblTotalPriceValue.TabIndex = 3;
-            this.lblTotalPriceValue.Text = "0.00 грн";
-            // 
-            // btnAddToCart
-            // 
-            this.btnAddToCart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.btnAddToCart.FlatAppearance.BorderSize = 0;
-            this.btnAddToCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddToCart.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnAddToCart.ForeColor = System.Drawing.Color.White;
-            this.btnAddToCart.Location = new System.Drawing.Point(15, 595);
-            this.btnAddToCart.Name = "btnAddToCart";
-            this.btnAddToCart.Size = new System.Drawing.Size(200, 45);
-            this.btnAddToCart.TabIndex = 4;
-            this.btnAddToCart.Text = "🛒 Додати до кошика";
-            this.btnAddToCart.UseVisualStyleBackColor = false;
-            this.btnAddToCart.Click += new System.EventHandler(this.btnAddToCart_Click);
+            panelSummary.BackColor = Color.White;
+            panelSummary.BorderStyle = BorderStyle.FixedSingle;
+            panelSummary.Controls.Add(btnClearBuild);
+            panelSummary.Controls.Add(btnAddToCart);
+            panelSummary.Controls.Add(lblTotalPriceValue);
+            panelSummary.Controls.Add(lblTotalPrice);
+            panelSummary.Controls.Add(txtBuildSummary);
+            panelSummary.Controls.Add(lblSummary);
+            panelSummary.Location = new Point(940, 90);
+            panelSummary.Name = "panelSummary";
+            panelSummary.Size = new Size(440, 660);
+            panelSummary.TabIndex = 2;
             // 
             // btnClearBuild
             // 
-            this.btnClearBuild.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnClearBuild.FlatAppearance.BorderSize = 0;
-            this.btnClearBuild.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearBuild.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnClearBuild.ForeColor = System.Drawing.Color.White;
-            this.btnClearBuild.Location = new System.Drawing.Point(225, 595);
-            this.btnClearBuild.Name = "btnClearBuild";
-            this.btnClearBuild.Size = new System.Drawing.Size(200, 45);
-            this.btnClearBuild.TabIndex = 5;
-            this.btnClearBuild.Text = "🗑️ Очистити збірку";
-            this.btnClearBuild.UseVisualStyleBackColor = false;
-            this.btnClearBuild.Click += new System.EventHandler(this.btnClearBuild_Click);
+            btnClearBuild.BackColor = Color.FromArgb(149, 165, 166);
+            btnClearBuild.FlatAppearance.BorderSize = 0;
+            btnClearBuild.FlatStyle = FlatStyle.Flat;
+            btnClearBuild.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnClearBuild.ForeColor = Color.White;
+            btnClearBuild.Location = new Point(225, 595);
+            btnClearBuild.Name = "btnClearBuild";
+            btnClearBuild.Size = new Size(200, 45);
+            btnClearBuild.TabIndex = 5;
+            btnClearBuild.Text = "🗑️ Очистити збірку";
+            btnClearBuild.UseVisualStyleBackColor = false;
+            btnClearBuild.Click += btnClearBuild_Click;
+            // 
+            // btnAddToCart
+            // 
+            btnAddToCart.BackColor = Color.FromArgb(39, 174, 96);
+            btnAddToCart.FlatAppearance.BorderSize = 0;
+            btnAddToCart.FlatStyle = FlatStyle.Flat;
+            btnAddToCart.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnAddToCart.ForeColor = Color.White;
+            btnAddToCart.Location = new Point(15, 595);
+            btnAddToCart.Name = "btnAddToCart";
+            btnAddToCart.Size = new Size(200, 45);
+            btnAddToCart.TabIndex = 4;
+            btnAddToCart.Text = "\U0001f6d2 Додати до кошика";
+            btnAddToCart.UseVisualStyleBackColor = false;
+            btnAddToCart.Click += btnAddToCart_Click;
+            // 
+            // lblTotalPriceValue
+            // 
+            lblTotalPriceValue.AutoSize = true;
+            lblTotalPriceValue.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblTotalPriceValue.ForeColor = Color.FromArgb(39, 174, 96);
+            lblTotalPriceValue.Location = new Point(15, 550);
+            lblTotalPriceValue.Name = "lblTotalPriceValue";
+            lblTotalPriceValue.Size = new Size(100, 30);
+            lblTotalPriceValue.TabIndex = 3;
+            lblTotalPriceValue.Text = "0.00 грн";
+            // 
+            // lblTotalPrice
+            // 
+            lblTotalPrice.AutoSize = true;
+            lblTotalPrice.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTotalPrice.Location = new Point(15, 520);
+            lblTotalPrice.Name = "lblTotalPrice";
+            lblTotalPrice.Size = new Size(144, 25);
+            lblTotalPrice.TabIndex = 2;
+            lblTotalPrice.Text = "Загальна ціна:";
+            // 
+            // txtBuildSummary
+            // 
+            txtBuildSummary.BorderStyle = BorderStyle.FixedSingle;
+            txtBuildSummary.Font = new Font("Segoe UI", 10F);
+            txtBuildSummary.Location = new Point(15, 55);
+            txtBuildSummary.Name = "txtBuildSummary";
+            txtBuildSummary.ReadOnly = true;
+            txtBuildSummary.Size = new Size(410, 450);
+            txtBuildSummary.TabIndex = 1;
+            txtBuildSummary.Text = "";
+            // 
+            // lblSummary
+            // 
+            lblSummary.AutoSize = true;
+            lblSummary.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblSummary.Location = new Point(15, 15);
+            lblSummary.Name = "lblSummary";
+            lblSummary.Size = new Size(193, 25);
+            lblSummary.TabIndex = 0;
+            lblSummary.Text = "Ваша конфігурація:";
             // 
             // PCBuilderForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.ClientSize = new System.Drawing.Size(1400, 780);
-            this.Controls.Add(this.panelSummary);
-            this.Controls.Add(this.panelComponents);
-            this.Controls.Add(this.panelHeader);
-            this.Name = "PCBuilderForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Збірка комп'ютера";
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelComponents.ResumeLayout(false);
-            this.panelComponents.PerformLayout();
-            this.panelSummary.ResumeLayout(false);
-            this.panelSummary.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(236, 240, 241);
+            ClientSize = new Size(1400, 780);
+            Controls.Add(panelSummary);
+            Controls.Add(panelComponents);
+            Controls.Add(panelHeader);
+            MinimumSize = new Size(1000, 819);
+            Name = "PCBuilderForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Збірка комп'ютера";
+            Resize += PCBuilderForm_Resize;
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelComponents.ResumeLayout(false);
+            panelComponents.PerformLayout();
+            panelSummary.ResumeLayout(false);
+            panelSummary.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

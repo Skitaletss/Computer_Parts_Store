@@ -133,13 +133,18 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.FromArgb(236, 240, 241);
             ClientSize = new Size(1400, 780);
             Controls.Add(dataGridViewPrebuilt);
             Controls.Add(panelHeader);
+            MaximumSize = new Size(1416, 1028);
+            MinimumSize = new Size(1416, 408);
             Name = "PrebuiltComputersForm";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Готові конфігурації ПК";
+            Resize += PrebuiltComputersForm_Resize;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPrebuilt).EndInit();

@@ -122,9 +122,29 @@ namespace Computer_Parts_Store.Forms
             }
         }
 
+
+
         private void btnClose_Click(object? sender, EventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void ShoppingCartForm_Resize(object sender, EventArgs e)
+        {
+            FormResize();
+        }
+
+        private void FormResize()
+        {
+            panelSummary.Location = new Point(
+                ClientSize.Width - panelSummary.Width - 20,
+                panelSummary.Location.Y);
+            dataGridViewCart.Size = new Size(
+                ClientSize.Width - panelSummary.Width - 60,
+                dataGridViewCart.Height);
+            btnClose.Location = new Point(
+                ClientSize.Width - btnClose.Width - 20,
+                btnClose.Location.Y);
         }
     }
 }
