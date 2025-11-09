@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductDetailsForm));
             panelHeader = new Panel();
             btnClose = new Button();
             lblTitle = new Label();
@@ -433,6 +434,10 @@
             ClientSize = new Size(800, 800);
             Controls.Add(panelProductInfo);
             Controls.Add(panelHeader);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ProductDetailsForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Деталі товару";

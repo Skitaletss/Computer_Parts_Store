@@ -72,17 +72,11 @@ namespace Computer_Parts_Store.Forms
                     {
                         var item = new ListViewItem(part.Name);
                         item.SubItems.Add(part.Category != null ? $"{part.Category.Name}" : "N/A");
-                        item.SubItems.Add(part.Article != null ? $"{part.Article}" : "N/A");
                         item.SubItems.Add(part.Price != null ? $"{part.Price}" : "N/A");
                         item.SubItems.Add(part.Description != null ? $"{part.Description}" : "N/A");
-                        item.SubItems.Add(part.StockQuantity != null ? $"{part.StockQuantity}" : "N/A");
                         item.SubItems.Add(part.Manufacturer != null ? $"{part.Manufacturer}" : "N/A");
                         item.SubItems.Add(part.Model != null ? $"{part.Model}" : "N/A");
-                        item.SubItems.Add(part.Specification != null ? $"{part.Specification}" : "N/A");
                         item.SubItems.Add(part.Color != null ? $"{part.Color}" : "N/A");
-                        item.SubItems.Add(part.Dimensions != null ? $"{part.Dimensions}" : "N/A");
-                        item.SubItems.Add(part.Weight != null ? $"{part.Weight}" : "N/A");
-                        item.SubItems.Add(part.WarrantyMonths != null ? $"{part.WarrantyMonths}" : "N/A");
                         item.ImageIndex = 0;
                         listView1.Items.Add(item);
                     }
@@ -213,22 +207,18 @@ namespace Computer_Parts_Store.Forms
         private void CatalogForm_Load(object sender, EventArgs e)
         {
             listView1.Columns.Clear();
-            listView1.Columns.Add("Назва", 200);
-            listView1.Columns.Add("Категорія", 150);
-            listView1.Columns.Add("Артикул", 200);
-            listView1.Columns.Add("Ціна", 200);
-            listView1.Columns.Add("Опис", 200);
-            listView1.Columns.Add("Кількість", 10);
-            listView1.Columns.Add("Виробник", 200);
-            listView1.Columns.Add("Модель", 200);
-            listView1.Columns.Add("Специфікація", 200);
-            listView1.Columns.Add("Колір", 200);
-            listView1.Columns.Add("Розмір", 200);
-            listView1.Columns.Add("Вага", 200);
-            listView1.Columns.Add("Гарантія", 200);
+            listView1.Columns.Add("Назва", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Категорія", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Ціна", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Опис", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Виробник", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Модель", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Колір", -2, HorizontalAlignment.Left);
 
             LoadProducts(null);
             SetView(View.Details);
+
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
         private void button1_Click(object sender, EventArgs e) => SetView(View.LargeIcon);
@@ -301,6 +291,86 @@ namespace Computer_Parts_Store.Forms
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void CatalogForm_Resize(object sender, EventArgs e)
+        {
+            UpdateLayout();
+        }
+
+        private void UpdateLayout()
+        {
+            btnClose.Left = ClientSize.Width - btnClose.Width - 20;
+
+            panelFilters.Width = ClientSize.Width - 80;
+
+            listView1.Width = ClientSize.Width - 80;
+            listView1.Height = ClientSize.Height - listView1.Top - 20;
+
+            button1.Left = ClientSize.Width - button1.Width - 20;
+            button2.Left = ClientSize.Width - button2.Width - 20;
+
+            if (ClientSize.Width < 1340)
+            {
+                ResizeFilters();
+            }
+            else
+            {
+                ResetFilters();
+            }
+        }
+
+        private void ResizeFilters()
+        {
+            panelFilters.Height = 180;
+
+            listView1.Top = panelFilters.Top + panelFilters.Height + 10;
+
+            int secondRowTop = 120;
+            int rightPosition = panelFilters.Width - 20;
+
+            btnCompare.Top = secondRowTop;
+            btnCompare.Left = rightPosition - btnCompare.Width;
+
+            btnClearFilter.Top = secondRowTop;
+            btnClearFilter.Left = btnCompare.Left - btnClearFilter.Width - 10;
+
+            priceMax.Top = secondRowTop + 20;
+            priceMax.Left = btnClearFilter.Left - priceMax.Width - 20;
+
+            priceMin.Top = secondRowTop + 20;
+            priceMin.Left = priceMax.Left - priceMin.Width - 10;
+
+            lblPriceTo.Top = secondRowTop;
+            lblPriceTo.Left = priceMax.Left;
+
+            lblPriceFrom.Top = secondRowTop;
+            lblPriceFrom.Left = priceMin.Left;
+        }
+
+        private void ResetFilters()
+        {
+            panelFilters.Height = 120;
+            panelFilters.Location = new Point(20, 90);
+            listView1.Top = panelFilters.Top + panelFilters.Height + 10;
+
+            priceMin.Top = 72;
+            priceMin.Left = 760;
+
+            priceMax.Top = 72;
+            priceMax.Left = 900;
+
+            btnClearFilter.Top = 55;
+            btnClearFilter.Left = 1040;
+
+            btnCompare.Top = 55;
+            btnCompare.Left = 1150;
+
+            lblPriceFrom.Top = 45;
+            lblPriceFrom.Left = priceMin.Left;
+
+            lblPriceTo.Top = 45;
+            lblPriceTo.Left = priceMax.Left;
         }
     }
 }

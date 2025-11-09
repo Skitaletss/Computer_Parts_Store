@@ -200,7 +200,7 @@
             lblInfo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblInfo.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.World, 204);
             lblInfo.ForeColor = Color.FromArgb(52, 73, 94);
-            lblInfo.Location = new Point(50, 202);
+            lblInfo.Location = new Point(50, 128);
             lblInfo.Name = "lblInfo";
             lblInfo.Size = new Size(850, 398);
             lblInfo.TabIndex = 1;
@@ -227,7 +227,7 @@
             Controls.Add(panelContent);
             Controls.Add(panelMenu);
             Controls.Add(panelHeader);
-            MinimumSize = new Size(600, 600);
+            MinimumSize = new Size(800, 650);
             Name = "MainForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;

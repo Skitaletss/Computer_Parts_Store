@@ -98,10 +98,7 @@ namespace Computer_Parts_Store.Forms
                 scale = 1f + (contentWidth - 600) / 900f * 0.6f;
             }
 
-            lblWelcome.Font = new Font("Segoe UI", 20f * scale, FontStyle.Bold);
-            lblInfo.Font = new Font("Segoe UI", 14f * scale);
             lblWelcome.Margin = new Padding((int)(20 * scale));
-            lblInfo.Margin = new Padding((int)(20 * scale), 0, (int)(20 * scale), (int)(20 * scale));
 
             if (panelContent.ClientSize.Height > 450)
             {

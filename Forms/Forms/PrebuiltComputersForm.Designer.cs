@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrebuiltComputersForm));
             panelHeader = new Panel();
             btnClose = new Button();
             lblTitle = new Label();
@@ -138,10 +139,10 @@
             ClientSize = new Size(1400, 780);
             Controls.Add(dataGridViewPrebuilt);
             Controls.Add(panelHeader);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(1416, 1028);
             MinimumSize = new Size(1416, 408);
             Name = "PrebuiltComputersForm";
-            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Готові конфігурації ПК";
             Resize += PrebuiltComputersForm_Resize;

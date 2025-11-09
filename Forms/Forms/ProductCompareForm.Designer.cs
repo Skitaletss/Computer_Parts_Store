@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductCompareForm));
             panelHeader = new Panel();
             btnClose = new Button();
             lblTitle = new Label();
@@ -86,10 +87,10 @@
             Controls.Add(comparisonGrid);
             Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ProductCompareForm";
-            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Порівняння товарів";
             panelHeader.ResumeLayout(false);

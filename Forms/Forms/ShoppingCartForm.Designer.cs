@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShoppingCartForm));
             panelHeader = new Panel();
             btnClose = new Button();
             lblTitle = new Label();
@@ -239,9 +240,9 @@
             Controls.Add(panelSummary);
             Controls.Add(dataGridViewCart);
             Controls.Add(panelHeader);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(780, 819);
             Name = "ShoppingCartForm";
-            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Кошик покупок";
             Resize += ShoppingCartForm_Resize;

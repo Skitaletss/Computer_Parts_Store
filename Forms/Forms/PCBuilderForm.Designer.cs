@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PCBuilderForm));
             panelHeader = new Panel();
             btnClose = new Button();
             lblTitle = new Label();
@@ -387,6 +388,7 @@
             Controls.Add(panelSummary);
             Controls.Add(panelComponents);
             Controls.Add(panelHeader);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1000, 819);
             Name = "PCBuilderForm";
             StartPosition = FormStartPosition.CenterScreen;

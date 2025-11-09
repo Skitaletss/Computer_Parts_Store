@@ -17,361 +17,356 @@
 
         private void InitializeComponent()
         {
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.panelFilters = new System.Windows.Forms.Panel();
-            this.lblFilters = new System.Windows.Forms.Label();
-            this.lblDateFrom = new System.Windows.Forms.Label();
-            this.dtpDateFrom = new System.Windows.Forms.DateTimePicker();
-            this.lblDateTo = new System.Windows.Forms.Label();
-            this.dtpDateTo = new System.Windows.Forms.DateTimePicker();
-            this.btnApplyFilter = new System.Windows.Forms.Button();
-            this.btnClearFilter = new System.Windows.Forms.Button();
-            this.btnGenerateReport = new System.Windows.Forms.Button();
-            this.dataGridViewSales = new System.Windows.Forms.DataGridView();
-            this.colOrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemsCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colViewDetails = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.panelSummary = new System.Windows.Forms.Panel();
-            this.lblSummaryTitle = new System.Windows.Forms.Label();
-            this.lblTotalOrders = new System.Windows.Forms.Label();
-            this.lblTotalOrdersValue = new System.Windows.Forms.Label();
-            this.lblTotalRevenue = new System.Windows.Forms.Label();
-            this.lblTotalRevenueValue = new System.Windows.Forms.Label();
-            this.lblAverageOrder = new System.Windows.Forms.Label();
-            this.lblAverageOrderValue = new System.Windows.Forms.Label();
-            this.panelHeader.SuspendLayout();
-            this.panelFilters.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSales)).BeginInit();
-            this.panelSummary.SuspendLayout();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesHistoryForm));
+            panelHeader = new Panel();
+            btnClose = new Button();
+            lblTitle = new Label();
+            panelFilters = new Panel();
+            btnGenerateReport = new Button();
+            btnClearFilter = new Button();
+            btnApplyFilter = new Button();
+            dtpDateTo = new DateTimePicker();
+            lblDateTo = new Label();
+            dtpDateFrom = new DateTimePicker();
+            lblDateFrom = new Label();
+            lblFilters = new Label();
+            dataGridViewSales = new DataGridView();
+            colOrderNumber = new DataGridViewTextBoxColumn();
+            colDate = new DataGridViewTextBoxColumn();
+            colCustomer = new DataGridViewTextBoxColumn();
+            colItemsCount = new DataGridViewTextBoxColumn();
+            colTotalAmount = new DataGridViewTextBoxColumn();
+            colViewDetails = new DataGridViewButtonColumn();
+            panelSummary = new Panel();
+            lblAverageOrderValue = new Label();
+            lblAverageOrder = new Label();
+            lblTotalRevenueValue = new Label();
+            lblTotalRevenue = new Label();
+            lblTotalOrdersValue = new Label();
+            lblTotalOrders = new Label();
+            lblSummaryTitle = new Label();
+            panelHeader.SuspendLayout();
+            panelFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewSales).BeginInit();
+            panelSummary.SuspendLayout();
+            SuspendLayout();
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.panelHeader.Controls.Add(this.btnClose);
-            this.panelHeader.Controls.Add(this.lblTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1400, 70);
-            this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 17);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(229, 37);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Історія продажів";
+            panelHeader.BackColor = Color.FromArgb(41, 128, 185);
+            panelHeader.Controls.Add(btnClose);
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1400, 70);
+            panelHeader.TabIndex = 0;
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(1300, 15);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(80, 40);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Закрити";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            btnClose.BackColor = Color.FromArgb(192, 57, 43);
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(1300, 15);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(80, 40);
+            btnClose.TabIndex = 1;
+            btnClose.Text = "Закрити";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 17);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(245, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Історія продажів";
             // 
             // panelFilters
             // 
-            this.panelFilters.BackColor = System.Drawing.Color.White;
-            this.panelFilters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelFilters.Controls.Add(this.btnGenerateReport);
-            this.panelFilters.Controls.Add(this.btnClearFilter);
-            this.panelFilters.Controls.Add(this.btnApplyFilter);
-            this.panelFilters.Controls.Add(this.dtpDateTo);
-            this.panelFilters.Controls.Add(this.lblDateTo);
-            this.panelFilters.Controls.Add(this.dtpDateFrom);
-            this.panelFilters.Controls.Add(this.lblDateFrom);
-            this.panelFilters.Controls.Add(this.lblFilters);
-            this.panelFilters.Location = new System.Drawing.Point(20, 90);
-            this.panelFilters.Name = "panelFilters";
-            this.panelFilters.Size = new System.Drawing.Size(1000, 100);
-            this.panelFilters.TabIndex = 1;
-            // 
-            // lblFilters
-            // 
-            this.lblFilters.AutoSize = true;
-            this.lblFilters.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblFilters.Location = new System.Drawing.Point(15, 10);
-            this.lblFilters.Name = "lblFilters";
-            this.lblFilters.Size = new System.Drawing.Size(139, 21);
-            this.lblFilters.TabIndex = 0;
-            this.lblFilters.Text = "Фільтр по даті:";
-            // 
-            // lblDateFrom
-            // 
-            this.lblDateFrom.AutoSize = true;
-            this.lblDateFrom.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblDateFrom.Location = new System.Drawing.Point(15, 45);
-            this.lblDateFrom.Name = "lblDateFrom";
-            this.lblDateFrom.Size = new System.Drawing.Size(60, 19);
-            this.lblDateFrom.TabIndex = 1;
-            this.lblDateFrom.Text = "Дата з:";
-            // 
-            // dtpDateFrom
-            // 
-            this.dtpDateFrom.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateFrom.Location = new System.Drawing.Point(90, 43);
-            this.dtpDateFrom.Name = "dtpDateFrom";
-            this.dtpDateFrom.Size = new System.Drawing.Size(150, 25);
-            this.dtpDateFrom.TabIndex = 2;
-            // 
-            // lblDateTo
-            // 
-            this.lblDateTo.AutoSize = true;
-            this.lblDateTo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblDateTo.Location = new System.Drawing.Point(260, 45);
-            this.lblDateTo.Name = "lblDateTo";
-            this.lblDateTo.Size = new System.Drawing.Size(67, 19);
-            this.lblDateTo.TabIndex = 3;
-            this.lblDateTo.Text = "Дата по:";
-            // 
-            // dtpDateTo
-            // 
-            this.dtpDateTo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateTo.Location = new System.Drawing.Point(340, 43);
-            this.dtpDateTo.Name = "dtpDateTo";
-            this.dtpDateTo.Size = new System.Drawing.Size(150, 25);
-            this.dtpDateTo.TabIndex = 4;
-            // 
-            // btnApplyFilter
-            // 
-            this.btnApplyFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.btnApplyFilter.FlatAppearance.BorderSize = 0;
-            this.btnApplyFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnApplyFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnApplyFilter.ForeColor = System.Drawing.Color.White;
-            this.btnApplyFilter.Location = new System.Drawing.Point(510, 35);
-            this.btnApplyFilter.Name = "btnApplyFilter";
-            this.btnApplyFilter.Size = new System.Drawing.Size(120, 40);
-            this.btnApplyFilter.TabIndex = 5;
-            this.btnApplyFilter.Text = "Застосувати";
-            this.btnApplyFilter.UseVisualStyleBackColor = false;
-            this.btnApplyFilter.Click += new System.EventHandler(this.btnApplyFilter_Click);
-            // 
-            // btnClearFilter
-            // 
-            this.btnClearFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnClearFilter.FlatAppearance.BorderSize = 0;
-            this.btnClearFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnClearFilter.ForeColor = System.Drawing.Color.White;
-            this.btnClearFilter.Location = new System.Drawing.Point(640, 35);
-            this.btnClearFilter.Name = "btnClearFilter";
-            this.btnClearFilter.Size = new System.Drawing.Size(120, 40);
-            this.btnClearFilter.TabIndex = 6;
-            this.btnClearFilter.Text = "Очистити";
-            this.btnClearFilter.UseVisualStyleBackColor = false;
-            this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
+            panelFilters.BackColor = Color.White;
+            panelFilters.BorderStyle = BorderStyle.FixedSingle;
+            panelFilters.Controls.Add(btnGenerateReport);
+            panelFilters.Controls.Add(btnClearFilter);
+            panelFilters.Controls.Add(btnApplyFilter);
+            panelFilters.Controls.Add(dtpDateTo);
+            panelFilters.Controls.Add(lblDateTo);
+            panelFilters.Controls.Add(dtpDateFrom);
+            panelFilters.Controls.Add(lblDateFrom);
+            panelFilters.Controls.Add(lblFilters);
+            panelFilters.Location = new Point(20, 90);
+            panelFilters.Name = "panelFilters";
+            panelFilters.Size = new Size(1000, 100);
+            panelFilters.TabIndex = 1;
             // 
             // btnGenerateReport
             // 
-            this.btnGenerateReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnGenerateReport.FlatAppearance.BorderSize = 0;
-            this.btnGenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerateReport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGenerateReport.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateReport.Location = new System.Drawing.Point(820, 35);
-            this.btnGenerateReport.Name = "btnGenerateReport";
-            this.btnGenerateReport.Size = new System.Drawing.Size(160, 40);
-            this.btnGenerateReport.TabIndex = 7;
-            this.btnGenerateReport.Text = "📊 Сформувати звіт";
-            this.btnGenerateReport.UseVisualStyleBackColor = false;
-            this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
+            btnGenerateReport.BackColor = Color.FromArgb(41, 128, 185);
+            btnGenerateReport.FlatAppearance.BorderSize = 0;
+            btnGenerateReport.FlatStyle = FlatStyle.Flat;
+            btnGenerateReport.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnGenerateReport.ForeColor = Color.White;
+            btnGenerateReport.Location = new Point(820, 35);
+            btnGenerateReport.Name = "btnGenerateReport";
+            btnGenerateReport.Size = new Size(160, 40);
+            btnGenerateReport.TabIndex = 7;
+            btnGenerateReport.Text = "📊 Сформувати звіт";
+            btnGenerateReport.UseVisualStyleBackColor = false;
+            btnGenerateReport.Click += btnGenerateReport_Click;
+            // 
+            // btnClearFilter
+            // 
+            btnClearFilter.BackColor = Color.FromArgb(149, 165, 166);
+            btnClearFilter.FlatAppearance.BorderSize = 0;
+            btnClearFilter.FlatStyle = FlatStyle.Flat;
+            btnClearFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnClearFilter.ForeColor = Color.White;
+            btnClearFilter.Location = new Point(640, 35);
+            btnClearFilter.Name = "btnClearFilter";
+            btnClearFilter.Size = new Size(120, 40);
+            btnClearFilter.TabIndex = 6;
+            btnClearFilter.Text = "Очистити";
+            btnClearFilter.UseVisualStyleBackColor = false;
+            btnClearFilter.Click += btnClearFilter_Click;
+            // 
+            // btnApplyFilter
+            // 
+            btnApplyFilter.BackColor = Color.FromArgb(39, 174, 96);
+            btnApplyFilter.FlatAppearance.BorderSize = 0;
+            btnApplyFilter.FlatStyle = FlatStyle.Flat;
+            btnApplyFilter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnApplyFilter.ForeColor = Color.White;
+            btnApplyFilter.Location = new Point(510, 35);
+            btnApplyFilter.Name = "btnApplyFilter";
+            btnApplyFilter.Size = new Size(120, 40);
+            btnApplyFilter.TabIndex = 5;
+            btnApplyFilter.Text = "Застосувати";
+            btnApplyFilter.UseVisualStyleBackColor = false;
+            btnApplyFilter.Click += btnApplyFilter_Click;
+            // 
+            // dtpDateTo
+            // 
+            dtpDateTo.Font = new Font("Segoe UI", 10F);
+            dtpDateTo.Format = DateTimePickerFormat.Short;
+            dtpDateTo.Location = new Point(340, 43);
+            dtpDateTo.Name = "dtpDateTo";
+            dtpDateTo.Size = new Size(150, 25);
+            dtpDateTo.TabIndex = 4;
+            // 
+            // lblDateTo
+            // 
+            lblDateTo.AutoSize = true;
+            lblDateTo.Font = new Font("Segoe UI", 10F);
+            lblDateTo.Location = new Point(260, 45);
+            lblDateTo.Name = "lblDateTo";
+            lblDateTo.Size = new Size(62, 19);
+            lblDateTo.TabIndex = 3;
+            lblDateTo.Text = "Дата по:";
+            // 
+            // dtpDateFrom
+            // 
+            dtpDateFrom.Font = new Font("Segoe UI", 10F);
+            dtpDateFrom.Format = DateTimePickerFormat.Short;
+            dtpDateFrom.Location = new Point(90, 43);
+            dtpDateFrom.Name = "dtpDateFrom";
+            dtpDateFrom.Size = new Size(150, 25);
+            dtpDateFrom.TabIndex = 2;
+            // 
+            // lblDateFrom
+            // 
+            lblDateFrom.AutoSize = true;
+            lblDateFrom.Font = new Font("Segoe UI", 10F);
+            lblDateFrom.Location = new Point(15, 45);
+            lblDateFrom.Name = "lblDateFrom";
+            lblDateFrom.Size = new Size(52, 19);
+            lblDateFrom.TabIndex = 1;
+            lblDateFrom.Text = "Дата з:";
+            // 
+            // lblFilters
+            // 
+            lblFilters.AutoSize = true;
+            lblFilters.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblFilters.Location = new Point(15, 10);
+            lblFilters.Name = "lblFilters";
+            lblFilters.Size = new Size(126, 21);
+            lblFilters.TabIndex = 0;
+            lblFilters.Text = "Фільтр по даті:";
             // 
             // dataGridViewSales
             // 
-            this.dataGridViewSales.AllowUserToAddRows = false;
-            this.dataGridViewSales.AllowUserToDeleteRows = false;
-            this.dataGridViewSales.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewSales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewSales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colOrderNumber,
-            this.colDate,
-            this.colCustomer,
-            this.colItemsCount,
-            this.colTotalAmount,
-            this.colViewDetails});
-            this.dataGridViewSales.Location = new System.Drawing.Point(20, 210);
-            this.dataGridViewSales.Name = "dataGridViewSales";
-            this.dataGridViewSales.ReadOnly = true;
-            this.dataGridViewSales.RowTemplate.Height = 35;
-            this.dataGridViewSales.Size = new System.Drawing.Size(1000, 540);
-            this.dataGridViewSales.TabIndex = 2;
-            this.dataGridViewSales.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSales_CellContentClick);
+            dataGridViewSales.AllowUserToAddRows = false;
+            dataGridViewSales.AllowUserToDeleteRows = false;
+            dataGridViewSales.BackgroundColor = Color.White;
+            dataGridViewSales.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewSales.Columns.AddRange(new DataGridViewColumn[] { colOrderNumber, colDate, colCustomer, colItemsCount, colTotalAmount, colViewDetails });
+            dataGridViewSales.Location = new Point(20, 210);
+            dataGridViewSales.Name = "dataGridViewSales";
+            dataGridViewSales.ReadOnly = true;
+            dataGridViewSales.RowTemplate.Height = 35;
+            dataGridViewSales.Size = new Size(1000, 540);
+            dataGridViewSales.TabIndex = 2;
+            dataGridViewSales.CellContentClick += dataGridViewSales_CellContentClick;
             // 
             // colOrderNumber
             // 
-            this.colOrderNumber.HeaderText = "№ Замовлення";
-            this.colOrderNumber.Name = "colOrderNumber";
-            this.colOrderNumber.ReadOnly = true;
-            this.colOrderNumber.Width = 120;
+            colOrderNumber.HeaderText = "№ Замовлення";
+            colOrderNumber.Name = "colOrderNumber";
+            colOrderNumber.ReadOnly = true;
+            colOrderNumber.Width = 120;
             // 
             // colDate
             // 
-            this.colDate.HeaderText = "Дата";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            this.colDate.Width = 150;
+            colDate.HeaderText = "Дата";
+            colDate.Name = "colDate";
+            colDate.ReadOnly = true;
+            colDate.Width = 150;
             // 
             // colCustomer
             // 
-            this.colCustomer.HeaderText = "Покупець";
-            this.colCustomer.Name = "colCustomer";
-            this.colCustomer.ReadOnly = true;
-            this.colCustomer.Width = 300;
+            colCustomer.HeaderText = "Покупець";
+            colCustomer.Name = "colCustomer";
+            colCustomer.ReadOnly = true;
+            colCustomer.Width = 300;
             // 
             // colItemsCount
             // 
-            this.colItemsCount.HeaderText = "К-сть товарів";
-            this.colItemsCount.Name = "colItemsCount";
-            this.colItemsCount.ReadOnly = true;
-            this.colItemsCount.Width = 100;
+            colItemsCount.HeaderText = "К-сть товарів";
+            colItemsCount.Name = "colItemsCount";
+            colItemsCount.ReadOnly = true;
             // 
             // colTotalAmount
             // 
-            this.colTotalAmount.HeaderText = "Сума (грн)";
-            this.colTotalAmount.Name = "colTotalAmount";
-            this.colTotalAmount.ReadOnly = true;
-            this.colTotalAmount.Width = 150;
+            colTotalAmount.HeaderText = "Сума (грн)";
+            colTotalAmount.Name = "colTotalAmount";
+            colTotalAmount.ReadOnly = true;
+            colTotalAmount.Width = 150;
             // 
             // colViewDetails
             // 
-            this.colViewDetails.HeaderText = "Деталі";
-            this.colViewDetails.Name = "colViewDetails";
-            this.colViewDetails.ReadOnly = true;
-            this.colViewDetails.Text = "Переглянути";
-            this.colViewDetails.UseColumnTextForButtonValue = true;
-            this.colViewDetails.Width = 120;
+            colViewDetails.HeaderText = "Деталі";
+            colViewDetails.Name = "colViewDetails";
+            colViewDetails.ReadOnly = true;
+            colViewDetails.Text = "Переглянути";
+            colViewDetails.UseColumnTextForButtonValue = true;
+            colViewDetails.Width = 120;
             // 
             // panelSummary
             // 
-            this.panelSummary.BackColor = System.Drawing.Color.White;
-            this.panelSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelSummary.Controls.Add(this.lblAverageOrderValue);
-            this.panelSummary.Controls.Add(this.lblAverageOrder);
-            this.panelSummary.Controls.Add(this.lblTotalRevenueValue);
-            this.panelSummary.Controls.Add(this.lblTotalRevenue);
-            this.panelSummary.Controls.Add(this.lblTotalOrdersValue);
-            this.panelSummary.Controls.Add(this.lblTotalOrders);
-            this.panelSummary.Controls.Add(this.lblSummaryTitle);
-            this.panelSummary.Location = new System.Drawing.Point(1040, 90);
-            this.panelSummary.Name = "panelSummary";
-            this.panelSummary.Size = new System.Drawing.Size(340, 660);
-            this.panelSummary.TabIndex = 3;
-            // 
-            // lblSummaryTitle
-            // 
-            this.lblSummaryTitle.AutoSize = true;
-            this.lblSummaryTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblSummaryTitle.Location = new System.Drawing.Point(15, 20);
-            this.lblSummaryTitle.Name = "lblSummaryTitle";
-            this.lblSummaryTitle.Size = new System.Drawing.Size(102, 25);
-            this.lblSummaryTitle.TabIndex = 0;
-            this.lblSummaryTitle.Text = "Статистика";
-            // 
-            // lblTotalOrders
-            // 
-            this.lblTotalOrders.AutoSize = true;
-            this.lblTotalOrders.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblTotalOrders.Location = new System.Drawing.Point(15, 80);
-            this.lblTotalOrders.Name = "lblTotalOrders";
-            this.lblTotalOrders.Size = new System.Drawing.Size(156, 20);
-            this.lblTotalOrders.TabIndex = 1;
-            this.lblTotalOrders.Text = "Всього замовлень:";
-            // 
-            // lblTotalOrdersValue
-            // 
-            this.lblTotalOrdersValue.AutoSize = true;
-            this.lblTotalOrdersValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTotalOrdersValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.lblTotalOrdersValue.Location = new System.Drawing.Point(15, 105);
-            this.lblTotalOrdersValue.Name = "lblTotalOrdersValue";
-            this.lblTotalOrdersValue.Size = new System.Drawing.Size(28, 32);
-            this.lblTotalOrdersValue.TabIndex = 2;
-            this.lblTotalOrdersValue.Text = "0";
-            // 
-            // lblTotalRevenue
-            // 
-            this.lblTotalRevenue.AutoSize = true;
-            this.lblTotalRevenue.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblTotalRevenue.Location = new System.Drawing.Point(15, 170);
-            this.lblTotalRevenue.Name = "lblTotalRevenue";
-            this.lblTotalRevenue.Size = new System.Drawing.Size(168, 20);
-            this.lblTotalRevenue.TabIndex = 3;
-            this.lblTotalRevenue.Text = "Загальний дохід (грн):";
-            // 
-            // lblTotalRevenueValue
-            // 
-            this.lblTotalRevenueValue.AutoSize = true;
-            this.lblTotalRevenueValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTotalRevenueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.lblTotalRevenueValue.Location = new System.Drawing.Point(15, 195);
-            this.lblTotalRevenueValue.Name = "lblTotalRevenueValue";
-            this.lblTotalRevenueValue.Size = new System.Drawing.Size(75, 32);
-            this.lblTotalRevenueValue.TabIndex = 4;
-            this.lblTotalRevenueValue.Text = "0.00";
-            // 
-            // lblAverageOrder
-            // 
-            this.lblAverageOrder.AutoSize = true;
-            this.lblAverageOrder.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblAverageOrder.Location = new System.Drawing.Point(15, 260);
-            this.lblAverageOrder.Name = "lblAverageOrder";
-            this.lblAverageOrder.Size = new System.Drawing.Size(225, 20);
-            this.lblAverageOrder.TabIndex = 5;
-            this.lblAverageOrder.Text = "Середній чек замовлення (грн):";
+            panelSummary.BackColor = Color.White;
+            panelSummary.BorderStyle = BorderStyle.FixedSingle;
+            panelSummary.Controls.Add(lblAverageOrderValue);
+            panelSummary.Controls.Add(lblAverageOrder);
+            panelSummary.Controls.Add(lblTotalRevenueValue);
+            panelSummary.Controls.Add(lblTotalRevenue);
+            panelSummary.Controls.Add(lblTotalOrdersValue);
+            panelSummary.Controls.Add(lblTotalOrders);
+            panelSummary.Controls.Add(lblSummaryTitle);
+            panelSummary.Location = new Point(1040, 90);
+            panelSummary.Name = "panelSummary";
+            panelSummary.Size = new Size(340, 660);
+            panelSummary.TabIndex = 3;
             // 
             // lblAverageOrderValue
             // 
-            this.lblAverageOrderValue.AutoSize = true;
-            this.lblAverageOrderValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblAverageOrderValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(34)))));
-            this.lblAverageOrderValue.Location = new System.Drawing.Point(15, 285);
-            this.lblAverageOrderValue.Name = "lblAverageOrderValue";
-            this.lblAverageOrderValue.Size = new System.Drawing.Size(75, 32);
-            this.lblAverageOrderValue.TabIndex = 6;
-            this.lblAverageOrderValue.Text = "0.00";
+            lblAverageOrderValue.AutoSize = true;
+            lblAverageOrderValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblAverageOrderValue.ForeColor = Color.FromArgb(230, 126, 34);
+            lblAverageOrderValue.Location = new Point(15, 285);
+            lblAverageOrderValue.Name = "lblAverageOrderValue";
+            lblAverageOrderValue.Size = new Size(63, 32);
+            lblAverageOrderValue.TabIndex = 6;
+            lblAverageOrderValue.Text = "0.00";
+            // 
+            // lblAverageOrder
+            // 
+            lblAverageOrder.AutoSize = true;
+            lblAverageOrder.Font = new Font("Segoe UI", 11F);
+            lblAverageOrder.Location = new Point(15, 260);
+            lblAverageOrder.Name = "lblAverageOrder";
+            lblAverageOrder.Size = new Size(230, 20);
+            lblAverageOrder.TabIndex = 5;
+            lblAverageOrder.Text = "Середній чек замовлення (грн):";
+            // 
+            // lblTotalRevenueValue
+            // 
+            lblTotalRevenueValue.AutoSize = true;
+            lblTotalRevenueValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTotalRevenueValue.ForeColor = Color.FromArgb(39, 174, 96);
+            lblTotalRevenueValue.Location = new Point(15, 195);
+            lblTotalRevenueValue.Name = "lblTotalRevenueValue";
+            lblTotalRevenueValue.Size = new Size(63, 32);
+            lblTotalRevenueValue.TabIndex = 4;
+            lblTotalRevenueValue.Text = "0.00";
+            // 
+            // lblTotalRevenue
+            // 
+            lblTotalRevenue.AutoSize = true;
+            lblTotalRevenue.Font = new Font("Segoe UI", 11F);
+            lblTotalRevenue.Location = new Point(15, 170);
+            lblTotalRevenue.Name = "lblTotalRevenue";
+            lblTotalRevenue.Size = new Size(163, 20);
+            lblTotalRevenue.TabIndex = 3;
+            lblTotalRevenue.Text = "Загальний дохід (грн):";
+            // 
+            // lblTotalOrdersValue
+            // 
+            lblTotalOrdersValue.AutoSize = true;
+            lblTotalOrdersValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTotalOrdersValue.ForeColor = Color.FromArgb(41, 128, 185);
+            lblTotalOrdersValue.Location = new Point(15, 105);
+            lblTotalOrdersValue.Name = "lblTotalOrdersValue";
+            lblTotalOrdersValue.Size = new Size(28, 32);
+            lblTotalOrdersValue.TabIndex = 2;
+            lblTotalOrdersValue.Text = "0";
+            // 
+            // lblTotalOrders
+            // 
+            lblTotalOrders.AutoSize = true;
+            lblTotalOrders.Font = new Font("Segoe UI", 11F);
+            lblTotalOrders.Location = new Point(15, 80);
+            lblTotalOrders.Name = "lblTotalOrders";
+            lblTotalOrders.Size = new Size(140, 20);
+            lblTotalOrders.TabIndex = 1;
+            lblTotalOrders.Text = "Всього замовлень:";
+            // 
+            // lblSummaryTitle
+            // 
+            lblSummaryTitle.AutoSize = true;
+            lblSummaryTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblSummaryTitle.Location = new Point(15, 20);
+            lblSummaryTitle.Name = "lblSummaryTitle";
+            lblSummaryTitle.Size = new Size(115, 25);
+            lblSummaryTitle.TabIndex = 0;
+            lblSummaryTitle.Text = "Статистика";
             // 
             // SalesHistoryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.ClientSize = new System.Drawing.Size(1400, 780);
-            this.Controls.Add(this.panelSummary);
-            this.Controls.Add(this.dataGridViewSales);
-            this.Controls.Add(this.panelFilters);
-            this.Controls.Add(this.panelHeader);
-            this.Name = "SalesHistoryForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Історія продажів";
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelFilters.ResumeLayout(false);
-            this.panelFilters.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSales)).EndInit();
-            this.panelSummary.ResumeLayout(false);
-            this.panelSummary.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(236, 240, 241);
+            ClientSize = new Size(1400, 780);
+            Controls.Add(panelSummary);
+            Controls.Add(dataGridViewSales);
+            Controls.Add(panelFilters);
+            Controls.Add(panelHeader);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "SalesHistoryForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Історія продажів";
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelFilters.ResumeLayout(false);
+            panelFilters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewSales).EndInit();
+            panelSummary.ResumeLayout(false);
+            panelSummary.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
