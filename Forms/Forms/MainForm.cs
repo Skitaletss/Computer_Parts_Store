@@ -13,6 +13,7 @@ namespace Computer_Parts_Store.Forms
 
         private void btnCatalog_Click(object? sender, EventArgs e)
         {
+            // Создание каталога
             CatalogForm catalogForm = new CatalogForm();
             catalogForm.ShowDialog();
         }
