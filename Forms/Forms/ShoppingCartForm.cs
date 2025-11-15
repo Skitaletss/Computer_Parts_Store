@@ -1,22 +1,60 @@
-﻿using System;
+﻿using Computer_Parts_Store.Models;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
 
 namespace Computer_Parts_Store.Forms
 {
     public partial class ShoppingCartForm : Form
     {
+        public List<CartItem> CartItems { get; private set; }
+
         public ShoppingCartForm()
         {
             InitializeComponent();
+            CartItems = new List<CartItem>();
             LoadCartItems();
             UpdateSummary();
         }
 
         private void LoadCartItems()
         {
-            // Додаємо дані як числа, а не як рядки
-            dataGridViewCart.Rows.Add("Intel Core i5-12400F", "ART001", 8500.00m, 1, 8500.00m);
-            dataGridViewCart.Rows.Add("NVIDIA RTX 3060", "ART002", 12000.00m, 1, 12000.00m);
+            // Додаємо тестові дані - замініть на реальні дані з вашої логіки
+            CartItems.Add(new CartItem
+            {
+                ProductId = 1,
+                Name = "Intel Core i5-12400F",
+                Article = "ART001",
+                Price = 8500.00m,
+                Quantity = 1
+            });
+            CartItems.Add(new CartItem
+            {
+                ProductId = 2,
+                Name = "NVIDIA RTX 3060",
+                Article = "ART002",
+                Price = 12000.00m,
+                Quantity = 1
+            });
+
+            RefreshCartGrid();
+        }
+
+        private void RefreshCartGrid()
+        {
+            dataGridViewCart.Rows.Clear();
+            foreach (var item in CartItems)
+            {
+                dataGridViewCart.Rows.Add(
+                    item.Name,
+                    item.Article,
+                    item.Price,
+                    item.Quantity,
+                    item.Total
+                );
+            }
         }
 
         private void UpdateSummary()
@@ -24,35 +62,21 @@ namespace Computer_Parts_Store.Forms
             int itemsCount = 0;
             decimal totalPrice = 0;
 
-            foreach (DataGridViewRow row in dataGridViewCart.Rows)
+            foreach (var item in CartItems)
             {
-                if (!row.IsNewRow && row.Cells["colQuantity"].Value != null && row.Cells["colTotal"].Value != null)
-                {
-                    try
-                    {
-                        // Безпечна конвертація кількості
-                        itemsCount += Convert.ToInt32(row.Cells["colQuantity"].Value);
-
-                        // Безпечна конвертація суми
-                        totalPrice += Convert.ToDecimal(row.Cells["colTotal"].Value);
-                    }
-                    catch
-                    {
-                        // Ігноруємо помилки конвертації
-                        continue;
-                    }
-                }
+                itemsCount += item.Quantity;
+                totalPrice += item.Total;
             }
 
             lblItemsCountValue.Text = itemsCount.ToString();
             lblTotalPriceValue.Text = totalPrice.ToString("F2");
         }
 
-        private void dataGridViewCart_CellContentClick(object? sender, DataGridViewCellEventArgs e)
+        private void dataGridViewCart_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            if (e.ColumnIndex == dataGridViewCart.Columns["colRemove"]?.Index)
+            if (e.ColumnIndex == dataGridViewCart.Columns["colRemove"].Index)
             {
                 DialogResult result = MessageBox.Show(
                     "Ви впевнені, що хочете видалити цей товар?",
@@ -62,18 +86,19 @@ namespace Computer_Parts_Store.Forms
 
                 if (result == DialogResult.Yes)
                 {
-                    dataGridViewCart.Rows.RemoveAt(e.RowIndex);
+                    CartItems.RemoveAt(e.RowIndex);
+                    RefreshCartGrid();
                     UpdateSummary();
                     MessageBox.Show("Товар видалено з кошика", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        private void dataGridViewCart_CellValueChanged(object? sender, DataGridViewCellEventArgs e)
+        private void dataGridViewCart_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            if (e.ColumnIndex == dataGridViewCart.Columns["colQuantity"]?.Index)
+            if (e.ColumnIndex == dataGridViewCart.Columns["colQuantity"].Index)
             {
                 try
                 {
@@ -83,6 +108,13 @@ namespace Computer_Parts_Store.Forms
                     {
                         decimal price = Convert.ToDecimal(row.Cells["colPrice"].Value);
                         int quantity = Convert.ToInt32(row.Cells["colQuantity"].Value);
+
+                        // Оновлюємо дані в списку CartItems
+                        if (e.RowIndex < CartItems.Count)
+                        {
+                            CartItems[e.RowIndex].Quantity = quantity;
+                        }
+
                         row.Cells["colTotal"].Value = price * quantity;
                         UpdateSummary();
                     }
@@ -94,19 +126,27 @@ namespace Computer_Parts_Store.Forms
             }
         }
 
-        private void btnCheckout_Click(object? sender, EventArgs e)
+        private void btnCheckout_Click(object sender, EventArgs e)
         {
-            if (dataGridViewCart.Rows.Count == 0 || (dataGridViewCart.Rows.Count == 1 && dataGridViewCart.Rows[0].IsNewRow))
+            if (CartItems.Count == 0)
             {
                 MessageBox.Show("Кошик порожній!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            CheckoutForm checkoutForm = new CheckoutForm();
+            CheckoutForm checkoutForm = new CheckoutForm(CartItems);
             checkoutForm.ShowDialog();
+
+            // Очистити кошик після успішного замовлення
+            if (checkoutForm.OrderCreated)
+            {
+                CartItems.Clear();
+                RefreshCartGrid();
+                UpdateSummary();
+            }
         }
 
-        private void btnClearCart_Click(object? sender, EventArgs e)
+        private void btnClearCart_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
                 "Ви впевнені, що хочете очистити кошик?",
@@ -116,15 +156,14 @@ namespace Computer_Parts_Store.Forms
 
             if (result == DialogResult.Yes)
             {
-                dataGridViewCart.Rows.Clear();
+                CartItems.Clear();
+                RefreshCartGrid();
                 UpdateSummary();
                 MessageBox.Show("Кошик очищено", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-
-
-        private void btnClose_Click(object? sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
         }

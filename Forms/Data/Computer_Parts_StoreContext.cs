@@ -17,15 +17,20 @@ namespace Computer_Parts_Store.Data
         public DbSet<OrderItem> OrderItems { get; set; }
 
         public Computer_Parts_StoreContext() { }
-        public Computer_Parts_StoreContext(DbContextOptions<Computer_Parts_StoreContext> options) : base(options) { }
+
+        public Computer_Parts_StoreContext(DbContextOptions<Computer_Parts_StoreContext> options)
+            : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+                // Використовуємо шлях до виконуваного файлу, а не поточну директорію
+                var basePath = AppDomain.CurrentDomain.BaseDirectory;
+
                 var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: false)
+                    .SetBasePath(basePath)
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .Build();
 
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -37,7 +42,7 @@ namespace Computer_Parts_Store.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Налаштування зв'язку багато-до-багатьох для PrebuiltComputer та Product
+            // Зв’язок багато-до-багатьох між PrebuiltComputer і Product
             modelBuilder.Entity<PrebuiltComputer>()
                 .HasMany(pc => pc.Products)
                 .WithMany(p => p.PrebuiltComputers)
