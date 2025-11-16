@@ -23,19 +23,19 @@ namespace Computer_Parts_Store.Data
         {
             try
             {
-                Console.WriteLine("Ініціалізація бази даних...");
+                Console.WriteLine("Ініціалізація бази даних SQLite...");
 
                 var connectionString = GetConnectionString();
                 Console.WriteLine($"Підключення: {connectionString}");
 
                 var options = new DbContextOptionsBuilder<Computer_Parts_StoreContext>()
-                    .UseSqlServer(connectionString)
+                    .UseSqlite(connectionString)
                     .Options;
 
                 using var context = new Computer_Parts_StoreContext(options);
 
-                Console.WriteLine("Застосування міграцій...");
-                context.Database.Migrate();
+                Console.WriteLine("Створення бази даних...");
+                context.Database.EnsureCreated();
 
                 Console.WriteLine("Перевірка наявності даних...");
 
@@ -50,13 +50,15 @@ namespace Computer_Parts_Store.Data
                     Console.WriteLine("Дані вже існують в базі");
                     Console.WriteLine($"Знайдено {context.Products.Count()} товарів");
                 }
+
+                DisplayCatalogInfo(context);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Console.WriteLine($"Помилка: {ex.Message}");
-                if (ex.InnerException != null)
+                Console.WriteLine($"Помилка: {exception.Message}");
+                if (exception.InnerException != null)
                 {
-                    Console.WriteLine($"Внутрішня помилка: {ex.InnerException.Message}");
+                    Console.WriteLine($"Внутрішня помилка: {exception.InnerException.Message}");
                 }
             }
         }
@@ -91,46 +93,128 @@ namespace Computer_Parts_Store.Data
                     Console.WriteLine("Категорії додано успішно");
                 }
 
-                var cpuCat = context.Categories.First(c => c.Name.Contains("Процесори"));
-                var gpuCat = context.Categories.First(c => c.Name.Contains("Відеокарти"));
-                var mbCat = context.Categories.First(c => c.Name.Contains("Материнські"));
-                var ramCat = context.Categories.First(c => c.Name.Contains("Оперативна"));
-                var ssdCat = context.Categories.First(c => c.Name.Contains("SSD"));
-                var hddCat = context.Categories.First(c => c.Name.Contains("HDD"));
-                var psuCat = context.Categories.First(c => c.Name.Contains("Блоки живлення"));
-                var caseCat = context.Categories.First(c => c.Name.Contains("Корпуси"));
-                var airCoolCat = context.Categories.First(c => c.Name.Contains("Повітряне"));
-                var liquidCoolCat = context.Categories.First(c => c.Name.Contains("Рідинне"));
-                var fansCat = context.Categories.First(c => c.Name.Contains("кулери"));
-                var monitorCat = context.Categories.First(c => c.Name.Contains("Монітори"));
-                var keyboardCat = context.Categories.First(c => c.Name.Contains("Клавіатури"));
-                var mouseCat = context.Categories.First(c => c.Name.Contains("миші"));
+                if (!context.Products.Any())
+                {
+                    var processorCategory = context.Categories.First(category => category.Name.Contains("Процесори"));
+                    var videoCardCategory = context.Categories.First(category => category.Name.Contains("Відеокарти"));
+                    var motherboardCategory = context.Categories.First(category => category.Name.Contains("Материнські"));
+                    var memoryCategory = context.Categories.First(category => category.Name.Contains("Оперативна"));
+                    var solidStateDriveCategory = context.Categories.First(category => category.Name.Contains("SSD"));
+                    var hardDriveCategory = context.Categories.First(category => category.Name.Contains("HDD"));
+                    var powerSupplyCategory = context.Categories.First(category => category.Name.Contains("Блоки живлення"));
+                    var caseCategory = context.Categories.First(category => category.Name.Contains("Корпуси"));
+                    var airCoolingCategory = context.Categories.First(category => category.Name.Contains("Повітряне"));
+                    var liquidCoolingCategory = context.Categories.First(category => category.Name.Contains("Рідинне"));
+                    var fansCategory = context.Categories.First(category => category.Name.Contains("Кулери"));
+                    var monitorCategory = context.Categories.First(category => category.Name.Contains("Монітори"));
+                    var keyboardCategory = context.Categories.First(category => category.Name.Contains("Клавіатури"));
+                    var mouseCategory = context.Categories.First(category => category.Name.Contains("Миші"));
 
-                AddCpuProducts(context, cpuCat.Id);
-                AddGpuProducts(context, gpuCat.Id);
-                AddMotherboardProducts(context, mbCat.Id);
-                AddRamProducts(context, ramCat.Id);
-                AddSsdProducts(context, ssdCat.Id);
-                AddHddProducts(context, hddCat.Id);
-                AddPsuProducts(context, psuCat.Id);
-                AddCaseProducts(context, caseCat.Id);
-                AddAirCoolingProducts(context, airCoolCat.Id);
-                AddLiquidCoolingProducts(context, liquidCoolCat.Id);
-                AddFanProducts(context, fansCat.Id);
-                AddMonitorProducts(context, monitorCat.Id);
-                AddKeyboardProducts(context, keyboardCat.Id);
-                AddMouseProducts(context, mouseCat.Id);
+                    AddProcessorProducts(context, processorCategory.Id);
+                    AddVideoCardProducts(context, videoCardCategory.Id);
+                    AddMotherboardProducts(context, motherboardCategory.Id);
+                    AddMemoryProducts(context, memoryCategory.Id);
+                    AddSolidStateDriveProducts(context, solidStateDriveCategory.Id);
+                    AddHardDriveProducts(context, hardDriveCategory.Id);
+                    AddPowerSupplyProducts(context, powerSupplyCategory.Id);
+                    AddCaseProducts(context, caseCategory.Id);
+                    AddAirCoolingProducts(context, airCoolingCategory.Id);
+                    AddLiquidCoolingProducts(context, liquidCoolingCategory.Id);
+                    AddFanProducts(context, fansCategory.Id);
+                    AddMonitorProducts(context, monitorCategory.Id);
+                    AddKeyboardProducts(context, keyboardCategory.Id);
+                    AddMouseProducts(context, mouseCategory.Id);
 
-                Console.WriteLine("Всі товари успішно додано!");
+                    Console.WriteLine("Всі товари успішно додано!");
+                }
+
+                if (!context.PrebuiltComputers.Any())
+                {
+                    Console.WriteLine("Створення готових збірок ПК...");
+                    AddPrebuiltComputers(context);
+                    Console.WriteLine("Готові збірки ПК успішно додано!");
+                }
+
+                Console.WriteLine("Замовлення, клієнти та кошик залишено порожніми для заповнення користувачем.");
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Console.WriteLine($"Помилка при додаванні даних: {ex.Message}");
+                Console.WriteLine($"Помилка при додаванні даних: {exception.Message}");
                 throw;
             }
         }
 
-        private static void AddCpuProducts(Computer_Parts_StoreContext context, int categoryId)
+        private static void AddPrebuiltComputers(Computer_Parts_StoreContext context)
+        {
+            var ryzenProcessor = context.Products.First(product => product.Article == "RYZEN5-5600X");
+            var rtxVideoCard = context.Products.First(product => product.Article == "RTX4060-8G");
+            var asusMotherboard = context.Products.First(product => product.Article == "B550-TUF");
+            var kingstonMemory = context.Products.First(product => product.Article == "KF416-16");
+            var samsungSolidStateDrive = context.Products.First(product => product.Article == "970EVO-1TB");
+            var bequietPowerSupply = context.Products.First(product => product.Article == "PP11-600W");
+            var nzxtCase = context.Products.First(product => product.Article == "NZXT-H510");
+            var deepcoolCooler = context.Products.First(product => product.Article == "AK620");
+
+            var intelProcessor = context.Products.First(product => product.Article == "I5-12400F");
+            var amdVideoCard = context.Products.First(product => product.Article == "RX7600-8G");
+            var gigabyteMotherboard = context.Products.First(product => product.Article == "B760-GIGA");
+            var corsairMemory = context.Products.First(product => product.Article == "CMG32-D5");
+            var westernDigitalSolidStateDrive = context.Products.First(product => product.Article == "SN850X-2T");
+            var corsairPowerSupply = context.Products.First(product => product.Article == "CP-9020180");
+            var fractalCase = context.Products.First(product => product.Article == "FD-C-MES2-01");
+
+            var prebuiltComputers = new[]
+            {
+                new PrebuiltComputer
+                {
+                    Name = "Gaming PC AMD Ryzen 5 + RTX 4060",
+                    Description = "Ігрова збірка для геймінгу 1080p/1440p",
+                    Products = new[] { ryzenProcessor, rtxVideoCard, asusMotherboard, kingstonMemory, samsungSolidStateDrive, bequietPowerSupply, nzxtCase, deepcoolCooler }
+                },
+                new PrebuiltComputer
+                {
+                    Name = "Gaming PC Intel Core i5 + RX 7600",
+                    Description = "Балансна ігрова збірка для есіммерів",
+                    Products = new[] { intelProcessor, amdVideoCard, gigabyteMotherboard, corsairMemory, westernDigitalSolidStateDrive, corsairPowerSupply, fractalCase }
+                }
+            };
+
+            foreach (var computer in prebuiltComputers)
+            {
+                if (!context.PrebuiltComputers.Any(prebuiltComputer => prebuiltComputer.Name == computer.Name))
+                {
+                    context.PrebuiltComputers.Add(computer);
+                }
+            }
+            context.SaveChanges();
+        }
+
+        private static void DisplayCatalogInfo(Computer_Parts_StoreContext context)
+        {
+            Console.WriteLine("\n=== КАТАЛОГ ТОВАРІВ ===");
+            Console.WriteLine($"Категорій: {context.Categories.Count()}");
+            Console.WriteLine($"Товарів: {context.Products.Count()}");
+            Console.WriteLine($"Готових збірок ПК: {context.PrebuiltComputers.Count()}");
+
+            Console.WriteLine("\n=== КАТЕГОРІЇ ТА КІЛЬКІСТЬ ТОВАРІВ ===");
+            foreach (var category in context.Categories.OrderBy(category => category.Name))
+            {
+                var productCount = context.Products.Count(product => product.CategoryId == category.Id);
+                Console.WriteLine($"- {category.Name}: {productCount} шт");
+            }
+
+            Console.WriteLine("\n=== ГОТОВІ ЗБІРКИ ПК ===");
+            foreach (var prebuiltComputer in context.PrebuiltComputers)
+            {
+                Console.WriteLine($"- {prebuiltComputer.Name}: {prebuiltComputer.TotalPrice} грн");
+            }
+
+            Console.WriteLine($"\n=== СТАТИСТИКА КОРИСТУВАЧА ===");
+            Console.WriteLine($"Клієнтів: {context.Customers.Count()} (порожньо - додасть користувач)");
+            Console.WriteLine($"Замовлень: {context.Orders.Count()} (порожньо - додасть користувач)");
+        }
+
+        private static void AddProcessorProducts(Computer_Parts_StoreContext context, int categoryId)
         {
             Console.WriteLine("Додаємо товари для: Процесори");
 
@@ -142,7 +226,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -150,7 +234,7 @@ namespace Computer_Parts_Store.Data
             context.SaveChanges();
         }
 
-        private static void AddGpuProducts(Computer_Parts_StoreContext context, int categoryId)
+        private static void AddVideoCardProducts(Computer_Parts_StoreContext context, int categoryId)
         {
             Console.WriteLine("Додаємо товари для: Відеокарти");
 
@@ -162,7 +246,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -182,7 +266,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -190,7 +274,7 @@ namespace Computer_Parts_Store.Data
             context.SaveChanges();
         }
 
-        private static void AddRamProducts(Computer_Parts_StoreContext context, int categoryId)
+        private static void AddMemoryProducts(Computer_Parts_StoreContext context, int categoryId)
         {
             Console.WriteLine("Додаємо товари для: Оперативна пам'ять");
 
@@ -202,7 +286,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -210,7 +294,7 @@ namespace Computer_Parts_Store.Data
             context.SaveChanges();
         }
 
-        private static void AddSsdProducts(Computer_Parts_StoreContext context, int categoryId)
+        private static void AddSolidStateDriveProducts(Computer_Parts_StoreContext context, int categoryId)
         {
             Console.WriteLine("Додаємо товари для: SSD накопичувачі");
 
@@ -222,7 +306,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -230,7 +314,7 @@ namespace Computer_Parts_Store.Data
             context.SaveChanges();
         }
 
-        private static void AddHddProducts(Computer_Parts_StoreContext context, int categoryId)
+        private static void AddHardDriveProducts(Computer_Parts_StoreContext context, int categoryId)
         {
             Console.WriteLine("Додаємо товари для: HDD накопичувачі");
 
@@ -242,7 +326,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -250,7 +334,7 @@ namespace Computer_Parts_Store.Data
             context.SaveChanges();
         }
 
-        private static void AddPsuProducts(Computer_Parts_StoreContext context, int categoryId)
+        private static void AddPowerSupplyProducts(Computer_Parts_StoreContext context, int categoryId)
         {
             Console.WriteLine("Додаємо товари для: Блоки живлення");
 
@@ -262,7 +346,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -282,7 +366,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -302,7 +386,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -322,7 +406,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -342,7 +426,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -362,7 +446,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -382,7 +466,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -402,7 +486,7 @@ namespace Computer_Parts_Store.Data
 
             foreach (var product in products)
             {
-                if (!context.Products.Any(p => p.Article == product.Article))
+                if (!context.Products.Any(existingProduct => existingProduct.Article == product.Article))
                 {
                     context.Products.Add(product);
                 }
@@ -416,25 +500,19 @@ namespace Computer_Parts_Store.Data
             {
                 var connectionString = GetConnectionString();
                 var options = new DbContextOptionsBuilder<Computer_Parts_StoreContext>()
-                    .UseSqlServer(connectionString)
+                    .UseSqlite(connectionString)
                     .Options;
 
                 using var context = new Computer_Parts_StoreContext(options);
 
-                Console.WriteLine("\n=== ІНФОРМАЦІЯ ПРО БАЗУ ===");
-                Console.WriteLine($"Категорій: {context.Categories.Count()}");
-                Console.WriteLine($"Товарів: {context.Products.Count()}");
+                Console.WriteLine("\n=== ІНФОРМАЦІЯ ПРО БАЗУ SQLite ===");
+                Console.WriteLine($"Файл бази: {Path.GetFullPath("ComputerPartsStore.db")}");
 
-                Console.WriteLine("\n=== КАТЕГОРІЇ ТА КІЛЬКІСТЬ ТОВАРІВ ===");
-                foreach (var category in context.Categories.OrderBy(c => c.Name))
-                {
-                    var productCount = context.Products.Count(p => p.CategoryId == category.Id);
-                    Console.WriteLine($"- {category.Name}: {productCount} шт");
-                }
+                DisplayCatalogInfo(context);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Console.WriteLine($"Помилка при отриманні інформації: {ex.Message}");
+                Console.WriteLine($"Помилка при отриманні інформації: {exception.Message}");
             }
         }
     }

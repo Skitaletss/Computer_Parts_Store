@@ -29,7 +29,9 @@ namespace Computer_Parts_Store.Data
                     .Build();
 
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString);
+
+                // «м≥на з SQL Server на SQLite
+                optionsBuilder.UseSqlite(connectionString);
             }
         }
 
