@@ -1,178 +1,296 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
-using Computer_Parts_Store.Models;
 using Computer_Parts_Store.Data;
-using Microsoft.EntityFrameworkCore;
+using Computer_Parts_Store.Models;
 
 namespace Computer_Parts_Store.Forms
 {
     public partial class PCBuilderForm : Form
     {
-        private decimal totalPrice = 0;
-        private readonly PrebuiltComputer PC;
+        private Computer_Parts_StoreContext db = new();
+        private Dictionary<string, Product> selectedProducts = new();
+        private decimal totalPrice = 0m;
+
+        FlowLayoutPanel categoryPanel;
+        FlowLayoutPanel productListPanel;
+        private Button backButton;
+
+        private readonly string[] layerOrder = {
+            "case", "motherboard", "ram", "psu", "ssd", "hdd", "cpu", "cooler", "gpu",
+            "keyboard", "mouse", "monitor"
+        };
 
         public PCBuilderForm()
         {
             InitializeComponent();
-            LoadComponents();
+            InitializeCustomControls();
+            SetupCategoryButtons();
+        }
+        public PCBuilderForm(PrebuiltComputer pc) : this()
+        {
+            LoadComponents(pc);
         }
 
-        public PCBuilderForm(PrebuiltComputer pc)
+        private void InitializeCustomControls()
         {
-            PC = pc;
-            totalPrice = pc.TotalPrice;
-            InitializeComponent();
-            LoadComponents(PC);
-        }
-
-        private void LoadComponents()
-        {
-            // Завантаження комплектуючих з бази даних
-            cmbCPU.Items.Add("-- Оберіть процесор --");
-            cmbGPU.Items.Add("-- Оберіть відеокарту --");
-            cmbMotherboard.Items.Add("-- Оберіть материнську плату --");
-            cmbRAM.Items.Add("-- Оберіть оперативну пам'ять --");
-            cmbStorage.Items.Add("-- Оберіть накопичувач --");
-            cmbPSU.Items.Add("-- Оберіть блок живлення --");
-            cmbCase.Items.Add("-- Оберіть корпус --");
-            cmbCooling.Items.Add("-- Оберіть систему охолодження --");
-
-            using (var db = new Computer_Parts_StoreContext())
+            categoryPanel = new FlowLayoutPanel
             {
-                var products = db.Products.Include(_ => _.Category).ToList();
-                foreach (var product in products)
+                Dock = DockStyle.Fill,
+                AutoScroll = false,
+                WrapContents = true,
+                FlowDirection = FlowDirection.LeftToRight,
+                BackColor = Color.Transparent 
+            };
+
+            panelComponents.Controls.Add(categoryPanel);
+            categoryPanel.BringToFront();
+
+            productListPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                Visible = false,
+                BackColor = Color.Transparent
+            };
+
+            panelComponents.Controls.Add(productListPanel);
+
+            backButton = new Button
+            {
+                Text = "← Назад",
+                Size = new Size(120, 40),
+                Location = new Point((panelComponents.Width - 120) / 2, panelComponents.Height - 50),
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Top,
+                BackColor = Color.FromArgb(52, 73, 94),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Visible = false
+            };
+            backButton.Click += (s, e) => ShowCategories();
+
+            panelComponents.Controls.Add(backButton);
+            backButton.BringToFront();
+        }
+
+        private void SetupCategoryButtons()
+        {
+            categoryPanel.Controls.Clear();
+
+            var categories = db.Categories.ToList();
+
+            foreach (var cat in categories)
+            {
+                string layerName = MapCategoryToLayer(cat.Name);
+                if (!layerOrder.Contains(layerName)) continue;
+
+                Panel panel = new Panel
                 {
-                    switch (product.Category.Name)
+                    Size = new Size(140, 190),
+                    BackColor = Color.FromArgb(52, 73, 94),
+                    Cursor = Cursors.Hand,
+                    Margin = new Padding(10)
+                };
+
+                PictureBox icon = new PictureBox
+                {
+                    Size = new Size(100, 100),
+                    Location = new Point((panel.Width - 100) / 2, 15),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Image = LoadImageSafe($"Forms/Forms/{layerName}.png")
+                };
+
+                Label label = new Label
+                {
+                    Text = cat.Name,
+                    ForeColor = Color.White,
+                    Size = new Size(panel.Width, 50),
+                    Location = new Point(0, 125),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                    AutoEllipsis = true
+                };
+
+                panel.Controls.Add(icon);
+                panel.Controls.Add(label);
+                categoryPanel.Controls.Add(panel);
+
+                EventHandler clickEvent = (s, e) => ShowProductList(cat, layerName);
+                panel.Click += clickEvent;
+                icon.Click += clickEvent;
+                label.Click += clickEvent;
+            }
+        }
+        private void ShowProductList(Category category, string layerName)
+        {
+            categoryPanel.Visible = false;
+            productListPanel.Visible = true;
+            backButton.Visible = true;
+            productListPanel.Controls.Clear();
+
+            var products = db.Products.Where(p => p.CategoryId == category.Id).ToList();
+
+            foreach (var product in products)
+            {
+                Panel item = new Panel
+                {
+                    Size = new Size(180, 220),
+                    BackColor = Color.FromArgb(52, 73, 94),
+                    Margin = new Padding(10)
+                };
+
+                PictureBox pic = new PictureBox
+                {
+                    Size = new Size(160, 120),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Location = new Point(10, 10),
+                    Image = GetProductImage(product.Article) 
+                };
+
+                Label name = new Label
+                {
+                    Text = product.Name,
+                    ForeColor = Color.White,
+                    Location = new Point(10, 140),
+                    Size = new Size(160, 20),
+                    AutoEllipsis = true
+                };
+
+                Label price = new Label
+                {
+                    Text = $"{product.Price} грн",
+                    ForeColor = Color.LightGreen,
+                    Location = new Point(10, 160),
+                    Size = new Size(160, 20)
+                };
+
+                Button select = new Button
+                {
+                    Text = "Вибрати",
+                    Location = new Point(40, 185),
+                    Size = new Size(100, 25),
+                    BackColor = Color.White
+                };
+
+                select.Click += (s, e) =>
+                {
+                    selectedProducts[layerName] = product;
+                    UpdateTotalPrice();
+                    ShowCategories();
+                };
+
+                item.Controls.Add(pic);
+                item.Controls.Add(name);
+                item.Controls.Add(price);
+                item.Controls.Add(select);
+                productListPanel.Controls.Add(item);
+            }
+        }
+
+        private void ShowCategories()
+        {
+            productListPanel.Visible = false;
+            backButton.Visible = false;
+            categoryPanel.Visible = true;
+        }
+
+        private void UpdateTotalPrice()
+        {
+            txtBuildSummary.Clear();
+            foreach (var product in selectedProducts.Values)
+            {
+                txtBuildSummary.Clear();
+
+                txtBuildSummary.AppendText("=== КОНФІГУРАЦІЯ ПК ===\n\n");
+                foreach (var layer in layerOrder)
+                {
+                    if (selectedProducts.ContainsKey(layer))
                     {
-                        case "Процесори (CPU)":
-                            cmbCPU.Items.Add($"{product.Name}");
-                            break;
-                        case "Відеокарти (GPU)":
-                            cmbGPU.Items.Add($"{product.Name}");
-                            break;
-                        case "Материнські плати":
-                            cmbMotherboard.Items.Add($"{product.Name}");
-                            break;
-                        case "Оперативна пам'ять (RAM)":
-                            cmbRAM.Items.Add($"{product.Name}");
-                            break;
-                        case "HDD накопичувачі":
-                        case "SSD накопичувачі":
-                            cmbStorage.Items.Add($"{product.Name}");
-                            break;
-                        case "Блоки живлення (PSU)":
-                            cmbPSU.Items.Add($"{product.Name}");
-                            break;
-                        case "Корпуси":
-                            cmbCase.Items.Add($"{product.Name}");
-                            break;
-                        case "Повітряне охолодження":
-                        case "Рідинне охолодження":
-                            cmbCooling.Items.Add($"{product.Name}");
-                            break;
-                        default:
-                            break;
+                        var prod = selectedProducts[layer];
+                        txtBuildSummary.AppendText($"{layer.ToUpper()}: {prod.Name} - {prod.Price} грн\n");
                     }
                 }
             }
-            cmbCPU.SelectedIndex = 0;
-            cmbGPU.SelectedIndex = 0;
-            cmbMotherboard.SelectedIndex = 0;
-            cmbRAM.SelectedIndex = 0;
-            cmbStorage.SelectedIndex = 0;
-            cmbPSU.SelectedIndex = 0;
-            cmbCase.SelectedIndex = 0;
-            cmbCooling.SelectedIndex = 0;
+            totalPrice = selectedProducts.Values.Sum(p => p.Price);
+            if (lblTotalPriceValue != null)
+                lblTotalPriceValue.Text = totalPrice.ToString("N2");
+        }
+
+        private Image LoadImageSafe(string path)
+        {
+            if (File.Exists(path))
+            {
+                try
+                {
+                    using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    {
+                        return Image.FromStream(fs);
+                    }
+                }
+                catch { return new Bitmap(100, 100); } 
+            }
+            return new Bitmap(100, 100); 
+        }
+
+        private Image GetProductImage(string article)
+        {
+            string safeArticle = article?.Trim();
+            string[] extensions = { ".jpg", ".jpeg", ".png" };
+
+            foreach (var ext in extensions)
+            {
+                string path = Path.Combine(Application.StartupPath, "Forms", "Resources", "Products", $"{safeArticle}{ext}");
+                if (File.Exists(path)) return LoadImageSafe(path);
+            }
+            return new Bitmap(160, 120);
+        }
+
+        private string MapCategoryToLayer(string category)
+        {
+            category = category.Trim().ToLower();
+            if (category.Contains("корпус")) return "case";
+            if (category.Contains("материн")) return "motherboard";
+            if (category.Contains("оперативна")) return "ram";
+            if (category.Contains("живлення") || category.Contains("psu")) return "psu";
+            if (category.Contains("ssd")) return "ssd";
+            if (category.Contains("hdd")) return "hdd";
+            if (category.Contains("cpu") || category.Contains("процесор")) return "cpu";
+            if (category.Contains("кулер") || category.Contains("охолодження")) return "cooler";
+            if (category.Contains("gpu") || category.Contains("відеокарта")) return "gpu";
+            if (category.Contains("клавіатура")) return "keyboard";
+            if (category.Contains("миша")) return "mouse";
+            if (category.Contains("монітор")) return "monitor";
+            return "empty";
         }
         private void LoadComponents(PrebuiltComputer pc)
         {
-            LoadComponents();
-
             using (var db = new Computer_Parts_StoreContext())
             {
-                var products = db.PrebuiltComputers.Include(_ => _.Products)
-                    .ThenInclude(p => p.Category)
-                    .FirstOrDefault(_ => _.Id == pc.Id)?.Products;
+                var products = db.PrebuiltComputers
+                    .Where(c => c.Id == pc.Id)
+                    .SelectMany(c => c.Products)
+                    .ToList();
+
                 foreach (var product in products)
                 {
-                    switch (product.Category.Name)
+                    string layerName = MapCategoryToLayer(product.Category.Name);
+                    if (layerName != "empty" && !selectedProducts.ContainsKey(layerName))
                     {
-                        case "Процесори (CPU)":
-                            cmbCPU.SelectedItem = $"{product.Name}";
-                            break;
-                        case "Відеокарти (GPU)":
-                            cmbGPU.SelectedItem = $"{product.Name}";
-                            break;
-                        case "Материнські плати":
-                            cmbMotherboard.SelectedItem = $"{product.Name}";
-                            break;
-                        case "Оперативна пам'ять (RAM)":
-                            cmbRAM.SelectedItem = $"{product.Name}";
-                            break;
-                        case "HDD накопичувачі":
-                        case "SSD накопичувачі":
-                            cmbStorage.SelectedItem = $"{product.Name}";
-                            break;
-                        case "Блоки живлення (PSU)":
-                            cmbPSU.SelectedItem = $"{product.Name}";
-                            break;
-                        case "Корпуси":
-                            cmbCase.SelectedItem = $"{product.Name}";
-                            break;
-                        case "Повітряне охолодження":
-                        case "Рідинне охолодження":
-                            cmbCooling.SelectedItem = $"{product.Name}";
-                            break;
-                        default:
-                            break;
+                        selectedProducts[layerName] = product;
                     }
                 }
+
+                UpdateTotalPrice();
             }
-        }
-
-        private void Component_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateBuildSummary();
-        }
-
-        private void UpdateBuildSummary()
-        {
-            txtBuildSummary.Clear();
-
-            txtBuildSummary.AppendText("=== КОНФІГУРАЦІЯ ПК ===\n\n");
-
-
-
-            if (cmbCPU.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Процесор: {cmbCPU.Text}\n");
-
-            if (cmbGPU.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Відеокарта: {cmbGPU.Text}\n");
-
-            if (cmbMotherboard.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Материнська плата: {cmbMotherboard.Text}\n");
-
-            if (cmbRAM.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Оперативна пам'ять: {cmbRAM.Text}\n");
-
-            if (cmbStorage.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Накопичувач: {cmbStorage.Text}\n");
-
-            if (cmbPSU.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Блок живлення: {cmbPSU.Text}\n");
-
-            if (cmbCase.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Корпус: {cmbCase.Text}\n");
-
-            if (cmbCooling.SelectedIndex > 0)
-                txtBuildSummary.AppendText($"Система охолодження: {cmbCooling.Text}\n");
-
-            lblTotalPriceValue.Text = $"{totalPrice:F2} грн";
         }
 
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
-            if (cmbCPU.SelectedIndex == 0)
+            if (selectedProducts.Count == 0)
             {
                 MessageBox.Show("Виберіть принаймні процесор для збірки!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -183,16 +301,18 @@ namespace Computer_Parts_Store.Forms
 
         private void btnClearBuild_Click(object sender, EventArgs e)
         {
-            cmbCPU.SelectedIndex = 0;
-            cmbGPU.SelectedIndex = 0;
-            cmbMotherboard.SelectedIndex = 0;
-            cmbRAM.SelectedIndex = 0;
-            cmbStorage.SelectedIndex = 0;
-            cmbPSU.SelectedIndex = 0;
-            cmbCase.SelectedIndex = 0;
-            cmbCooling.SelectedIndex = 0;
+            DialogResult result = MessageBox.Show(
+                "Ви впевнені, що хочете очистити збірку?",
+                "Підтвердження",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-            UpdateBuildSummary();
+            if (result == DialogResult.Yes)
+            {
+                selectedProducts.Clear();
+                UpdateTotalPrice();
+                MessageBox.Show("Збірку очищено", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
