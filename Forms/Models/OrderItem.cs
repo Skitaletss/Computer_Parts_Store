@@ -15,9 +15,12 @@ namespace Computer_Parts_Store.Models
         public virtual Order Order { get; set; }
 
         // Посилання на товар
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
+        public int? PrebuiltComputerId { get; set; }
+        [ForeignKey("PrebuiltComputerId")]
+        public virtual PrebuiltComputer PrebuiltComputer { get; set; }
 
         [Required]
         [Range(1, int.MaxValue)]
@@ -31,6 +34,6 @@ namespace Computer_Parts_Store.Models
         [NotMapped]
         public decimal TotalPrice => Quantity * UnitPrice;
 
-        public override string ToString() => $"{Product?.Name} x{Quantity} - {TotalPrice} грн";
+        public override string ToString() => $"{Product?.Name ?? PrebuiltComputer.Name} x{Quantity} - {TotalPrice} грн";
     }
 }

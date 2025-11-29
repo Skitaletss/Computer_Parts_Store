@@ -1,3 +1,4 @@
+using Forms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -14,32 +15,56 @@ namespace Computer_Parts_Store.Forms
 
         private void btnCatalog_Click(object? sender, EventArgs e)
         {
+            Hide();
             CatalogForm catalogForm = new CatalogForm();
             catalogForm.ShowDialog();
+            Show();
         }
 
         private void btnPCBuilder_Click(object? sender, EventArgs e)
         {
+            Hide();
             PCBuilderForm pcBuilderForm = new PCBuilderForm();
             pcBuilderForm.ShowDialog();
+            Show();
         }
 
         private void btnPrebuilt_Click(object? sender, EventArgs e)
         {
+            Hide();
             PrebuiltComputersForm prebuiltForm = new PrebuiltComputersForm();
             prebuiltForm.ShowDialog();
+            Show();
         }
 
         private void btnCart_Click(object? sender, EventArgs e)
         {
+            Hide();
             ShoppingCartForm cartForm = new ShoppingCartForm();
             cartForm.ShowDialog();
+            Show();
         }
 
         private void btnSalesHistory_Click(object? sender, EventArgs e)
         {
+            Hide();
             SalesHistoryForm salesForm = new SalesHistoryForm();
             salesForm.ShowDialog();
+            Show();
+        }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            Hide();
+            LoginForm loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            Show();
+        }
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            Hide();
+            RegisterForm registerForm = new RegisterForm();
+            registerForm.ShowDialog();
+            Show();
         }
 
         private void btnExit_Click(object? sender, EventArgs e)
@@ -74,40 +99,5 @@ namespace Computer_Parts_Store.Forms
             }
         }
 
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            FormResize();
-        }
-
-        private void FormResize()
-        {
-            int contentWidth = panelContent.ClientSize.Width;
-
-            float scale = 1.0f;
-
-            if (contentWidth < 600)
-            {
-                scale = 0.7f;
-            }
-            else if (contentWidth > 1500)
-            {
-                scale = 1.3f;
-            }
-            else
-            {
-                scale = 1f + (contentWidth - 600) / 900f * 0.6f;
-            }
-
-            lblWelcome.Margin = new Padding((int)(20 * scale));
-
-            if (panelContent.ClientSize.Height > 450)
-            {
-                btnExit.Location = new Point(
-                    btnExit.Location.X,
-                    panelMenu.ClientSize.Height - btnExit.Height - 20
-                );
-            }
-
-        }
     }
 }

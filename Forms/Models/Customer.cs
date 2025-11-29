@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Computer_Parts_Store.Models
@@ -18,6 +19,10 @@ namespace Computer_Parts_Store.Models
 
         [EmailAddress]
         public string Email { get; set; }
+
+        [PasswordPropertyText]
+        [Required]
+        public string Password { get; set; }
 
         // Історія замовлень клієнта
         public virtual ICollection<Order> Orders { get; set; }
