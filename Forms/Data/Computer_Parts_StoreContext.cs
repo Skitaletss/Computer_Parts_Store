@@ -39,7 +39,7 @@ namespace Computer_Parts_Store.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Налаштування зв'язку багато-до-багатьох для PrebuiltComputer та Product
+            // Налаштування зв'язку багато-до-багатьох для Computer та Product
             modelBuilder.Entity<PrebuiltComputer>()
                 .HasMany(pc => pc.Products)
                 .WithMany(p => p.PrebuiltComputers)

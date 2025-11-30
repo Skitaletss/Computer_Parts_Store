@@ -22,12 +22,6 @@
             btnClose = new Button();
             lblTitle = new Label();
             dataGridViewCart = new DataGridView();
-            colName = new DataGridViewTextBoxColumn();
-            colArticle = new DataGridViewTextBoxColumn();
-            colPrice = new DataGridViewTextBoxColumn();
-            colQuantity = new DataGridViewTextBoxColumn();
-            colTotal = new DataGridViewTextBoxColumn();
-            colRemove = new DataGridViewButtonColumn();
             panelSummary = new Panel();
             btnClearCart = new Button();
             btnCheckout = new Button();
@@ -36,6 +30,12 @@
             lblItemsCountValue = new Label();
             lblItemsCount = new Label();
             lblSummaryTitle = new Label();
+            colName = new DataGridViewTextBoxColumn();
+            colPrice = new DataGridViewTextBoxColumn();
+            colQuantity = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
+            colDetails = new DataGridViewButtonColumn();
+            colRemove = new DataGridViewButtonColumn();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewCart).BeginInit();
             panelSummary.SuspendLayout();
@@ -84,55 +84,15 @@
             dataGridViewCart.AllowUserToDeleteRows = false;
             dataGridViewCart.BackgroundColor = Color.White;
             dataGridViewCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCart.Columns.AddRange(new DataGridViewColumn[] { colName, colArticle, colPrice, colQuantity, colTotal, colRemove });
+            dataGridViewCart.Columns.AddRange(new DataGridViewColumn[] { colName, colPrice, colQuantity, colTotal, colDetails, colRemove });
             dataGridViewCart.Location = new Point(20, 90);
             dataGridViewCart.MinimumSize = new Size(500, 660);
             dataGridViewCart.Name = "dataGridViewCart";
             dataGridViewCart.RowTemplate.Height = 40;
-            dataGridViewCart.Size = new Size(1000, 660);
+            dataGridViewCart.Size = new Size(1002, 660);
             dataGridViewCart.TabIndex = 1;
             dataGridViewCart.CellContentClick += dataGridViewCart_CellContentClick;
             dataGridViewCart.CellValueChanged += dataGridViewCart_CellValueChanged;
-            // 
-            // colName
-            // 
-            colName.HeaderText = "Назва товару";
-            colName.Name = "colName";
-            colName.ReadOnly = true;
-            colName.Width = 350;
-            // 
-            // colArticle
-            // 
-            colArticle.HeaderText = "Артикул";
-            colArticle.Name = "colArticle";
-            colArticle.ReadOnly = true;
-            // 
-            // colPrice
-            // 
-            colPrice.HeaderText = "Ціна (грн)";
-            colPrice.Name = "colPrice";
-            colPrice.ReadOnly = true;
-            colPrice.Width = 120;
-            // 
-            // colQuantity
-            // 
-            colQuantity.HeaderText = "Кількість";
-            colQuantity.Name = "colQuantity";
-            // 
-            // colTotal
-            // 
-            colTotal.HeaderText = "Сума (грн)";
-            colTotal.Name = "colTotal";
-            colTotal.ReadOnly = true;
-            colTotal.Width = 120;
-            // 
-            // colRemove
-            // 
-            colRemove.HeaderText = "Видалити";
-            colRemove.Name = "colRemove";
-            colRemove.Text = "Видалити";
-            colRemove.UseColumnTextForButtonValue = true;
-            colRemove.Width = 110;
             // 
             // panelSummary
             // 
@@ -231,6 +191,48 @@
             lblSummaryTitle.TabIndex = 0;
             lblSummaryTitle.Text = "Підсумок замовлення";
             // 
+            // colName
+            // 
+            colName.HeaderText = "Назва товару";
+            colName.Name = "colName";
+            colName.ReadOnly = true;
+            colName.Width = 350;
+            // 
+            // colPrice
+            // 
+            colPrice.HeaderText = "Ціна (грн)";
+            colPrice.Name = "colPrice";
+            colPrice.ReadOnly = true;
+            colPrice.Width = 120;
+            // 
+            // colQuantity
+            // 
+            colQuantity.HeaderText = "Кількість";
+            colQuantity.Name = "colQuantity";
+            // 
+            // colTotal
+            // 
+            colTotal.HeaderText = "Сума (грн)";
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
+            colTotal.Width = 120;
+            // 
+            // colDetails
+            // 
+            colDetails.HeaderText = "Деталі";
+            colDetails.Name = "colDetails";
+            colDetails.Text = "Деталі";
+            colDetails.UseColumnTextForButtonValue = true;
+            colDetails.Width = 110;
+            // 
+            // colRemove
+            // 
+            colRemove.HeaderText = "Видалити";
+            colRemove.Name = "colRemove";
+            colRemove.Text = "Видалити";
+            colRemove.UseColumnTextForButtonValue = true;
+            colRemove.Width = 110;
+            // 
             // ShoppingCartForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -260,12 +262,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.DataGridView dataGridViewCart;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colArticle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTotal;
-        private System.Windows.Forms.DataGridViewButtonColumn colRemove;
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label lblSummaryTitle;
         private System.Windows.Forms.Label lblItemsCount;
@@ -274,5 +270,11 @@
         private System.Windows.Forms.Label lblTotalPriceValue;
         private System.Windows.Forms.Button btnCheckout;
         private System.Windows.Forms.Button btnClearCart;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colPrice;
+        private DataGridViewTextBoxColumn colQuantity;
+        private DataGridViewTextBoxColumn colTotal;
+        private DataGridViewButtonColumn colDetails;
+        private DataGridViewButtonColumn colRemove;
     }
 }

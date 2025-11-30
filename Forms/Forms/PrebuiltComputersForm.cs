@@ -77,7 +77,49 @@ namespace Computer_Parts_Store.Forms
             }
             else if (e.ColumnIndex == dataGridViewPrebuilt.Columns["colAddToCart"]?.Index)
             {
-                MessageBox.Show("Готовий ПК додано до кошика!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (var db = new Computer_Parts_StoreContext())
+                {
+                    if (!LoginSession.IsLoggedIn)
+                    {
+                        MessageBox.Show("Будь ласка, увійдіть до свого облікового запису, щоб додати ПК до кошика", "Необхідний вхід", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    int userID = LoginSession.CurrentCustomer.Id;
+                    var order = db.Orders
+                        .Include(o => o.OrderItems)
+                        .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+                    if (order == null)
+                    {
+                        order = new Order
+                        {
+                            CustomerId = userID,
+                            OrderDate = DateTime.Now,
+                            Status = "Кошик"
+                        };
+                        db.Orders.Add(order);
+                        db.SaveChanges();
+                    }
+                    var prebuiltPCs = db.PrebuiltComputers.ToList();
+                    var selectedPC = prebuiltPCs[e.RowIndex];
+                    var existingItem = order.OrderItems.FirstOrDefault(oi => oi.PrebuiltComputerId == selectedPC.Id);
+                    if (existingItem != null)
+                    {
+                        existingItem.Quantity += 1;
+                    }
+                    else
+                    {
+                        var orderItem = new OrderItem
+                        {
+                            OrderId = order.Id,
+                            PrebuiltComputerId = selectedPC.Id,
+                            Quantity = 1,
+                            UnitPrice = selectedPC.TotalPrice
+                        };
+                        db.OrderItems.Add(orderItem);
+                    }
+                    db.SaveChanges();
+                }
+                MessageBox.Show("Готовий ПК додано до кошика", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

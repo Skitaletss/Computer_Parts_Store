@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Computer_Parts_Store.Data;
 using Computer_Parts_Store.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Computer_Parts_Store.Forms
 {
@@ -40,6 +42,11 @@ namespace Computer_Parts_Store.Forms
         {
             int quantity = (int)numericQuantity.Value;
 
+            if (!LoginSession.IsLoggedIn)
+            {
+                MessageBox.Show("Спочатку увійдіть у свій акаунт", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // Перевірка наявності на складі
             if (quantity > product.StockQuantity)
             {
@@ -47,7 +54,52 @@ namespace Computer_Parts_Store.Forms
                 return;
             }
 
-            MessageBox.Show($"Додано {quantity} од. товару до кошика!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            int userID = LoginSession.CurrentCustomer.Id;
+            using (var db = new Computer_Parts_StoreContext())
+            {
+                var cartOrder = db.Orders
+                    .Include(o => o.OrderItems)
+                    .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+
+                if (cartOrder == null)
+                {
+                    cartOrder = new Order
+                    {
+                        CustomerId = userID,
+                        Status = "Кошик",
+                        OrderDate = DateTime.Now
+                    };
+                    db.Orders.Add(cartOrder);
+                }
+
+                OrderItem? cartItem = cartOrder.OrderItems.FirstOrDefault(i => i.ProductId == product.Id);
+
+                if (cartItem != null)
+                {
+                    cartItem.Quantity += quantity;
+                }
+                else
+                {
+
+                    if (cartOrder.OrderItems == null)
+                    {
+                        cartOrder.OrderItems = new List<OrderItem>();
+                    }
+
+                    cartOrder.OrderItems.Add(
+                        new OrderItem
+                        {
+                            Product = product,
+                            Quantity = quantity,
+                            UnitPrice = product.Price
+                        }
+                    );
+                }
+
+                db.SaveChanges();
+            }
+
+            MessageBox.Show($"Додано {quantity} од. товару до кошика", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();
         }
 

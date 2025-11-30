@@ -22,6 +22,8 @@
             lblSubtitle = new Label();
             lblTitle = new Label();
             panelMenu = new Panel();
+            btnRegister = new Button();
+            btnLogin = new Button();
             btnExit = new Button();
             btnSalesHistory = new Button();
             btnCart = new Button();
@@ -72,6 +74,8 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(52, 73, 94);
+            panelMenu.Controls.Add(btnRegister);
+            panelMenu.Controls.Add(btnLogin);
             panelMenu.Controls.Add(btnExit);
             panelMenu.Controls.Add(btnSalesHistory);
             panelMenu.Controls.Add(btnCart);
@@ -83,6 +87,40 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(250, 600);
             panelMenu.TabIndex = 1;
+            // 
+            // btnRegister
+            // 
+            btnRegister.BackColor = Color.FromArgb(52, 73, 94);
+            btnRegister.FlatAppearance.BorderSize = 0;
+            btnRegister.FlatStyle = FlatStyle.Flat;
+            btnRegister.Font = new Font("Segoe UI", 12F);
+            btnRegister.ForeColor = Color.White;
+            btnRegister.Location = new Point(0, 452);
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(250, 37);
+            btnRegister.TabIndex = 7;
+            btnRegister.Text = "Зареєструватися";
+            btnRegister.UseVisualStyleBackColor = false;
+            btnRegister.Click += btnRegister_Click;
+            btnRegister.MouseEnter += MenuButton_MouseEnter;
+            btnRegister.MouseLeave += MenuButton_MouseLeave;
+            // 
+            // btnLogin
+            // 
+            btnLogin.BackColor = Color.FromArgb(52, 73, 94);
+            btnLogin.FlatAppearance.BorderSize = 0;
+            btnLogin.FlatStyle = FlatStyle.Flat;
+            btnLogin.Font = new Font("Segoe UI", 12F);
+            btnLogin.ForeColor = Color.White;
+            btnLogin.Location = new Point(0, 409);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(250, 37);
+            btnLogin.TabIndex = 6;
+            btnLogin.Text = "Увійти";
+            btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += btnLogin_Click;
+            btnLogin.MouseEnter += MenuButton_MouseEnter;
+            btnLogin.MouseLeave += MenuButton_MouseLeave;
             // 
             // btnExit
             // 
@@ -227,12 +265,12 @@
             Controls.Add(panelContent);
             Controls.Add(panelMenu);
             Controls.Add(panelHeader);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MinimumSize = new Size(800, 650);
             Name = "MainForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Магазин комп'ютерних комплектуючих";
-            Resize += MainForm_Resize;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelMenu.ResumeLayout(false);
@@ -255,5 +293,7 @@
         private System.Windows.Forms.Panel panelContent;
         private System.Windows.Forms.Label lblWelcome;
         private System.Windows.Forms.Label lblInfo;
+        private Button btnRegister;
+        private Button btnLogin;
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Computer_Parts_Store.Data;
 using Computer_Parts_Store.Models;
-using Computer_Parts_Store.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
+using System.Windows.Forms;
 
 namespace Computer_Parts_Store.Forms
 {
@@ -176,6 +177,65 @@ namespace Computer_Parts_Store.Forms
             {
                 MessageBox.Show("Виберіть принаймні процесор для збірки!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+            if (!LoginSession.IsLoggedIn)
+            {
+                MessageBox.Show("Спочатку увійдіть у свій акаунт", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int userID = LoginSession.CurrentCustomer.Id;
+            using (var db = new Computer_Parts_StoreContext())
+            {
+                var selectedProducts = new List<Product>();
+                foreach (ComboBox cmb in panelComponents.Controls.OfType<ComboBox>())
+                {
+                    if (cmb.SelectedIndex > 0)
+                    {
+                        var product = db.Products.FirstOrDefault(p => p.Name == cmb.Text);
+                        if (product != null)
+                        {
+                            selectedProducts.Add(product);
+                        }
+                    }
+                }
+                var prebuiltComputer = new PrebuiltComputer
+                {
+                    Name = "Користувацька збірка",
+                    Products = selectedProducts
+                };
+
+                var cartOrder = db.Orders
+                    .Include(o => o.OrderItems)
+                    .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+
+                if (cartOrder == null)
+                {
+                    cartOrder = new Order
+                    {
+                        CustomerId = userID,
+                        Status = "Кошик",
+                        OrderDate = DateTime.Now
+                    };
+                    db.Orders.Add(cartOrder);
+                }
+
+                var pc = new PrebuiltComputer
+                {
+                    Name = "Користувацька збірка",
+                    Description = $"Збірка ПК, створена користувачем {db.Customers.FirstOrDefault(c => c.Id == userID)} через конструктор",
+                    Products = selectedProducts
+                };
+
+                var orderItem = new OrderItem
+                {
+                    Order = cartOrder,
+                    PrebuiltComputer = pc,
+                    Quantity = 1,
+                    UnitPrice = pc.TotalPrice
+                };
+
+                db.OrderItems.Add(orderItem);
+                db.SaveChanges();
             }
 
             MessageBox.Show("Збірку додано до кошика!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Computer_Parts_Store.Data;
+using Computer_Parts_Store.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Computer_Parts_Store.Forms
 {
@@ -14,9 +17,39 @@ namespace Computer_Parts_Store.Forms
 
         private void LoadCartItems()
         {
-            // Додаємо дані як числа, а не як рядки
-            dataGridViewCart.Rows.Add("Intel Core i5-12400F", "ART001", 8500.00m, 1, 8500.00m);
-            dataGridViewCart.Rows.Add("NVIDIA RTX 3060", "ART002", 12000.00m, 1, 12000.00m);
+            dataGridViewCart.Rows.Clear();
+            using (var db = new Computer_Parts_StoreContext())
+            {
+                if(!LoginSession.IsLoggedIn) return;
+                int userID = LoginSession.CurrentCustomer.Id;
+
+                var order = db.Orders
+                    .Include(o => o.OrderItems)
+                    .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+
+                if (order == null) return;
+
+                foreach (var item in order.OrderItems)
+                {
+                    switch (item.ProductId, item.PrebuiltComputerId)
+                    {
+                        case (not null, null):
+                            var product = db.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == item.ProductId);
+                            if (product != null)
+                            {
+                                dataGridViewCart.Rows.Add(product.Name, item.UnitPrice, item.Quantity, item.TotalPrice);
+                            }
+                            break;
+                        case (null, not null):
+                            var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Id == item.PrebuiltComputerId);
+                            if (pc != null)
+                            {
+                                dataGridViewCart.Rows.Add(pc.Name, item.UnitPrice, item.Quantity, item.TotalPrice);
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
         private void UpdateSummary()
@@ -66,6 +99,29 @@ namespace Computer_Parts_Store.Forms
                     UpdateSummary();
                     MessageBox.Show("Товар видалено з кошика", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+            }
+            if (e.ColumnIndex == dataGridViewCart.Columns["colDetails"]?.Index)
+            {
+                string name = dataGridViewCart.Rows[e.RowIndex].Cells["colName"].Value.ToString() ?? string.Empty;
+
+                using (var db = new Computer_Parts_StoreContext())
+                {
+                    var product = db.Products.Include(p => p.Category).FirstOrDefault(p => p.Name == name);
+                    if (product != null)
+                    {
+                        ProductDetailsForm detailsForm = new ProductDetailsForm(product);
+                        detailsForm.ShowDialog();
+                        LoadCartItems();
+                    }
+                    var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Name == name);
+                    if (pc != null)
+                    {
+                        PCBuilderForm pcDetailsForm = new PCBuilderForm(pc);
+                        pcDetailsForm.ShowDialog();
+                        LoadCartItems();
+                    }
+                }
+                
             }
         }
 
@@ -117,8 +173,20 @@ namespace Computer_Parts_Store.Forms
             if (result == DialogResult.Yes)
             {
                 dataGridViewCart.Rows.Clear();
+                using (var db = new Computer_Parts_StoreContext())
+                {
+                    if(!LoginSession.IsLoggedIn) return;
+                    int userID = LoginSession.CurrentCustomer.Id;
+                    var order = db.Orders
+                        .Include(o => o.OrderItems)
+                        .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+                    if (order != null)
+                    {
+                        db.OrderItems.RemoveRange(order.OrderItems);
+                        db.SaveChanges();
+                    }
+                }   
                 UpdateSummary();
-                MessageBox.Show("Кошик очищено", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
