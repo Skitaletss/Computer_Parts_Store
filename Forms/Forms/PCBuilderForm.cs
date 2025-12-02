@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Computer_Parts_Store.Data;
+using Computer_Parts_Store.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Computer_Parts_Store.Data;
-using Computer_Parts_Store.Models;
+using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
+using Font = System.Drawing.Font;
+using Image = System.Drawing.Image;
 
 namespace Computer_Parts_Store.Forms
 {
@@ -87,6 +91,7 @@ namespace Computer_Parts_Store.Forms
             {
                 string layerName = MapCategoryToLayer(cat.Name);
                 if (!layerOrder.Contains(layerName)) continue;
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Categories", $"{layerName}.png");
 
                 Panel panel = new Panel
                 {
@@ -101,7 +106,7 @@ namespace Computer_Parts_Store.Forms
                     Size = new Size(100, 100),
                     Location = new Point((panel.Width - 100) / 2, 15),
                     SizeMode = PictureBoxSizeMode.Zoom,
-                    Image = LoadImageSafe($"Forms/Forms/{layerName}.png")
+                    Image = LoadImageSafe(path)
                 };
 
                 Label label = new Label
@@ -238,15 +243,10 @@ namespace Computer_Parts_Store.Forms
 
         private Image GetProductImage(string article)
         {
-            string safeArticle = article?.Trim();
-            string[] extensions = { ".jpg", ".jpeg", ".png" };
-
-            foreach (var ext in extensions)
-            {
-                string path = Path.Combine(Application.StartupPath, "Forms", "Resources", "Products", $"{safeArticle}{ext}");
-                if (File.Exists(path)) return LoadImageSafe(path);
-            }
-            return new Bitmap(160, 120);
+            string? safeArticle = article?.Trim();
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Products", $"{safeArticle}.png");
+            if (!File.Exists(path)) path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Products", "noimage.jpg");
+            return LoadImageSafe(path);
         }
 
         private string MapCategoryToLayer(string category)

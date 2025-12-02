@@ -15,33 +15,55 @@ namespace Computer_Parts_Store.Forms
         public CatalogForm()
         {
             InitializeComponent();
-            LoadImages();
             LoadCategories();
-            LoadProducts(null);
         }
-        private void LoadImages()
+        private ImageList LoadImages(List<Product> products)
         {
-            ImageList imageList = new ImageList();
-            imageList.ImageSize = new Size(64, 64);
+            ImageList list = new ImageList();
+            list.ImageSize = new Size(128, 128);
+            list.ColorDepth = ColorDepth.Depth32Bit;
+            string productsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Products");
 
-            string imagePath = Path.Combine(Application.StartupPath, "IMG", "0.png");
-            if (File.Exists(imagePath))
+            Bitmap placeholder = new Bitmap(128,128);
+            using (Graphics g = Graphics.FromImage(placeholder))
             {
-                imageList.Images.Add(Image.FromFile(imagePath));
+                g.Clear(Color.LightGray);
+                g.DrawRectangle(Pens.Gray, 0, 0, 127, 127);
+                g.DrawString("No Img", SystemFonts.DefaultFont, Brushes.Black, 40, 55);
             }
-            else
+            list.Images.Add("placeholder", placeholder);
+
+            foreach (var p in products)
             {
-                Bitmap placeholder = new Bitmap(64, 64);
-                using (Graphics g = Graphics.FromImage(placeholder))
+                if (list.Images.ContainsKey(p.Article)) continue;
+
+                string path = Path.Combine(productsDir, $"{p.Article}.png");
+
+                if (File.Exists(path))
                 {
-                    g.Clear(Color.SteelBlue);
-                    g.DrawRectangle(Pens.Black, 0, 0, 63, 63);
+                    try
+                    {
+                        byte[] bytes = File.ReadAllBytes(path);
+                        using (MemoryStream ms = new MemoryStream(bytes))
+                        {
+                            using (Image original = Image.FromStream(ms))
+                            {
+                                Bitmap cleanImage = new Bitmap(128, 128);
+                                using (Graphics g = Graphics.FromImage(cleanImage))
+                                {
+                                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                    g.DrawImage(original, 0, 0, 128, 128);
+                                }
+                                list.Images.Add(p.Article, cleanImage);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                    }
                 }
-                imageList.Images.Add(placeholder);
             }
-
-            listView1.LargeImageList = imageList;
-            listView1.SmallImageList = imageList;
+            return list;
         }
         private void LoadCategories()
         {
@@ -68,16 +90,28 @@ namespace Computer_Parts_Store.Forms
 
                     listView1.Items.Clear();
 
+
+                    ImageList imageList = LoadImages(parts);
+                    listView1.LargeImageList = imageList;
+                    listView1.SmallImageList = imageList;
+
                     foreach (var part in parts)
                     {
                         var item = new ListViewItem(part.Name);
+                        string key = part.Article;
+                        if (!imageList.Images.ContainsKey(key))
+                        {
+                            key = "placeholder";
+                        }
+
+                        item.ImageKey = key;
                         item.SubItems.Add(part.Category != null ? $"{part.Category.Name}" : "N/A");
-                        item.SubItems.Add(part.Price != null ? $"{part.Price}" : "N/A");
-                        item.SubItems.Add(part.Description != null ? $"{part.Description}" : "N/A");
-                        item.SubItems.Add(part.Manufacturer != null ? $"{part.Manufacturer}" : "N/A");
-                        item.SubItems.Add(part.Model != null ? $"{part.Model}" : "N/A");
-                        item.SubItems.Add(part.Color != null ? $"{part.Color}" : "N/A");
-                        item.ImageIndex = 0;
+                        item.SubItems.Add(part.Price != null ? $"{part.Price:C}" : "N/A");
+                        item.SubItems.Add(part.Description ?? "N/A");
+                        item.SubItems.Add(part.Manufacturer ?? "N/A");
+                        item.SubItems.Add(part.Model ?? "N/A");
+                        item.SubItems.Add(part.Color ?? "N/A");
+
                         listView1.Items.Add(item);
                     }
                 }
@@ -206,19 +240,27 @@ namespace Computer_Parts_Store.Forms
         }
         private void CatalogForm_Load(object sender, EventArgs e)
         {
-            listView1.Columns.Clear();
-            listView1.Columns.Add("Назва", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Категорія", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Ціна", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Опис", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Виробник", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Модель", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Колір", -2, HorizontalAlignment.Left);
+            try
+            {
+                listView1.Columns.Clear();
+                listView1.Columns.Add("Назва", -2, HorizontalAlignment.Left);
+                listView1.Columns.Add("Категорія", -2, HorizontalAlignment.Left);
+                listView1.Columns.Add("Ціна", -2, HorizontalAlignment.Left);
+                listView1.Columns.Add("Опис", -2, HorizontalAlignment.Left);
+                listView1.Columns.Add("Виробник", -2, HorizontalAlignment.Left);
+                listView1.Columns.Add("Модель", -2, HorizontalAlignment.Left);
+                listView1.Columns.Add("Колір", -2, HorizontalAlignment.Left);
 
-            LoadProducts(null);
-            SetView(View.Details);
+                LoadProducts(null);
+                SetView(View.Details);
 
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during form load: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e) => SetView(View.LargeIcon);
