@@ -45,10 +45,13 @@
             lblTotalOrdersValue = new Label();
             lblTotalOrders = new Label();
             lblSummaryTitle = new Label();
+            statusStrip = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             panelHeader.SuspendLayout();
             panelFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSales).BeginInit();
             panelSummary.SuspendLayout();
+            statusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // panelHeader
@@ -158,6 +161,7 @@
             dtpDateTo.Name = "dtpDateTo";
             dtpDateTo.Size = new Size(150, 25);
             dtpDateTo.TabIndex = 4;
+            dtpDateTo.ValueChanged += dtpDateTo_ValueChanged;
             // 
             // lblDateTo
             // 
@@ -177,6 +181,7 @@
             dtpDateFrom.Name = "dtpDateFrom";
             dtpDateFrom.Size = new Size(150, 25);
             dtpDateFrom.TabIndex = 2;
+            dtpDateFrom.ValueChanged += dtpDateFrom_ValueChanged;
             // 
             // lblDateFrom
             // 
@@ -345,12 +350,30 @@
             lblSummaryTitle.TabIndex = 0;
             lblSummaryTitle.Text = "Статистика";
             // 
+            // statusStrip
+            // 
+            statusStrip.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip.Location = new Point(0, 758);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(1400, 22);
+            statusStrip.TabIndex = 4;
+            statusStrip.Text = "statusStrip";
+            // 
+            // statusLabel
+            // 
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1385, 17);
+            statusLabel.Spring = true;
+            statusLabel.Text = "Готово до роботи";
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // SalesHistoryForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(236, 240, 241);
             ClientSize = new Size(1400, 780);
+            Controls.Add(statusStrip);
             Controls.Add(panelSummary);
             Controls.Add(dataGridViewSales);
             Controls.Add(panelFilters);
@@ -366,7 +389,10 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewSales).EndInit();
             panelSummary.ResumeLayout(false);
             panelSummary.PerformLayout();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -398,5 +424,7 @@
         private System.Windows.Forms.Label lblTotalRevenueValue;
         private System.Windows.Forms.Label lblAverageOrder;
         private System.Windows.Forms.Label lblAverageOrderValue;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
     }
 }
