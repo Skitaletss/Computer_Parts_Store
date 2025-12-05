@@ -22,7 +22,10 @@ namespace Computer_Parts_Store.Forms
             {
                 using (var db = new Computer_Parts_StoreContext())
                 {
-                    var prebuiltPCs = db.PrebuiltComputers.Include(_ => _.Products);
+                    var prebuiltPCs = db.PrebuiltComputers
+                        .Include(pc => pc.Products)
+                        .Where(pc => !pc.Name.Contains("кастомний"))
+                        .ToList();
                     foreach (var pc in prebuiltPCs)
                     {
                         dataGridViewPrebuilt.Rows.Add(
@@ -108,14 +111,13 @@ namespace Computer_Parts_Store.Forms
                     }
                     else
                     {
-                        var orderItem = new OrderItem
+                        order.OrderItems.Add(new OrderItem
                         {
                             OrderId = order.Id,
                             PrebuiltComputer = selectedPC,
                             Quantity = 1,
                             UnitPrice = selectedPC.TotalPrice
-                        };
-                        db.OrderItems.Add(orderItem);
+                        });
                     }
                     db.SaveChanges();
                 }

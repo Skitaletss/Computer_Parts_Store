@@ -1,12 +1,13 @@
 ﻿using Computer_Parts_Store.Data;
 using Computer_Parts_Store.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Drawing;
 using static System.Net.Mime.MediaTypeNames;
 using Font = System.Drawing.Font;
 using Image = System.Drawing.Image;
@@ -18,6 +19,7 @@ namespace Computer_Parts_Store.Forms
         private Computer_Parts_StoreContext db = new();
         private Dictionary<string, Product> selectedProducts = new();
         private decimal totalPrice = 0m;
+        private PrebuiltComputer PC;
 
         FlowLayoutPanel categoryPanel;
         FlowLayoutPanel productListPanel;
@@ -36,7 +38,8 @@ namespace Computer_Parts_Store.Forms
         }
         public PCBuilderForm(PrebuiltComputer pc) : this()
         {
-            LoadComponents(pc);
+            PC = pc;
+            LoadComponents(PC);
         }
 
         private void InitializeCustomControls()
@@ -273,6 +276,7 @@ namespace Computer_Parts_Store.Forms
                 var products = db.PrebuiltComputers
                     .Where(c => c.Id == pc.Id)
                     .SelectMany(c => c.Products)
+                    .Include(p => p.Category)
                     .ToList();
 
                 foreach (var product in products)
@@ -294,6 +298,50 @@ namespace Computer_Parts_Store.Forms
             {
                 MessageBox.Show("Виберіть принаймні процесор для збірки!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            using (var db = new Computer_Parts_StoreContext())
+            {
+                if (!LoginSession.IsLoggedIn)
+                {
+                    MessageBox.Show("Будь ласка, увійдіть до свого облікового запису, щоб додати ПК до кошика", "Необхідний вхід", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                int userID = LoginSession.CurrentCustomer.Id;
+                var order = db.Orders
+                    .Include(o => o.OrderItems)
+                    .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+                if (order == null)
+                {
+                    order = new Order
+                    {
+                        CustomerId = userID,
+                        OrderDate = DateTime.Now,
+                        Status = "Кошик"
+                    };
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                }
+                if (PC == null)
+                {
+                    var username = LoginSession.CurrentCustomer.FullName;
+                    var pc = new PrebuiltComputer
+                    {
+                        Id = 0,
+                        Name = $"{username} кастомний ПК",
+                        Description = $"ПК зібраний спеціально для {username}",
+                        Products = selectedProducts.Values
+                    };
+                    PC = pc;
+                }
+                order.OrderItems.Add(new OrderItem
+                {
+                    OrderId = order.Id,
+                    Quantity = 1,
+                    PrebuiltComputer = PC,
+                    UnitPrice = PC.TotalPrice
+                });
+                db.SaveChanges();
             }
 
             MessageBox.Show("Збірку додано до кошика!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -18,9 +18,10 @@ namespace Computer_Parts_Store.Forms
         private void LoadCartItems()
         {
             dataGridViewCart.Rows.Clear();
+
             using (var db = new Computer_Parts_StoreContext())
             {
-                if(!LoginSession.IsLoggedIn) return;
+                if (!LoginSession.IsLoggedIn) return;
                 int userID = LoginSession.CurrentCustomer.Id;
 
                 var order = db.Orders
@@ -31,23 +32,22 @@ namespace Computer_Parts_Store.Forms
 
                 foreach (var item in order.OrderItems)
                 {
-                    switch (item.ProductId, item.PrebuiltComputerId)
+                    string name = "Unknown";
+
+                    if (item.ProductId != null)
                     {
-                        case (not null, null):
-                            var product = db.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == item.ProductId);
-                            if (product != null)
-                            {
-                                dataGridViewCart.Rows.Add(product.Name, item.UnitPrice, item.Quantity, item.TotalPrice);
-                            }
-                            break;
-                        case (null, not null):
-                            var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Id == item.PrebuiltComputerId);
-                            if (pc != null)
-                            {
-                                dataGridViewCart.Rows.Add(pc.Name, item.UnitPrice, item.Quantity, item.TotalPrice);
-                            }
-                            break;
+                        var p = db.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                        if (p != null) name = p.Name;
                     }
+                    else if (item.PrebuiltComputerId != null)
+                    {
+                        var pc = db.PrebuiltComputers.FirstOrDefault(x => x.Id == item.PrebuiltComputerId);
+                        if (pc != null) name = pc.Name;
+                    }
+
+                    int rowIndex = dataGridViewCart.Rows.Add(name, item.UnitPrice, item.Quantity, item.TotalPrice);
+
+                    dataGridViewCart.Rows[rowIndex].Tag = item;
                 }
             }
         }
@@ -85,6 +85,8 @@ namespace Computer_Parts_Store.Forms
         {
             if (e.RowIndex < 0) return;
 
+            var item = dataGridViewCart.Rows[e.RowIndex].Tag as OrderItem;
+
             if (e.ColumnIndex == dataGridViewCart.Columns["colRemove"]?.Index)
             {
                 DialogResult result = MessageBox.Show(
@@ -95,7 +97,7 @@ namespace Computer_Parts_Store.Forms
 
                 if (result == DialogResult.Yes)
                 {
-                    var name = dataGridViewCart.Rows[e.RowIndex].Cells["colName"].Value.ToString() ?? string.Empty;
+                    
                     dataGridViewCart.Rows.RemoveAt(e.RowIndex);
                     using(var db = new Computer_Parts_StoreContext())
                     {
@@ -103,8 +105,8 @@ namespace Computer_Parts_Store.Forms
                             .Include(oi => oi.Order)
                             .FirstOrDefault(oi => oi.Order.CustomerId == LoginSession.CurrentCustomer.Id &&
                                                   oi.Order.Status == "Кошик" &&
-                                                  (oi.Product != null && oi.Product.Name == name ||
-                                                   oi.PrebuiltComputer != null && oi.PrebuiltComputer.Name == name));
+                                                  (oi.Product != null && oi.Product.Id == item.ProductId ||
+                                                   oi.PrebuiltComputer != null && oi.PrebuiltComputer.Id == item.PrebuiltComputerId));
                         if (orderItem != null)
                             {
                             db.OrderItems.Remove(orderItem);
@@ -117,20 +119,20 @@ namespace Computer_Parts_Store.Forms
             }
             if (e.ColumnIndex == dataGridViewCart.Columns["colDetails"]?.Index)
             {
-                string name = dataGridViewCart.Rows[e.RowIndex].Cells["colName"].Value.ToString() ?? string.Empty;
-
                 using (var db = new Computer_Parts_StoreContext())
                 {
-                    var product = db.Products.Include(p => p.Category).FirstOrDefault(p => p.Name == name);
+                    var product = db.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == item.ProductId);
                     if (product != null)
                     {
                         ProductDetailsForm detailsForm = new ProductDetailsForm(product);
                         detailsForm.ShowDialog();
                         LoadCartItems();
                     }
-                    var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Name == name);
+
+                    var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Id == item.PrebuiltComputerId);
                     if (pc != null)
                     {
+
                         PCBuilderForm pcDetailsForm = new PCBuilderForm(pc);
                         pcDetailsForm.ShowDialog();
                         LoadCartItems();

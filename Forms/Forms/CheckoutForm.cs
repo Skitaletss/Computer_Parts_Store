@@ -100,6 +100,11 @@ namespace Computer_Parts_Store.Forms
 
                     ReceiptForm receiptForm = new ReceiptForm(currentOrder);
                     receiptForm.ShowDialog();
+
+                    var customPCs = db.PrebuiltComputers
+                        .Where(pc => pc.Name.StartsWith(LoginSession.CurrentCustomer.FullName))
+                        .ToList();
+                    db.RemoveRange(customPCs);
                 };
                 Close();
             }
