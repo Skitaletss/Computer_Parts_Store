@@ -95,7 +95,22 @@ namespace Computer_Parts_Store.Forms
 
                 if (result == DialogResult.Yes)
                 {
+                    var name = dataGridViewCart.Rows[e.RowIndex].Cells["colName"].Value.ToString() ?? string.Empty;
                     dataGridViewCart.Rows.RemoveAt(e.RowIndex);
+                    using(var db = new Computer_Parts_StoreContext())
+                    {
+                        var orderItem = db.OrderItems
+                            .Include(oi => oi.Order)
+                            .FirstOrDefault(oi => oi.Order.CustomerId == LoginSession.CurrentCustomer.Id &&
+                                                  oi.Order.Status == "Кошик" &&
+                                                  (oi.Product != null && oi.Product.Name == name ||
+                                                   oi.PrebuiltComputer != null && oi.PrebuiltComputer.Name == name));
+                        if (orderItem != null)
+                            {
+                            db.OrderItems.Remove(orderItem);
+                            db.SaveChanges();
+                        }
+                    }
                     UpdateSummary();
                     MessageBox.Show("Товар видалено з кошика", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -160,6 +175,7 @@ namespace Computer_Parts_Store.Forms
 
             CheckoutForm checkoutForm = new CheckoutForm();
             checkoutForm.ShowDialog();
+            Close();
         }
 
         private void btnClearCart_Click(object? sender, EventArgs e)

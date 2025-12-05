@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Computer_Parts_Store.Data;
+using System;
 using System.Windows.Forms;
+using Computer_Parts_Store.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Computer_Parts_Store.Forms
 {
     public partial class CheckoutForm : Form
     {
+        private Order? currentOrder;
         public CheckoutForm()
         {
             InitializeComponent();
@@ -14,58 +18,50 @@ namespace Computer_Parts_Store.Forms
 
         private void LoadOrderDetails()
         {
-            // Додаємо дані як числа, а не як рядки
-            dataGridViewOrder.Rows.Add("Intel Core i5-12400F", 1, 8500.00m, 8500.00m);
-            dataGridViewOrder.Rows.Add("NVIDIA RTX 3060", 1, 12000.00m, 12000.00m);
-
-            CalculateTotal();
-        }
-
-        private void CalculateTotal()
-        {
-            decimal total = 0;
-
-            foreach (DataGridViewRow row in dataGridViewOrder.Rows)
+            using (var db = new Computer_Parts_StoreContext())
             {
-                if (!row.IsNewRow && row.Cells["colTotal"].Value != null)
+                if (!LoginSession.IsLoggedIn) return;
+                int userID = LoginSession.CurrentCustomer.Id;
+
+                Order? order = db.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.PrebuiltComputer)
+                    .ThenInclude(pc => pc.Products)
+                    .FirstOrDefault(o => o.CustomerId == userID && o.Status == "Кошик");
+
+                if (order == null) return;
+
+                currentOrder = order;
+
+                foreach (var item in order.OrderItems)
                 {
-                    try
+                    switch (item.ProductId, item.PrebuiltComputerId)
                     {
-                        total += Convert.ToDecimal(row.Cells["colTotal"].Value);
-                    }
-                    catch
-                    {
-                        // Ігноруємо помилки конвертації
-                        continue;
+                        case (not null, null):
+                            var product = db.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == item.ProductId);
+                            if (product != null)
+                            {
+                                dataGridViewOrder.Rows.Add(product.Name, item.Quantity, item.UnitPrice, item.TotalPrice);
+                            }
+                            break;
+                        case (null, not null):
+                            var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Id == item.PrebuiltComputerId);
+                            if (pc != null)
+                            {
+                                dataGridViewOrder.Rows.Add(pc.Name, item.Quantity, item.UnitPrice, item.TotalPrice);
+                            }
+                            break;
                     }
                 }
-            }
 
-            lblTotalAmountValue.Text = total.ToString("F2");
+                lblTotalAmountValue.Text = order.TotalAmount.ToString("F2");
+            }
         }
 
         private void btnConfirmOrder_Click(object? sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtLastName.Text))
-            {
-                MessageBox.Show("Введіть прізвище!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtLastName.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-            {
-                MessageBox.Show("Введіть ім'я!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtFirstName.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtMiddleName.Text))
-            {
-                MessageBox.Show("Введіть по батькові!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtMiddleName.Focus();
-                return;
-            }
 
             DialogResult result = MessageBox.Show(
                 "Підтвердити замовлення?",
@@ -75,12 +71,37 @@ namespace Computer_Parts_Store.Forms
 
             if (result == DialogResult.Yes)
             {
-                MessageBox.Show("Замовлення успішно оформлено!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (var db = new Computer_Parts_StoreContext())
+                {
+                    Order? order = db.Orders
+                        .Include(o => o.OrderItems)
+                        .ThenInclude(oi => oi.Product)
+                        .Include(o => o.OrderItems)
+                        .ThenInclude(oi => oi.PrebuiltComputer)
+                        .ThenInclude(pc => pc.Products)
+                        .FirstOrDefault(o => o.Id == currentOrder.Id);
+                    if (order != null)
+                    {
+                        order.Status = "Підтверджено";
+                        order.OrderDate = DateTime.Now;
+                        foreach (var item in order.OrderItems)
+                        {
+                            if (item.ProductId != null) item.Product.StockQuantity -= item.Quantity;
+                            if (item.PrebuiltComputerId != null)
+                            {
+                                foreach (var product in item.PrebuiltComputer.Products)
+                                {
+                                    product.StockQuantity -= 1;
+                                }
+                            }
+                        }
+                        db.SaveChanges();
+                    }
 
-                ReceiptForm receiptForm = new ReceiptForm();
-                receiptForm.ShowDialog();
-
-                this.Close();
+                    ReceiptForm receiptForm = new ReceiptForm(currentOrder);
+                    receiptForm.ShowDialog();
+                };
+                Close();
             }
         }
 
@@ -94,13 +115,13 @@ namespace Computer_Parts_Store.Forms
 
             if (result == DialogResult.Yes)
             {
-                this.Close();
+                Close();
             }
         }
 
         private void btnClose_Click(object? sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

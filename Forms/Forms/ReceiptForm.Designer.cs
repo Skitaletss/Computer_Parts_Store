@@ -39,6 +39,8 @@
             panelHeader = new Panel();
             lblTitle = new Label();
             panelReceipt = new Panel();
+            lblCustomerValue = new Label();
+            lblOrderDateValue = new Label();
             lblThankYou = new Label();
             lblTotal = new Label();
             lblSubtotal = new Label();
@@ -53,11 +55,13 @@
             lblOrderDate = new Label();
             lblOrderNumber = new Label();
             lblSeparator1 = new Label();
-            lblStoreInfo = new Label();
+            lblStoreAddress = new Label();
             lblStoreName = new Label();
             btnPrint = new Button();
             btnSave = new Button();
             btnClose = new Button();
+            lblStoreEmail = new Label();
+            lblStorePhone = new Label();
             panelHeader.SuspendLayout();
             panelReceipt.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewItems).BeginInit();
@@ -88,6 +92,10 @@
             // 
             panelReceipt.BackColor = Color.White;
             panelReceipt.BorderStyle = BorderStyle.FixedSingle;
+            panelReceipt.Controls.Add(lblStorePhone);
+            panelReceipt.Controls.Add(lblStoreEmail);
+            panelReceipt.Controls.Add(lblCustomerValue);
+            panelReceipt.Controls.Add(lblOrderDateValue);
             panelReceipt.Controls.Add(lblThankYou);
             panelReceipt.Controls.Add(lblTotal);
             panelReceipt.Controls.Add(lblSubtotal);
@@ -98,12 +106,32 @@
             panelReceipt.Controls.Add(lblOrderDate);
             panelReceipt.Controls.Add(lblOrderNumber);
             panelReceipt.Controls.Add(lblSeparator1);
-            panelReceipt.Controls.Add(lblStoreInfo);
+            panelReceipt.Controls.Add(lblStoreAddress);
             panelReceipt.Controls.Add(lblStoreName);
             panelReceipt.Location = new Point(50, 100);
             panelReceipt.Name = "panelReceipt";
             panelReceipt.Size = new Size(800, 850);
             panelReceipt.TabIndex = 1;
+            // 
+            // lblCustomerValue
+            // 
+            lblCustomerValue.AutoSize = true;
+            lblCustomerValue.Font = new Font("Segoe UI", 10F);
+            lblCustomerValue.Location = new Point(121, 185);
+            lblCustomerValue.Name = "lblCustomerValue";
+            lblCustomerValue.Size = new Size(141, 19);
+            lblCustomerValue.TabIndex = 13;
+            lblCustomerValue.Text = "Іванов Іван Іванович";
+            // 
+            // lblOrderDateValue
+            // 
+            lblOrderDateValue.AutoSize = true;
+            lblOrderDateValue.Font = new Font("Segoe UI", 10F);
+            lblOrderDateValue.Location = new Point(89, 160);
+            lblOrderDateValue.Name = "lblOrderDateValue";
+            lblOrderDateValue.Size = new Size(137, 19);
+            lblOrderDateValue.TabIndex = 12;
+            lblOrderDateValue.Text = "01.01.2025 12:00:00";
             // 
             // lblThankYou
             // 
@@ -202,9 +230,9 @@
             lblCustomer.Font = new Font("Segoe UI", 10F);
             lblCustomer.Location = new Point(50, 185);
             lblCustomer.Name = "lblCustomer";
-            lblCustomer.Size = new Size(210, 19);
+            lblCustomer.Size = new Size(74, 19);
             lblCustomer.TabIndex = 5;
-            lblCustomer.Text = "Покупець: Іванов Іван Іванович";
+            lblCustomer.Text = "Покупець:";
             // 
             // lblOrderDate
             // 
@@ -212,9 +240,9 @@
             lblOrderDate.Font = new Font("Segoe UI", 10F);
             lblOrderDate.Location = new Point(50, 160);
             lblOrderDate.Name = "lblOrderDate";
-            lblOrderDate.Size = new Size(174, 19);
+            lblOrderDate.Size = new Size(42, 19);
             lblOrderDate.TabIndex = 4;
-            lblOrderDate.Text = "Дата: 01.01.2025 12:00:00";
+            lblOrderDate.Text = "Дата:";
             // 
             // lblOrderNumber
             // 
@@ -234,16 +262,16 @@
             lblSeparator1.Size = new Size(700, 2);
             lblSeparator1.TabIndex = 2;
             // 
-            // lblStoreInfo
+            // lblStoreAddress
             // 
-            lblStoreInfo.Font = new Font("Segoe UI", 10F);
-            lblStoreInfo.ForeColor = Color.Gray;
-            lblStoreInfo.Location = new Point(0, 60);
-            lblStoreInfo.Name = "lblStoreInfo";
-            lblStoreInfo.Size = new Size(800, 40);
-            lblStoreInfo.TabIndex = 1;
-            lblStoreInfo.Text = "м. Київ, вул. Хрещатик 1\r\nТел: +380 (44) 123-45-67 | Email: shop@computerparts.ua";
-            lblStoreInfo.TextAlign = ContentAlignment.MiddleCenter;
+            lblStoreAddress.Font = new Font("Segoe UI", 10F);
+            lblStoreAddress.ForeColor = Color.Gray;
+            lblStoreAddress.Location = new Point(-1, 55);
+            lblStoreAddress.Name = "lblStoreAddress";
+            lblStoreAddress.Size = new Size(801, 25);
+            lblStoreAddress.TabIndex = 1;
+            lblStoreAddress.Text = "м. Київ, вул. Хрещатик 1";
+            lblStoreAddress.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblStoreName
             // 
@@ -300,6 +328,28 @@
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 
+            // lblStoreEmail
+            // 
+            lblStoreEmail.Font = new Font("Segoe UI", 10F);
+            lblStoreEmail.ForeColor = Color.Gray;
+            lblStoreEmail.Location = new Point(355, 75);
+            lblStoreEmail.Name = "lblStoreEmail";
+            lblStoreEmail.Size = new Size(316, 34);
+            lblStoreEmail.TabIndex = 14;
+            lblStoreEmail.Text = "Email: shop@computerparts.ua";
+            lblStoreEmail.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblStorePhone
+            // 
+            lblStorePhone.Font = new Font("Segoe UI", 10F);
+            lblStorePhone.ForeColor = Color.Gray;
+            lblStorePhone.Location = new Point(121, 78);
+            lblStorePhone.Name = "lblStorePhone";
+            lblStorePhone.Size = new Size(263, 29);
+            lblStorePhone.TabIndex = 15;
+            lblStorePhone.Text = "Тел: +380 (44) 123-45-67";
+            lblStorePhone.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // ReceiptForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -341,7 +391,7 @@
 
         private System.Windows.Forms.Label lblStoreName;
 
-        private System.Windows.Forms.Label lblStoreInfo;
+        private System.Windows.Forms.Label lblStoreAddress;
 
         private System.Windows.Forms.Label lblSeparator1;
 
@@ -376,7 +426,10 @@
         private System.Windows.Forms.Button btnSave;
 
         private System.Windows.Forms.Button btnClose;
-
+        private Label lblCustomerValue;
+        private Label lblOrderDateValue;
+        private Label lblStorePhone;
+        private Label lblStoreEmail;
     }
 
 }

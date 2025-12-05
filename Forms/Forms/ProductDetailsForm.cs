@@ -86,12 +86,14 @@ namespace Computer_Parts_Store.Forms
                         cartOrder.OrderItems = new List<OrderItem>();
                     }
 
+                    var trackedProduct = db.Products.Find(product.Id);
+
                     cartOrder.OrderItems.Add(
                         new OrderItem
                         {
-                            Product = product,
+                            Product = trackedProduct,
                             Quantity = quantity,
-                            UnitPrice = product.Price
+                            UnitPrice = trackedProduct.Price
                         }
                     );
                 }

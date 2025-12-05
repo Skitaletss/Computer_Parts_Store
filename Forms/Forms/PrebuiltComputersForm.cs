@@ -99,7 +99,7 @@ namespace Computer_Parts_Store.Forms
                         db.Orders.Add(order);
                         db.SaveChanges();
                     }
-                    var prebuiltPCs = db.PrebuiltComputers.ToList();
+                    var prebuiltPCs = db.PrebuiltComputers.Include(pc => pc.Products).ToList();
                     var selectedPC = prebuiltPCs[e.RowIndex];
                     var existingItem = order.OrderItems.FirstOrDefault(oi => oi.PrebuiltComputerId == selectedPC.Id);
                     if (existingItem != null)
@@ -111,7 +111,7 @@ namespace Computer_Parts_Store.Forms
                         var orderItem = new OrderItem
                         {
                             OrderId = order.Id,
-                            PrebuiltComputerId = selectedPC.Id,
+                            PrebuiltComputer = selectedPC,
                             Quantity = 1,
                             UnitPrice = selectedPC.TotalPrice
                         };

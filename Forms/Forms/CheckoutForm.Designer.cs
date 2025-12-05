@@ -21,18 +21,6 @@
             panelHeader = new Panel();
             btnClose = new Button();
             lblTitle = new Label();
-            panelCustomerInfo = new Panel();
-            txtEmail = new TextBox();
-            lblEmail = new Label();
-            txtPhone = new TextBox();
-            lblPhone = new Label();
-            txtMiddleName = new TextBox();
-            lblMiddleName = new Label();
-            txtFirstName = new TextBox();
-            lblFirstName = new Label();
-            txtLastName = new TextBox();
-            lblLastName = new Label();
-            lblCustomerInfo = new Label();
             panelOrderSummary = new Panel();
             btnCancel = new Button();
             btnConfirmOrder = new Button();
@@ -47,7 +35,6 @@
             colTotal = new DataGridViewTextBoxColumn();
             lblOrderSummary = new Label();
             panelHeader.SuspendLayout();
-            panelCustomerInfo.SuspendLayout();
             panelOrderSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrder).BeginInit();
             SuspendLayout();
@@ -60,7 +47,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1400, 70);
+            panelHeader.Size = new Size(732, 70);
             panelHeader.TabIndex = 0;
             // 
             // btnClose
@@ -70,7 +57,7 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(1300, 15);
+            btnClose.Location = new Point(630, 14);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(80, 40);
             btnClose.TabIndex = 1;
@@ -89,126 +76,6 @@
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Оформлення замовлення";
             // 
-            // panelCustomerInfo
-            // 
-            panelCustomerInfo.BackColor = Color.White;
-            panelCustomerInfo.BorderStyle = BorderStyle.FixedSingle;
-            panelCustomerInfo.Controls.Add(txtEmail);
-            panelCustomerInfo.Controls.Add(lblEmail);
-            panelCustomerInfo.Controls.Add(txtPhone);
-            panelCustomerInfo.Controls.Add(lblPhone);
-            panelCustomerInfo.Controls.Add(txtMiddleName);
-            panelCustomerInfo.Controls.Add(lblMiddleName);
-            panelCustomerInfo.Controls.Add(txtFirstName);
-            panelCustomerInfo.Controls.Add(lblFirstName);
-            panelCustomerInfo.Controls.Add(txtLastName);
-            panelCustomerInfo.Controls.Add(lblLastName);
-            panelCustomerInfo.Controls.Add(lblCustomerInfo);
-            panelCustomerInfo.Location = new Point(20, 90);
-            panelCustomerInfo.Name = "panelCustomerInfo";
-            panelCustomerInfo.Size = new Size(650, 350);
-            panelCustomerInfo.TabIndex = 1;
-            // 
-            // txtEmail
-            // 
-            txtEmail.Font = new Font("Segoe UI", 11F);
-            txtEmail.Location = new Point(315, 280);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(300, 27);
-            txtEmail.TabIndex = 10;
-            // 
-            // lblEmail
-            // 
-            lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Segoe UI", 11F);
-            lblEmail.Location = new Point(315, 255);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(121, 20);
-            lblEmail.TabIndex = 9;
-            lblEmail.Text = "Email (опційно):";
-            // 
-            // txtPhone
-            // 
-            txtPhone.Font = new Font("Segoe UI", 11F);
-            txtPhone.Location = new Point(15, 280);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(280, 27);
-            txtPhone.TabIndex = 8;
-            // 
-            // lblPhone
-            // 
-            lblPhone.AutoSize = true;
-            lblPhone.Font = new Font("Segoe UI", 11F);
-            lblPhone.Location = new Point(15, 255);
-            lblPhone.Name = "lblPhone";
-            lblPhone.Size = new Size(144, 20);
-            lblPhone.TabIndex = 7;
-            lblPhone.Text = "Телефон (опційно):";
-            // 
-            // txtMiddleName
-            // 
-            txtMiddleName.Font = new Font("Segoe UI", 11F);
-            txtMiddleName.Location = new Point(15, 215);
-            txtMiddleName.Name = "txtMiddleName";
-            txtMiddleName.Size = new Size(600, 27);
-            txtMiddleName.TabIndex = 6;
-            // 
-            // lblMiddleName
-            // 
-            lblMiddleName.AutoSize = true;
-            lblMiddleName.Font = new Font("Segoe UI", 11F);
-            lblMiddleName.Location = new Point(15, 190);
-            lblMiddleName.Name = "lblMiddleName";
-            lblMiddleName.Size = new Size(95, 20);
-            lblMiddleName.TabIndex = 5;
-            lblMiddleName.Text = "По батькові:";
-            // 
-            // txtFirstName
-            // 
-            txtFirstName.Font = new Font("Segoe UI", 11F);
-            txtFirstName.Location = new Point(15, 150);
-            txtFirstName.Name = "txtFirstName";
-            txtFirstName.Size = new Size(600, 27);
-            txtFirstName.TabIndex = 4;
-            // 
-            // lblFirstName
-            // 
-            lblFirstName.AutoSize = true;
-            lblFirstName.Font = new Font("Segoe UI", 11F);
-            lblFirstName.Location = new Point(15, 125);
-            lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(38, 20);
-            lblFirstName.TabIndex = 3;
-            lblFirstName.Text = "Ім'я:";
-            // 
-            // txtLastName
-            // 
-            txtLastName.Font = new Font("Segoe UI", 11F);
-            txtLastName.Location = new Point(15, 85);
-            txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(600, 27);
-            txtLastName.TabIndex = 2;
-            // 
-            // lblLastName
-            // 
-            lblLastName.AutoSize = true;
-            lblLastName.Font = new Font("Segoe UI", 11F);
-            lblLastName.Location = new Point(15, 60);
-            lblLastName.Name = "lblLastName";
-            lblLastName.Size = new Size(80, 20);
-            lblLastName.TabIndex = 1;
-            lblLastName.Text = "Прізвище:";
-            // 
-            // lblCustomerInfo
-            // 
-            lblCustomerInfo.AutoSize = true;
-            lblCustomerInfo.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblCustomerInfo.Location = new Point(15, 15);
-            lblCustomerInfo.Name = "lblCustomerInfo";
-            lblCustomerInfo.Size = new Size(196, 25);
-            lblCustomerInfo.TabIndex = 0;
-            lblCustomerInfo.Text = "Дані покупця (ПІБ):";
-            // 
             // panelOrderSummary
             // 
             panelOrderSummary.BackColor = Color.White;
@@ -221,7 +88,7 @@
             panelOrderSummary.Controls.Add(lblTotalAmount);
             panelOrderSummary.Controls.Add(dataGridViewOrder);
             panelOrderSummary.Controls.Add(lblOrderSummary);
-            panelOrderSummary.Location = new Point(690, 90);
+            panelOrderSummary.Location = new Point(20, 88);
             panelOrderSummary.Name = "panelOrderSummary";
             panelOrderSummary.Size = new Size(690, 660);
             panelOrderSummary.TabIndex = 2;
@@ -354,9 +221,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(236, 240, 241);
-            ClientSize = new Size(1400, 780);
+            ClientSize = new Size(732, 780);
             Controls.Add(panelOrderSummary);
-            Controls.Add(panelCustomerInfo);
             Controls.Add(panelHeader);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CheckoutForm";
@@ -364,8 +230,6 @@
             Text = "Оформлення замовлення";
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelCustomerInfo.ResumeLayout(false);
-            panelCustomerInfo.PerformLayout();
             panelOrderSummary.ResumeLayout(false);
             panelOrderSummary.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrder).EndInit();
@@ -377,18 +241,6 @@
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Panel panelCustomerInfo;
-        private System.Windows.Forms.Label lblCustomerInfo;
-        private System.Windows.Forms.Label lblLastName;
-        private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.Label lblFirstName;
-        private System.Windows.Forms.TextBox txtFirstName;
-        private System.Windows.Forms.Label lblMiddleName;
-        private System.Windows.Forms.TextBox txtMiddleName;
-        private System.Windows.Forms.Label lblPhone;
-        private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Panel panelOrderSummary;
         private System.Windows.Forms.Label lblOrderSummary;
         private System.Windows.Forms.DataGridView dataGridViewOrder;

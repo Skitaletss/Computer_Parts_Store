@@ -1,30 +1,61 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System;
-using System.Drawing.Printing;
 using System.Globalization;
-using System.Reflection.Metadata;
-using System.Windows.Forms;
-using System.Xml.Linq;
+using Computer_Parts_Store.Data;
+using Computer_Parts_Store.Models;
 
 namespace Computer_Parts_Store.Forms
 {
     public partial class ReceiptForm : Form
     {
+        private readonly Order? Order;
         public ReceiptForm()
         {
             InitializeComponent();
             LoadReceiptData();
         }
 
+        public ReceiptForm(Order o)
+        {
+            InitializeComponent();
+            Order = o;
+            LoadReceiptData();
+        }
+
         private void LoadReceiptData()
         {
-            lblOrderNumber.Text = "Замовлення № 000001";
-            lblOrderDate.Text = $"Дата: {DateTime.Now:dd.MM.yyyy HH:mm:ss}";
-            lblCustomer.Text = "Покупець: Іванов Іван Іванович";
+            lblCustomerValue.Text = LoginSession.CurrentCustomer.FullName;
+            lblOrderDateValue.Text = DateTime.Now.ToString("dd.MM.yyyy");
 
-            dataGridViewItems.Rows.Add("Intel Core i5-12400F", "1", "8500.00", "8500.00");
-            dataGridViewItems.Rows.Add("NVIDIA RTX 3060", "1", "12000.00", "12000.00");
+            using (var db = new Computer_Parts_StoreContext())
+            {
+                if (Order == null) return;
+                var orderItems = db.OrderItems
+                    .Where(oi => oi.OrderId == Order.Id)
+                    .ToList();
+                foreach (var item in orderItems)
+                {
+                    string itemName = "N/A";
+                    if (item.ProductId != null)
+                    {
+                        var product = db.Products.FirstOrDefault(p => p.Id == item.ProductId);
+                        if (product != null)
+                        {
+                            itemName = product.Name;
+                            dataGridViewItems.Rows.Add(itemName, item.Quantity, item.UnitPrice.ToString("F2"), item.TotalPrice.ToString("F2", CultureInfo.InvariantCulture));
+                        }
+                    }
+                    else if (item.PrebuiltComputerId != null)
+                    {
+                        var pc = db.PrebuiltComputers.FirstOrDefault(pc => pc.Id == item.PrebuiltComputerId);
+                        if (pc != null)
+                        {
+                            itemName = pc.Name;
+                            dataGridViewItems.Rows.Add(itemName, item.Quantity, item.UnitPrice, item.TotalPrice.ToString("F2", CultureInfo.InvariantCulture));
+                        }
+                    }
+                }
+            }
 
             CalculateTotal();
         }
@@ -64,123 +95,117 @@ namespace Computer_Parts_Store.Forms
 
         private void SaveAsPdf(string filePath)
         {
-            iTextSharp.text.Document document = null;
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            Document document = null;
             PdfWriter writer = null;
 
             try
             {
-                // Create PDF document
-                document = new iTextSharp.text.Document(PageSize.A4, 20, 20, 30, 30);
-                writer = PdfWriter.GetInstance(document, new System.IO.FileStream(filePath, System.IO.FileMode.Create));
+                document = new Document(PageSize.A4, 20, 20, 30, 30);
+                writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
                 document.Open();
 
-                // Font setup
-                BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, false);
-                iTextSharp.text.Font font = new(baseFont, 10);
-                iTextSharp.text.Font headerFont = new(baseFont, 14);
-                iTextSharp.text.Font smallFont = new(baseFont, 8);
+                string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
 
-                // Header section
-                Paragraph header = new Paragraph("FISCAL RECEIPT", headerFont);
+                BaseFont baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+                iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, 10);
+                iTextSharp.text.Font headerFont = new iTextSharp.text.Font(baseFont, 14, iTextSharp.text.Font.BOLD);
+                iTextSharp.text.Font smallFont = new iTextSharp.text.Font(baseFont, 8);
+
+                Paragraph header = new Paragraph("ФІСКАЛЬНИЙ ЧЕК", headerFont);
                 header.Alignment = Element.ALIGN_CENTER;
                 header.SpacingAfter = 10;
                 document.Add(header);
 
-                // Store information
-                document.Add(new Paragraph("Store: \"Your Store Name\"", font));
-                document.Add(new Paragraph("Address: Your Address", font));
-                document.Add(new Paragraph("Phone: +380 XX XXX XX XX", font));
+                document.Add(new Paragraph($"Магазин: \"{lblStoreName.Text}\"", font));
+                document.Add(new Paragraph($"Адреса: {lblStoreAddress.Text}", font));
+                document.Add(new Paragraph($"{lblStorePhone.Text}", font));
+                document.Add(new Paragraph($"{lblStoreEmail.Text}", font));
 
-                // Use thread-safe random for receipt number
+                document.Add(new Paragraph(new string('─', 50), font));
+
+                document.Add(new Paragraph($"Клієнт: {lblCustomerValue.Text}", font));
+                document.Add(new Paragraph($"Тел: {LoginSession.CurrentCustomer.Phone}", font));
+
                 var random = new Random();
-                document.Add(new Paragraph($"Receipt No: RCP-{DateTime.Now:yyyyMMdd}-{random.Next(1000, 9999)}", font));
-                document.Add(new Paragraph($"Date: {DateTime.Now:dd.MM.yyyy}", font));
-                document.Add(new Paragraph($"Time: {DateTime.Now:HH:mm:ss}", font));
+                document.Add(new Paragraph($"Чек №: RCP-{DateTime.Now:yyyyMMdd}-{random.Next(1000, 99999)}", font));
+                document.Add(new Paragraph($"Дата: {DateTime.Now:dd.MM.yyyy}", font));
+                document.Add(new Paragraph($"Час: {DateTime.Now:HH:mm:ss}", font));
                 document.Add(new Paragraph(new string('─', 50), font));
 
-                // Items section header
-                document.Add(new Paragraph("ITEMS:", font) { SpacingBefore = 10 });
+                document.Add(new Paragraph("ТОВАРИ:", font) { SpacingBefore = 10 });
                 document.Add(new Paragraph(new string('─', 50), font));
 
-                // Check if there are any items to save
                 if (dataGridViewItems.Rows.Count == 0 || (dataGridViewItems.Rows.Count == 1 && dataGridViewItems.Rows[0].IsNewRow))
                 {
-                    Paragraph noItems = new Paragraph("No items to display", font);
+                    Paragraph noItems = new Paragraph("Немає товарів", font);
                     noItems.Alignment = Element.ALIGN_CENTER;
                     document.Add(noItems);
                 }
                 else
                 {
-                    // Create table for items
                     PdfPTable table = new PdfPTable(4);
                     table.WidthPercentage = 100;
-                    table.SetWidths([1f, 4f, 2f, 2f]);
+                    table.SetWidths(new float[] { 1f, 4f, 2f, 2f });
 
-                    // Table headers
                     table.AddCell(new PdfPCell(new Phrase("#", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                    table.AddCell(new PdfPCell(new Phrase("Product", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                    table.AddCell(new PdfPCell(new Phrase("Quantity", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                    table.AddCell(new PdfPCell(new Phrase("Amount", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                    table.AddCell(new PdfPCell(new Phrase("Товар", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                    table.AddCell(new PdfPCell(new Phrase("К-сть", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                    table.AddCell(new PdfPCell(new Phrase("Сума", font)) { BackgroundColor = BaseColor.LIGHT_GRAY });
 
                     decimal totalAmount = 0;
                     int itemNumber = 1;
 
-                    // Add items to table
                     foreach (DataGridViewRow row in dataGridViewItems.Rows)
                     {
-                            string itemName = row.Cells["colName"].Value?.ToString() ?? "Unknown product";
-                            string quantity = row.Cells["colQuantity"].Value?.ToString() ?? "1";
-                            string price = row.Cells["colPrice"].Value?.ToString() ?? "0";
+                        if (row.IsNewRow) continue;
 
-                            if (decimal.TryParse(price, out decimal itemPrice) &&
-                                int.TryParse(quantity, out int itemQuantity))
-                            {
-                                decimal itemTotal = itemPrice * itemQuantity;
-                                totalAmount += itemTotal;
+                        string productName = row.Cells["colName"].Value?.ToString() ?? "N/A";
 
-                                table.AddCell(new PdfPCell(new Phrase(itemNumber.ToString(), font)));
-                                table.AddCell(new PdfPCell(new Phrase(itemName, font)));
-                                table.AddCell(new PdfPCell(new Phrase($"{quantity} x {itemPrice:F2}", font)));
-                                table.AddCell(new PdfPCell(new Phrase($"{itemTotal:F2} UAH", font)));
+                        int quantity = 0;
+                        if (row.Cells["colQuantity"].Value != null)
+                            int.TryParse(row.Cells["colQuantity"].Value.ToString(), out quantity);
 
-                                itemNumber++;
-                            }
-                        
+                        decimal amount = Convert.ToDecimal(row.Cells["colTotal"].Value, CultureInfo.InvariantCulture);
+
+                        table.AddCell(new PdfPCell(new Phrase(itemNumber.ToString(), font)));
+                        table.AddCell(new PdfPCell(new Phrase(productName, font)));
+                        table.AddCell(new PdfPCell(new Phrase(quantity.ToString(), font)));
+                        table.AddCell(new PdfPCell(new Phrase($"{amount:F2} грн", font)));
+
+                        totalAmount += amount;
+                        itemNumber++;
                     }
 
                     document.Add(table);
                     document.Add(new Paragraph(new string('─', 50), font));
 
-                    // Totals section
-                    document.Add(new Paragraph($"TOTAL AMOUNT: {totalAmount:F2} UAH", font));
-
+                    document.Add(new Paragraph($"ВСЬОГО: {totalAmount:F2} грн", headerFont));
                     document.Add(new Paragraph(new string('─', 50), font));
-
-                    // Payment info
-                    document.Add(new Paragraph("PAYMENT: CASH", font));
-                    document.Add(new Paragraph("CHANGE: 0.00 UAH", font));
+                    document.Add(new Paragraph("РЕШТА: 0.00 грн", font));
                 }
 
                 document.Add(new Paragraph("\n", font));
 
-                // Footer section
-                Paragraph thanks = new Paragraph("Thank you for your purchase!", font);
+                Paragraph thanks = new Paragraph("Дякуємо за покупку!", font);
                 thanks.Alignment = Element.ALIGN_CENTER;
                 document.Add(thanks);
 
-                Paragraph goodDay = new Paragraph("Have a nice day!", font);
-                goodDay.Alignment = Element.ALIGN_CENTER;
-                document.Add(goodDay);
+                Paragraph bye = new Paragraph("Гарного дня!", font);
+                bye.Alignment = Element.ALIGN_CENTER;
+                document.Add(bye);
 
                 document.Add(new Paragraph("\n", font));
-                document.Add(new Paragraph("* Receipt can be returned within 14 days", smallFont));
-                document.Add(new Paragraph($"* Receipt saved: {DateTime.Now:yyyy-MM-dd HH:mm:ss}", smallFont));
+                document.Add(new Paragraph("* Чек дійсний для повернення протягом 14 днів", smallFont));
+                document.Add(new Paragraph($"* Збережено: {DateTime.Now:yyyy-MM-dd HH:mm:ss}", smallFont));
 
-                MessageBox.Show($"Receipt successfully saved", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Чек збережено", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Помилка: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
