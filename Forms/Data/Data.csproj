@@ -7,6 +7,184 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Categories\case.png" />
+    <None Remove="Categories\cooler.png" />
+    <None Remove="Categories\cpu.png" />
+    <None Remove="Categories\gpu.png" />
+    <None Remove="Categories\hdd.png" />
+    <None Remove="Categories\keyboard.png" />
+    <None Remove="Categories\monitor.png" />
+    <None Remove="Categories\motherboard.png" />
+    <None Remove="Categories\mouse.png" />
+    <None Remove="Categories\psu.png" />
+    <None Remove="Categories\ram.png" />
+    <None Remove="Categories\ssd.png" />
+    <None Remove="Categories\в.png" />
+    <None Remove="Products\24GN600-B.png" />
+    <None Remove="Products\910-0056.png" />
+    <None Remove="Products\920-0092.png" />
+    <None Remove="Products\970EVO-1TB.png" />
+    <None Remove="Products\AK620.png" />
+    <None Remove="Products\B550-TUF.png" />
+    <None Remove="Products\B760-GIGA.png" />
+    <None Remove="Products\CMG32-D5.png" />
+    <None Remove="Products\CO-9050105-WW.png" />
+    <None Remove="Products\CP-9020180.png" />
+    <None Remove="Products\CW-9060056-WW.png" />
+    <None Remove="Products\FD-C-MES2-01.png" />
+    <None Remove="Products\I5-12400F.png" />
+    <None Remove="Products\KF416-16.png" />
+    <None Remove="Products\NF-A12x25.png" />
+    <None Remove="Products\NH-D15.png" />
+    <None Remove="Products\NZXT-H510.png" />
+    <None Remove="Products\ODG5-27.png" />
+    <None Remove="Products\placeholder.png" />
+    <None Remove="Products\PP11-600W.png" />
+    <None Remove="Products\RL-KRX73-01.png" />
+    <None Remove="Products\RTX4060-8G.png" />
+    <None Remove="Products\RX7600-8G.png" />
+    <None Remove="Products\RYZEN5-5600X.png" />
+    <None Remove="Products\RZ01-0321.png" />
+    <None Remove="Products\RZ03-0354.png" />
+    <None Remove="Products\SN850X-2T.png" />
+    <None Remove="Products\ST2000DM.png" />
+    <None Remove="Products\WD40EZAZ.png" />
+    <None Remove="Products\WD40EZAZs.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Categories\case.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\cooler.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\cpu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\gpu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\hdd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\keyboard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\monitor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\motherboard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\mouse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\psu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\ram.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\ssd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Categories\в.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\24GN600-B.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\910-0056.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\920-0092.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\970EVO-1TB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\AK620.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\B550-TUF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\B760-GIGA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\CMG32-D5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\CO-9050105-WW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\CP-9020180.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\CW-9060056-WW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\FD-C-MES2-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\I5-12400F.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\KF416-16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\NF-A12x25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\NH-D15.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\NZXT-H510.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\ODG5-27.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\PP11-600W.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\RL-KRX73-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\RTX4060-8G.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\RX7600-8G.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\RYZEN5-5600X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\RZ01-0321.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\RZ03-0354.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\SN850X-2T.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\ST2000DM.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\WD40EZAZ.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Products\WD40EZAZs.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extensions.EntityFrameworkCore.Sqlite.ChangeTracking" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.9" />
