@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Linq;
+using Computer_Parts_Store.Data;
+using Computer_Parts_Store.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Computer_Parts_Store.Forms
 {
@@ -25,10 +29,46 @@ namespace Computer_Parts_Store.Forms
             // Завантаження даних з бази даних
             dataGridViewSales.Rows.Clear();
 
-            // Приклад даних
-            dataGridViewSales.Rows.Add("000001", "15.08.2024 14:30", "Петренко Петро", "3", "25000.00");
-            dataGridViewSales.Rows.Add("000002", "16.08.2024 10:15", "Сидоренко Олена", "5", "45000.00");
-            dataGridViewSales.Rows.Add("000003", "17.08.2024 16:45", "Коваленко Іван", "2", "18000.00");
+            using (var db = new Computer_Parts_StoreContext())
+            {
+                // Отримуємо діапазон дат
+                DateTime dateFrom = dtpDateFrom.Value.Date;
+                DateTime dateTo = dtpDateTo.Value.Date.AddDays(1).AddSeconds(-1);
+
+                // Завантажуємо замовлення з бази даних
+                var orders = db.Orders
+                    .Include(o => o.Customer)
+                    .Include(o => o.OrderItems)
+                        .ThenInclude(oi => oi.Product)
+                    .Include(o => o.OrderItems)
+                        .ThenInclude(oi => oi.PrebuiltComputer)
+                    .Where(o => o.Status == "Підтверджено" &&
+                                o.OrderDate >= dateFrom &&
+                                o.OrderDate <= dateTo)
+                    .OrderByDescending(o => o.OrderDate)
+                    .ToList();
+
+                // Додаємо замовлення до таблиці
+                foreach (var order in orders)
+                {
+                    string orderNumber = order.Id.ToString("D6");
+                    string dateTime = order.OrderDate.ToString("dd.MM.yyyy HH:mm");
+                    string customerName = order.Customer?.FullName ?? "Невідомий";
+                    int itemsCount = order.OrderItems?.Sum(oi => oi.Quantity) ?? 0;
+                    string totalAmount = order.TotalAmount.ToString("F2", CultureInfo.InvariantCulture);
+
+                    int rowIndex = dataGridViewSales.Rows.Add(
+                        orderNumber,
+                        dateTime,
+                        customerName,
+                        itemsCount,
+                        totalAmount
+                    );
+
+                    // Зберігаємо об'єкт замовлення в Tag для подальшого використання
+                    dataGridViewSales.Rows[rowIndex].Tag = order;
+                }
+            }
 
             UpdateStatistics();
         }
@@ -49,12 +89,6 @@ namespace Computer_Parts_Store.Forms
                         {
                             totalRevenue += amount;
                         }
-                        else
-                        {
-                            // Логування помилки або обробка некоректних даних
-                            MessageBox.Show($"Некоректне значення суми: {value}", "Помилка",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
                     }
                 }
             }
@@ -68,6 +102,16 @@ namespace Computer_Parts_Store.Forms
 
         private void btnApplyFilter_Click(object sender, EventArgs e)
         {
+            // Перевірка коректності діапазону дат
+            if (dtpDateFrom.Value > dtpDateTo.Value)
+            {
+                MessageBox.Show("Дата початку не може бути пізніше дати кінця!",
+                    "Помилка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             // Застосувати фільтр по датах
             LoadSalesData();
             MessageBox.Show("Фільтр застосовано", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -98,8 +142,56 @@ namespace Computer_Parts_Store.Forms
             // Переглянути деталі замовлення
             if (e.ColumnIndex == dataGridViewSales.Columns["colViewDetails"].Index)
             {
-                string orderNumber = dataGridViewSales.Rows[e.RowIndex].Cells["colOrderNumber"].Value.ToString();
-                MessageBox.Show($"Деталі замовлення {orderNumber}", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Отримуємо замовлення з Tag
+                Order order = dataGridViewSales.Rows[e.RowIndex].Tag as Order;
+
+                if (order != null)
+                {
+                    // Відкриваємо форму чека з даними замовлення
+                    using (var db = new Computer_Parts_StoreContext())
+                    {
+                        // Завантажуємо повні дані замовлення з бази
+                        var fullOrder = db.Orders
+                            .Include(o => o.Customer)
+                            .Include(o => o.OrderItems)
+                                .ThenInclude(oi => oi.Product)
+                            .Include(o => o.OrderItems)
+                                .ThenInclude(oi => oi.PrebuiltComputer)
+                            .FirstOrDefault(o => o.Id == order.Id);
+
+                        if (fullOrder != null)
+                        {
+                            // Встановлюємо тимчасово поточного користувача для форми чека
+                            Customer previousCustomer = LoginSession.CurrentCustomer;
+                            LoginSession.Login(fullOrder.Customer);
+
+                            ReceiptForm receiptForm = new ReceiptForm(fullOrder);
+                            receiptForm.ShowDialog();
+
+                            // Повертаємо попереднього користувача
+                            if (previousCustomer != null)
+                            {
+                                LoginSession.Login(previousCustomer);
+                            }
+                            else
+                            {
+                                LoginSession.Logout();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не вдалося завантажити дані замовлення",
+                                "Помилка",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                else
+                {
+                    string orderNumber = dataGridViewSales.Rows[e.RowIndex].Cells["colOrderNumber"].Value.ToString();
+                    MessageBox.Show($"Деталі замовлення {orderNumber}", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 

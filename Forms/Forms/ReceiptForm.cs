@@ -9,6 +9,7 @@ namespace Computer_Parts_Store.Forms
     public partial class ReceiptForm : Form
     {
         private readonly Order? Order;
+
         public ReceiptForm()
         {
             InitializeComponent();
@@ -24,15 +25,21 @@ namespace Computer_Parts_Store.Forms
 
         private void LoadReceiptData()
         {
+            if (!LoginSession.IsLoggedIn || Order == null)
+            {
+                MessageBox.Show("Помилка завантаження даних чека", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             lblCustomerValue.Text = LoginSession.CurrentCustomer.FullName;
-            lblOrderDateValue.Text = DateTime.Now.ToString("dd.MM.yyyy");
+            lblOrderDateValue.Text = Order.OrderDate.ToString("dd.MM.yyyy");
 
             using (var db = new Computer_Parts_StoreContext())
             {
-                if (Order == null) return;
                 var orderItems = db.OrderItems
                     .Where(oi => oi.OrderId == Order.Id)
                     .ToList();
+
                 foreach (var item in orderItems)
                 {
                     string itemName = "N/A";
@@ -130,8 +137,19 @@ namespace Computer_Parts_Store.Forms
 
                 var random = new Random();
                 document.Add(new Paragraph($"Чек №: RCP-{DateTime.Now:yyyyMMdd}-{random.Next(1000, 99999)}", font));
-                document.Add(new Paragraph($"Дата: {DateTime.Now:dd.MM.yyyy}", font));
-                document.Add(new Paragraph($"Час: {DateTime.Now:HH:mm:ss}", font));
+
+                // Використовуємо дату з замовлення, якщо вона доступна
+                if (Order != null)
+                {
+                    document.Add(new Paragraph($"Дата: {Order.OrderDate:dd.MM.yyyy}", font));
+                    document.Add(new Paragraph($"Час: {Order.OrderDate:HH:mm:ss}", font));
+                }
+                else
+                {
+                    document.Add(new Paragraph($"Дата: {DateTime.Now:dd.MM.yyyy}", font));
+                    document.Add(new Paragraph($"Час: {DateTime.Now:HH:mm:ss}", font));
+                }
+
                 document.Add(new Paragraph(new string('─', 50), font));
 
                 document.Add(new Paragraph("ТОВАРИ:", font) { SpacingBefore = 10 });
